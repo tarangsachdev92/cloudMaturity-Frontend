@@ -1,0 +1,227 @@
+<div class="row">
+  <div class="col-md-8 PL-0">
+    <div class="table-box">
+      <h3>Improvement Plan Details</h3>
+
+      <div class="row">
+        <div class="col-md-6 PL-0">
+          <div class="table-box__data">
+            <div class="table-box__data__left">
+              <span>Organisation:</span>
+            </div>
+            <div class="table-box__data__right">
+              <span>{{improvementPlan?.org_id?.org_name | checkEmpty}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 PR-0">
+          <div class="table-box__data">
+            <div class="table-box__data__left">
+              <span>Created On:</span>
+            </div>
+            <div class="table-box__data__right">
+              <span>{{improvementPlan?.createdAt | date: "dd MMM yyyy" | checkEmpty }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 PL-0">
+          <div class="table-box__data">
+            <div class="table-box__data__left">
+              <span>Valid From:</span>
+            </div>
+            <div class="table-box__data__right">
+              <span>{{improvementPlan?.valid_from | date: "dd MMM yyyy" | checkEmpty }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 PR-0">
+          <div class="table-box__data">
+            <div class="table-box__data__left">
+              <span>Valid To:</span>
+            </div>
+            <div class="table-box__data__right">
+              <span>{{improvementPlan?.valid_to | date: "dd MMM yyyy" | checkEmpty }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2 PR-0">
+    <div class="box-view-right">
+      <div class="box-gap box-gap--space box-inital-score">
+        <i class="fas fa-star-half-alt"></i>
+        <b>{{getScore(improvementPlan?.initialScore) | checkEmpty}}</b>
+        <h3>Initial Score</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row MT-2">
+  <div class="col-md-10 PR-0 PL-0">
+    <div class="table-box">
+      <h3>Score and Target</h3>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="current-desired">
+            <div class="row">
+              <div class="col-md-5 PL-0">
+                <div class="current-desired__box">
+                  <i class="fas fa-star-half-alt"></i>
+                  <h5>Current</h5>
+                  <h2>{{getScore(improvementPlan?.currentScore) | checkEmpty}}</h2>
+                </div>
+              </div>
+
+              <div class="col-md-1 text-center PL-0 PR-0">
+                <i class="fas fa-caret-right"></i>
+              </div>
+
+              <div class="col-md-5 PR-0 current-desired--goal">
+                <div class="current-desired__box">
+                  <i class="fas fa-star"></i>
+                  <h5>Desired</h5>
+                  <h2>{{improvementPlan?.target || 0 | formatDecimal}}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="improvementPlan?.elements.length">
+          <div [ngClass]="{ 'expand-chart--expanded': isChartExpand }" class="expand-chart">
+            <a *ngIf="!isChartExpand" (click)="onExpandChart()" class="expand-chart__expand-icon" matTooltip="Expand">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+            <a *ngIf="isChartExpand" (click)="onCollapseChart()" class="expand-chart__collapse-icon"
+              matTooltip="Collapse">
+              <i class="fas fa-compress-arrows-alt"></i>
+            </a>
+            <div class="full-width-chart">
+              <canvas baseChart [datasets]="scoreDataRadarChart.radarChartData"
+                [legend]="scoreDataRadarChart.radarChartLegend" [colors]="scoreDataRadarChart.assetChartColors"
+                [options]="scoreDataRadarChart.radarChartOptions" [labels]="scoreDataRadarChart.radarChartLabels"
+                [chartType]="scoreDataRadarChart.radarChartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="!improvementPlan?.elements.length && !isImprovementPlanLoader">
+          <app-no-data></app-no-data>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row MT-2">
+  <div class="col-md-10 PR-0 PL-0">
+    <div class="table-box">
+      <h3>Gaps Implementation</h3>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="box-gap box-gap-chart improvement-plan-box-row">
+            <h3>Implementation Progress</h3>
+            <div class="gauge-chart">
+              <ngx-gauge [type]="gaugeTypeImplementation" [value]="improvementPlan?.gapProgress || 0 | formatDecimal"
+                [label]="gaugeLabelImplementation" [append]="gaugeAppendTextImplementation"
+                [size]="gaugeSizeImplementation" [thick]="gaugeThickImplementation"
+                [foregroundColor]="gaugeClrImplementation">
+              </ngx-gauge>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="improvement-plan-box-row">
+            <div class="improvement-plan-box-row__box">
+              <div>
+                <h4>Open Gaps</h4>
+                <b>{{improvementPlan?.openGaps | checkEmpty}}</b>
+              </div>
+              <div class="MT-4">
+                <h4>Initial Gaps</h4>
+                <b>{{improvementPlan?.initialGaps | checkEmpty}}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="chart-improvement-plan">
+            <div>
+              <ul>
+                <li>
+                  <span></span>
+                  <small>Open Gaps</small>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <canvas baseChart [datasets]="gapsLineChart.lineChartData" [labels]="gapsLineChart.lineChartLabels"
+                [options]="gapsLineChart.lineChartOptions" [colors]="gapsLineChart.lineChartColors"
+                [legend]="gapsLineChart.lineChartLegend" [chartType]="gapsLineChart.lineChartType"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row MT-2 MB-2">
+  <div class="col-md-10 PR-0 PL-0">
+    <div class="table-box">
+      <h3>Actions Implementation</h3>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="box-gap box-gap-chart improvement-plan-box-row">
+            <h3>Implementation Progress</h3>
+            <div class="gauge-chart">
+              <ngx-gauge [type]="gaugeTypeActions" [value]="improvementPlan?.actionProgress || 0 | formatDecimal"
+                [label]="gaugeLabelActions" [append]="gaugeAppendTextActions" [size]="gaugeSizeActions"
+                [thick]="gaugeThickActions" [foregroundColor]="gaugeClrActions">
+              </ngx-gauge>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="improvement-plan-box-row">
+            <div class="improvement-plan-box-row__box">
+              <div>
+                <h4>Open Actions</h4>
+                <b>{{improvementPlan?.openActions | checkEmpty}}</b>
+              </div>
+              <div class="MT-4">
+                <h4>Total Actions</h4>
+                <b>{{improvementPlan?.totalActions | checkEmpty}}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="chart-improvement-plan chart-improvement-plan--action">
+            <div>
+              <ul>
+                <li>
+                  <span></span>
+                  <small>Open Actions</small>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <canvas baseChart [datasets]="actionLineChart.lineChartData" [labels]="actionLineChart.lineChartLabels"
+                [options]="actionLineChart.lineChartOptions" [colors]="actionLineChart.lineChartColors"
+                [legend]="actionLineChart.lineChartLegend" [chartType]="actionLineChart.lineChartType"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="row MT-1">
+  <div class="col-md-8 PL-0">
+    <div class="white-form">
+      <form [formGroup]="addAssessmentModelForm" (ngSubmit)="onSubmitAssessmentModel(addAssessmentModelForm)">
+        <div class="row">
+          <div class="col-md-6 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Name*</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <input type="text" formControlName="model_name" [disableFormControl]="!!id" appAutofocus
+                  autocomplete="off" matInput placeholder="Enter model name" />
+                <mat-error *ngIf="isRequiredField(formControls['model_name'])">{{ validationMsg.MODEL_NAME }}
+                </mat-error>
+                <mat-error *ngIf="isValidField(formControls['model_name'])">{{ validationMsg.MODEL_NAME_VALID }}
+                </mat-error>
+                <mat-error *ngIf="isValidLength(formControls['model_name'])">{{ validationMsg.MODEL_NAME_LENGTH }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-6 PR-0">
+            <div class="form-control">
+              <span class="form-control__title">Maturity Levels Key*</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select formControlName="schema_id" (selectionChange)="onSchemaSelectionChange($event)"
+                  placeholder="Select Maturity Levels Key">
+                  <mat-option *ngFor="let maturitySchema of maturitySchemaList" [value]="maturitySchema._id">
+                    {{ maturitySchema.schema_name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="isRequiredField(formControls['schema_id'])">
+                  {{ validationMsg.MATURITY_LEVEL_SCHEMA }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 PL-0 PR-0">
+            <div class="form-control form-control--textarea">
+              <span class="form-control__title">Description</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <textarea formControlName="description" matInput placeholder="Enter description"></textarea>
+                <mat-error *ngIf="isValidLength(formControls['description'])">
+                  {{ validationMsg.DESCRIPTION_LENGTH }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Calculation Method*</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select formControlName="calculation_method" placeholder="Select Score Calculation Method">
+                  <mat-option *ngFor="let calculationMethod of calculationMethodsList"
+                    [value]="calculationMethod.value">
+                    {{ calculationMethod.display }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="isRequiredField(formControls['calculation_method'])">
+                  {{ validationMsg.CALCULATION_METHOD }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" mat-flat-button color="primary" class="small-btn">
+            Save
+          </button>
+          <button (click)="onBack()" type="button" mat-flat-button color="secondary" class="ML-1 small-btn">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

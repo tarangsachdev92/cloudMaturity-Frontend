@@ -1,0 +1,107 @@
+<div class="notification-view">
+  <div class="notification-view__header">
+    <div class="row">
+      <div class="col-md-9">
+        <h3>Notifications</h3>
+      </div>
+      <div class="col-md-3 text-right">
+        <!-- <a>View all</a> -->
+      </div>
+    </div>
+  </div>
+
+  <div
+    infiniteScroll
+    [scrollWindow]="false" 
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+    class="notification-view__body"
+  >
+    <ul>
+      <li>
+        <a>
+          <div class="notification-view__list">
+            <div class="notification-view__profile">JD</div>
+
+            <div class="notification-view__content">
+              <p>
+                <b class="name-notification">John Doe</b> added you to an
+                assessment team.
+              </p>
+              <p><b>Assessment: </b> <i>AS-224</i></p>
+              <strong>20 minutes ago</strong>
+            </div>
+
+            <div class="notification-view__navigation">
+              <span class="material-icons"> keyboard_arrow_right </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a>
+          <div class="notification-view__list">
+            <div class="notification-view__profile">JD</div>
+
+            <div class="notification-view__content">
+              <p>
+                <b class="name-notification">John Doe</b> Assign new assessment
+                domains to you.
+              </p>
+              <p><b>Assessment: </b> <i>AS-224</i></p>
+              <strong>20 minutes ago</strong>
+            </div>
+
+            <div class="notification-view__navigation">
+              <span class="material-icons"> keyboard_arrow_right </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a>
+          <div class="notification-view__list">
+            <div class="notification-view__profile">JD</div>
+
+            <div class="notification-view__content">
+              <p>
+                <b class="name-notification">John Doe</b> Assign new actions to
+                you.
+              </p>
+              <p><b>Improvement Plan: </b> <i>IP-224</i></p>
+              <strong>20 minutes ago</strong>
+            </div>
+
+            <div class="notification-view__navigation">
+              <span class="material-icons"> keyboard_arrow_right </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a>
+          <div class="notification-view__list">
+            <div class="notification-view__profile">JD</div>
+
+            <div class="notification-view__content">
+              <p>
+                <b class="name-notification">John Doe</b> Assign new questions
+                to you.
+              </p>
+              <p><b>Assessment: </b> <i>AS-224</i></p>
+              <strong>20 minutes ago</strong>
+            </div>
+
+            <div class="notification-view__navigation">
+              <span class="material-icons"> keyboard_arrow_right </span>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

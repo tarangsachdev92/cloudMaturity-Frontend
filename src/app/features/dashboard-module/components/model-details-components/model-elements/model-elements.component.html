@@ -1,0 +1,135 @@
+<div class="row between-page-header">
+  <div class="col-md-6 PL-0">
+  </div>
+  <div class="col-md-6 PR-0 text-right">
+    <button (click)="onDeleteMultipleElements()" *ngIf="isElementSelected" matTooltip="Delete Domains" type="button"
+      mat-icon-button>
+      <i class="fas fa-trash"></i>
+    </button>
+    <button *ngIf="!isModelReference" type="button" [matMenuTriggerFor]="menu" mat-flat-button color="primary"
+      class="small-btn ML-2">
+      Add Domain
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button *ngIf="!isModelReference" (click)="onAddElement()" type="button" mat-menu-item>
+        <span>Add new domain</span>
+      </button>
+      <button *ngIf="!isModelReference" (click)="onCopyElements()" type="button" mat-menu-item>
+        <span>Copy domains</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+
+<div class="table-box MT-1 MB-2">
+  <div class="element-list">
+    <div class="table table-model-element MT-2">
+      <p-treeTable [value]="data">
+        <ng-template pTemplate="header">
+          <tr>
+            <th width="4%" *ngIf="!isModelReference">
+              <mat-checkbox (change)="onCheckChangeSelectAll($event)" [checked]="
+                  !isLoadingModelElements &&
+                  originalAssessmentModelElementList.length &&
+                  isAllChecked()
+                ">
+              </mat-checkbox>
+            </th>
+            <th width="6%">
+              <div>
+                <a>Sr. No. </a>
+              </div>
+            </th>
+            <th width="31%">
+              <div>
+                Domain Name
+                <button (click)="filterToggle()" mat-icon-button type="button"
+                  [matTooltip]="isFilterShow ? 'Clear' : 'Search'">
+                  <i *ngIf="!isFilterShow" class="fa fa-search"></i>
+                  <i *ngIf="isFilterShow" class="fa fa-times"></i>
+                </button>
+              </div>
+              <div *ngIf="isFilterShow">
+                <div class="table__search">
+                  <input placeholder="Search Domain..." appAutofocus [formControl]="searchElementFormControl"
+                    (keyup)="filterElementList()" type="text" />
+                </div>
+              </div>
+            </th>
+            <th width="32%">Description</th>
+            <th width="12%">Sub domain</th>
+            <th width="10%">
+              <div>
+                Weight
+                <button (click)="toggleEditWeight()" *ngIf="!isModelReference &&
+                  originalAssessmentModelElementList.length> 0" mat-icon-button type="button" matTooltip="Edit">
+                  <i *ngIf="!isEditWeight" class="fa fa-pen"></i>
+                  <i *ngIf="isEditWeight" class="fa fa-check"></i>
+                </button>
+              </div>
+            </th>
+            <th width="8%" *ngIf="!isModelReference"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowNode let-elementData="rowData">
+          <tr [ngClass]="{ selected: false }">
+            <td *ngIf="!isModelReference">
+              <mat-checkbox [checked]="elementData.checked" (change)="onCheckChangeSingle($event, rowNode)">
+              </mat-checkbox>
+            </td>
+            <td>
+              {{ elementData.index + 1 }}
+            </td>
+            <td>
+              <div class="org-details">
+                <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                {{ elementData.element_name }}
+                <a *ngIf="!isModelReference" (click)="onAddSubElement(elementData)"
+                  class="org-details__add inner-action" matTooltip="Add Sub Domain">
+                  <i class="fa fa-plus"></i>
+                </a>
+              </div>
+            </td>
+            <td>
+              <app-read-more [maxLength]="100" [text]="elementData.description">
+              </app-read-more>
+            </td>
+            <td>
+              {{ elementData.subElements?.length || 0 }}
+            </td>
+            <td>
+              <div *ngIf="!isEditWeight">
+                {{ getWeight(elementData.weight) }}
+              </div>
+              <div *ngIf="!isModelReference && isEditWeight" class="edit-weight">
+                <input type="text" (input)="modelWeightChange($event, elementData)"
+                  [value]="getWeight(elementData.weight)" appTwoDigitDecimalNumber />
+              </div>
+            </td>
+            <td class="text-center" *ngIf="!isModelReference">
+              <a matTooltip="Edit" (click)="onEditElement($event, elementData)">
+                <i class="fas fa-pen"></i>
+              </a>
+              <a (click)="onDeleteElement(elementData)" matTooltip="Delete Domain" class="ML-2">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </ng-template>
+      </p-treeTable>
+    </div>
+
+    <div *ngIf="isLoadingModelElements">
+      <app-table-loader></app-table-loader>
+    </div>
+
+    <div *ngIf="
+        !isLoadingModelElements &&
+        displayAssessmentModelElementList.length === 0
+      " class="element-details__body">
+      <app-no-data></app-no-data>
+    </div>
+  </div>
+</div>

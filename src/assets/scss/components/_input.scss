@@ -1,0 +1,168 @@
+.form-control {
+  height: 11rem;
+  position: relative;
+  &__title {
+    color: $primary-color;
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+  }
+  &--textarea {
+    height: 13rem;
+    textarea {
+      resize: none !important;
+    }
+  }
+  &--file-select {
+    .mat-form-field-wrapper{
+      padding-bottom: 0 !important;
+      cursor: pointer;
+    }
+    .mat-form-field-outline,
+    input {
+      cursor: pointer;
+    }
+  }
+  mat-error + mat-error {
+    display: none;
+  }
+  mat-icon[matprefix] {
+    @include square(1.8rem);
+    color: rgba($black-color, 0.4);
+    position: relative;
+    top: -0.6rem;
+    left: 0.7rem;
+  }
+  mat-error {
+    font-size: 1.4rem;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: $grey-color;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.9em 0;
+  }
+  .mat-form-field-label {
+    color: $grey-color;
+    font: {
+      size: 1.8rem;
+      weight: 600;
+    }
+  }
+  .mat-input-element,
+  .mat-select {
+    color: $grey-color-2;
+    font: {
+      size: 1.8rem;
+      weight: 600;
+    }
+    position: relative;
+    top: -0.4rem;
+  }
+  .mat-form-field-label-wrapper {
+    top: -1.8rem;
+  }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-prefix,
+.mat-form-field-appearance-outline .mat-form-field-suffix {
+  width: 4rem;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-end,
+.mat-form-field-appearance-outline .mat-form-field-outline-start {
+  border-radius: 9px;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid.ng-untouched
+  .mat-form-field-outline-thick,
+.mat-form-field.mat-form-field-invalid .mat-form-field-label,
+.mat-form-field.mat-form-field-invalid
+  .mat-form-field-label
+  .mat-form-field-required-marker,
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid
+  .mat-form-field-outline-thick,
+.mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+  color: $grey-color !important;
+}
+
+.mat-warn .mat-input-element,
+.mat-form-field-invalid .mat-input-element {
+  caret-color: $grey-color !important;
+}
+
+.sign-up-layout {
+  .mat-form-field-appearance-outline .mat-form-field-flex {
+    padding: 0 0.75em 0 3rem;
+  }
+}
+
+.mat-select-arrow-wrapper {
+  position: relative;
+  top: 0.4rem;
+}
+
+.custom-tree-select {
+  width: 100%;
+
+  .ant-select-selector {
+    height: 5rem !important;
+    margin-top: 0.4rem;
+  }
+
+  .ant-select-selection-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    line-height: 4.5rem;
+  }
+
+  .ant-select-selection-placeholder {
+    font-size: 1.8rem;
+    height: 5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.42);
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .ant-select-selection__rendered {
+    line-height: 4.5rem;
+    font-size: 1.8rem;
+    height: 4.5rem;
+  }
+
+  .ant-select-selector:hover {
+    border-color: $red-color !important;
+  }
+
+  .ant-empty-description {
+    display: none;
+  }
+}
+
+.ant-select-tree .ant-select-tree-node-content-wrapper:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected {
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+.ant-select-tree-treenode .ant-select-tree-node-content-wrapper {
+  padding: 10px 5px !important;
+}
+
+.ant-select-tree-switcher{
+  @include flexCenter();
+}
+
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: $red-color !important;
+  border-width: 1px !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input{
+  height: 5rem !important;
+}

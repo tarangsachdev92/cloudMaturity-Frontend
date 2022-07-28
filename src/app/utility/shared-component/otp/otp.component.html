@@ -1,0 +1,51 @@
+<div class="otp-container">
+  <div class="app-section">
+    <div class="app-section__box">
+      <div class="app-section__box__logo">
+        <mat-icon svgIcon="logo"></mat-icon>
+      </div>
+
+      <p class="text-center">
+        Enter the 6 digit OTP sent to your email
+        <span *ngIf="email"> {{ email }}</span>
+      </p>
+
+      <form (ngSubmit)="onOtpFormSubmit(otpForm)" [formGroup]="otpForm">
+        <div class="form-control">
+          <span class="form-control__title">One time password*</span>
+          <mat-form-field [floatLabel]="'never'" appearance="outline">
+            <input #initialFormField autocomplete="off" formControlName="otp" matInput
+              placeholder="Enter one time password*" required type="text" />
+
+            <mat-error *ngIf="isRequiredField(formControls['otp'])">{{
+              validationMsg.OTP
+              }}</mat-error>
+            <mat-error *ngIf="isValidField(formControls['otp'])">{{
+              validationMsg.OTP_VALID
+              }}</mat-error>
+            <mat-error *ngIf="isValidLength(formControls['otp'])">{{
+              validationMsg.OTP_LENGTH
+              }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button class="small-btn" [disabled]="!otpForm.valid" color="primary" mat-flat-button type="submit">
+            Verify OTP
+          </button>
+        </div>
+
+        <div class="MT-3">
+          <span class="otp-resend">If you don't receive code.
+            <a (click)="resendOtp()" class="primary-link">Resend</a>
+          </span>
+        </div>
+
+        <div class="text-center">
+          <button (click)="onBackClick()" mat-button type="button">Back</button>
+          <!-- <button mat-button type="button" (click)="onBackClick()" matStepperPrevious>Back</button> -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

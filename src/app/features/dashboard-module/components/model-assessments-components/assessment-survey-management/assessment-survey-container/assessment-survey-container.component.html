@@ -1,0 +1,57 @@
+<div class="header-panel">
+  <div class="page-header__action text-right">
+    <a matTooltip="Print" (click)="onClickPrintAssessmentReport(assessmentDetail)">
+      <i class="fa fa-print"></i>
+    </a>
+
+    <a matTooltip="Delete" class="ML-2" (click)="deleteAssessmentHandler(assessmentId)">
+      <i class="fa fa-trash"></i>
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 PL-0 PR-0">
+    <div class="row">
+      <div class="col-md-12 PR-0">
+        <div class="assessment-survey-container">
+          <mat-tab-group #assessmentTab (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedTabIndex">
+            <mat-tab label="Assessment Dashboard">
+              <div class="MT-2" *ngIf="selectedTabIndex===assessmentTabEnum.DASHBOARD">
+                <app-survey-basic-details [assessmentDetail]="assessmentDetail">
+                </app-survey-basic-details>
+                <app-assessment-dashboard [assessmentId]="assessmentId" [assessmentDetail]="assessmentDetail"
+                  [isLoadingResults]="isLoadingResults" [assessmentDashboardData]="assessmentDashboardData">
+                </app-assessment-dashboard>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Assessment Plan">
+              <div *ngIf="selectedTabIndex===assessmentTabEnum.ASSESSMENT_PLAN">
+                <app-assessment-plan-details [elementList]="assessmentElementList" (planUpdate)="onPlanUpdate($event)"
+                  (authorityUpdate)="onAuthorityUpdate($event)" [assessmentTeamList]="assessmentTeamList"
+                  [isLoadingResults]="isLoadingResults" [assessmentDetail]="assessmentDetail">
+                </app-assessment-plan-details>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Questionnaire">
+              <div *ngIf="selectedTabIndex===assessmentTabEnum.QUESTIONNAIRE">
+                <app-assessment-questionnaire-details [elementList]="assessmentElementList"
+                  [assessmentDetail]="assessmentDetail" [assessmentId]="assessmentDetail?._id">
+                </app-assessment-questionnaire-details>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Long Text">
+              <div *ngIf="selectedTabIndex===assessmentTabEnum.SCOPE">
+                <app-assessment-scope [longText]="assessmentDetail?.details"
+                  (updateDetail)="onUpdateScopeDetail($event)"></app-assessment-scope>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

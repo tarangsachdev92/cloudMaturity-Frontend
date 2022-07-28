@@ -1,0 +1,70 @@
+@import "../../../../../../assets/scss/abstracts/abstracts";
+
+.element-list {
+  margin-bottom: 2rem;
+  position: relative;
+
+  &__fixed-btn {
+    position: absolute;
+    top: 0;
+    right: 3rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+
+    i {
+      color: $grey-color-2;
+      font-size: 1.6rem;
+    }
+  }
+
+  .table {
+    td{
+      position: relative;
+    }
+
+    &__search {
+      width: 90%;
+      margin-bottom: 1rem;
+
+      input {
+        padding: 5px 10px;
+      }
+    }
+  }
+
+  .edit-weight {
+    input {
+      width: 45px;
+      padding: 3px 5px;
+      border: 1px solid $grey-color-6;
+      font-size: 12px;
+
+      &:focus {
+        border: 1px solid $red-color;
+        outline: none;
+      }
+    }
+  }
+}
+
+
+.org-details{
+  position: relative;
+
+  &__name{
+    display: inline-block;
+    padding-left: 2rem;
+    max-width: 80%;
+
+    i{
+      position: absolute;
+      top: 3px;
+      left: 0;
+    }
+  }
+
+  &__add{
+    position: absolute;
+    right: 3rem;
+  }
+}

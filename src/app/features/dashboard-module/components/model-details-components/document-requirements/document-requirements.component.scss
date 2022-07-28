@@ -1,0 +1,32 @@
+@import "../../../../../../assets/scss/abstracts/abstracts";
+
+.element-list-documents{
+    li{
+        display: inline-block;
+        position: relative;
+        padding: 0 1rem;
+
+        &::after{
+            background: $grey-color;
+            position: absolute;
+            right: 0;
+            height: 2rem;
+            width: 1px;
+            content: '';
+        }
+
+        &:last-child{
+            &::after{
+                display: none;
+            }
+        }
+
+        a{
+            color: $red-color;
+
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}

@@ -1,0 +1,112 @@
+<div class="modal">
+    <div class="modal__header">
+        <h3>Add Task</h3>
+    </div>
+
+    <form [formGroup]="addTaskForm" (ngSubmit)="onSubmitTaskForm(addTaskForm)">
+        <div class="modal__body">
+            <!-- <div class="form-control">
+                <span class="form-control__title">Id</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <input type="text" formControlName="unique_id" appAutofocus autocomplete="off" matInput
+                        placeholder="Enter Id" />
+                </mat-form-field>
+            </div> -->
+
+            <div class="form-control form-control--textarea">
+                <span class="form-control__title">Description</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <textarea formControlName="description" appAutofocus matInput placeholder="Enter description"></textarea>
+                </mat-form-field>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-md-6 PL-0">
+                    <div class="form-control">
+                        <span class="form-control__title">Complexity</span>
+                        <mat-form-field appearance="outline" [floatLabel]="'never'">
+                            <mat-select formControlName="complexity" placeholder="Select complexity">
+                                <mat-option *ngFor="let complexity of complexities; let i = index;"
+                                    [value]="complexity">{{complexity}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-6 PR-0">
+                    <div class="form-control">
+                        <span class="form-control__title">Cost</span>
+                        <mat-form-field appearance="outline" [floatLabel]="'never'">
+                            <input type="text" formControlName="cost" autocomplete="off" matInput
+                                placeholder="Enter cost" />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="form-control">
+                <span class="form-control__title">Duration</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <input type="text" formControlName="duration" autocomplete="off" matInput
+                        placeholder="Enter duration (in days)" />
+                </mat-form-field>
+            </div> -->
+
+            <!-- <div class="form-control form-control--file-select">
+                <span class="form-control__title">Document</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <input readonly (click)="onFileSelect('document')" type="text" autocomplete="off" matInput
+                        placeholder="Select document" />
+                    <input type="file" multiple formControlName="documents" id="document" hidden
+                        (click)="onAttachmentClick($event)" (change)="onDocumentsSelection($event)" />
+                    <i class="fa fa-paperclip" aria-hidden="true" matSuffix></i>
+                </mat-form-field>
+            </div> -->
+
+            <!-- <ul class="file-section">
+                <li class="file-section__uploading" *ngFor="
+                    let attachment of alreadyUploadedAttachment;
+                    let attachmentIndex = index
+                  ">
+                    <div class="row">
+                        <div class="col-md-10 PL-0">
+                            {{ attachment.name }}
+                        </div>
+                        <div class="col-md-2 PR-0 text-right">
+                            <a matTooltip="Remove" (click)="
+                          onRemoveAlreadyUploadedAttachment(
+                            attachment,
+                            attachmentIndex,
+                            task
+                          )
+                        ">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="file-section__uploaded" *ngFor="let file of uploadedFiles; let uploadFileIndex = index">
+                    <div class="row">
+                        <div class="col-md-10 PL-0">
+                            {{ file.name }}
+                        </div>
+                        <div class="col-md-2 PR-0 text-right">
+                            <a matTooltip="Remove" (click)="onRemoveCurrentAttachment(uploadFileIndex)">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul> -->
+
+            <div>
+                <div class="modal__footer text-right">
+                    <button type="submit" mat-flat-button color="primary">Save</button>
+                    <button (click)="onCloseDialog()" type="button" mat-flat-button color="secondary">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

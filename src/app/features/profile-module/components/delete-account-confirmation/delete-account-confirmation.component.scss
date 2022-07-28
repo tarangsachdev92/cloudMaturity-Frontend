@@ -1,0 +1,10 @@
+@import "../../../../../assets/scss/abstracts/abstracts";
+
+p {
+  font-weight: 500;
+
+  b {
+    color: $red-color;
+    font-weight: 500;
+  }
+}

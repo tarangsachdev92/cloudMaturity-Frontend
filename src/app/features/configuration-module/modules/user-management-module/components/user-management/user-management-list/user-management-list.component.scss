@@ -1,0 +1,21 @@
+@import "../../../../../../../../assets/scss/abstracts/abstracts";
+
+tr {
+  cursor: pointer;
+
+  &:hover {
+    background: $grey-color-6;
+  }
+
+  &.active {
+    background: $grey-color-6;
+  }
+}
+
+.box__body ul li > a div:last-child {
+  top: 0;
+}
+
+.table__search {
+  width: 100%;
+}

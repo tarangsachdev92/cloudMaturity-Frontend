@@ -1,0 +1,208 @@
+<div class="row">
+  <div class="col-md-12 model-details-container">
+    <mat-tab-group>
+      <mat-tab label="Address">
+        <div class="row">
+          <div class="col-md-7 PL-0 PR-0">
+            <div class="white-form MT-2 MB-2">
+              <form
+                [formGroup]="editCompanyProfileForm"
+                (ngSubmit)="onEditCompanyProfileSubmit(editCompanyProfileForm)"
+              >
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-control">
+                      <span class="form-control__title">Company*</span>
+                      <mat-form-field
+                        appearance="outline"
+                        [floatLabel]="'never'"
+                      >
+                        <input
+                          formControlName="company"
+                          type="text"
+                          autocomplete="off"
+                          matInput
+                          placeholder="Enter company name"
+                        />
+                        <mat-error
+                          *ngIf="isRequiredField(formControls['company'])"
+                          >{{ validationMsg.COMPANY_NAME }}</mat-error
+                        >
+                        <mat-error
+                          *ngIf="isValidField(formControls['company'])"
+                          >{{ validationMsg.COMPANY_VALID }}</mat-error
+                        >
+                        <mat-error
+                          *ngIf="isValidLength(formControls['company'])"
+                          >{{ validationMsg.COMPANY_NAME_LENGTH }}</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-control form-control--textarea">
+                      <span class="form-control__title">Address</span>
+                      <mat-form-field
+                        appearance="outline"
+                        [floatLabel]="'never'"
+                      >
+                        <textarea
+                          formControlName="address"
+                          matInput
+                          placeholder="Enter address"
+                        ></textarea>
+                        <mat-error
+                          *ngIf="isValidField(formControls['address'])"
+                          >{{ validationMsg.ADDRESS_VALID }}</mat-error
+                        >
+                        <mat-error
+                          *ngIf="isValidLength(formControls['address'])"
+                          >{{ validationMsg.ADDRESS_LENGTH }}</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-control">
+                      <span class="form-control__title">Country</span>
+                      <mat-form-field
+                        appearance="outline"
+                        [floatLabel]="'never'"
+                      >
+                        <mat-select
+                          formControlName="country"
+                          placeholder="Select country"
+                        >
+                          <mat-option
+                            *ngFor="let country of countries"
+                            [value]="country.name"
+                            >{{ country.name }}</mat-option
+                          >
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-control">
+                      <span class="form-control__title">City</span>
+                      <mat-form-field
+                        appearance="outline"
+                        [floatLabel]="'never'"
+                      >
+                        <input
+                          formControlName="city"
+                          type="text"
+                          autocomplete="off"
+                          matInput
+                          placeholder="Enter city name"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-control">
+                      <span class="form-control__title">Code</span>
+                      <mat-form-field
+                        appearance="outline"
+                        [floatLabel]="'never'"
+                      >
+                        <mat-select
+                          formControlName="dial_code"
+                          placeholder="Select code"
+                        >
+                          <mat-option
+                            *ngFor="let phone_code of dialCodes"
+                            [value]="phone_code"
+                            >{{ phone_code }}</mat-option
+                          >
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-md-8">
+                    <div class="form-control">
+                      <span class="form-control__title">Phone</span>
+                      <mat-form-field
+                        appearance="outline"
+                        [floatLabel]="'never'"
+                      >
+                        <input
+                          type="text"
+                          formControlName="phone"
+                          autocomplete="off"
+                          matInput
+                          placeholder="Enter phone"
+                        />
+                        <mat-error
+                          *ngIf="isValidField(formControls['phone'])"
+                          >{{ validationMsg.PHONE_VALID }}</mat-error
+                        >
+                        <mat-error
+                          *ngIf="isValidLength(formControls['phone'])"
+                          >{{ validationMsg.PHONE_LENGTH }}</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-control">
+                      <span class="form-control__title">VAT Number</span>
+                      <mat-form-field
+                        appearance="outline"
+                        [floatLabel]="'never'"
+                      >
+                        <input
+                          formControlName="vat_number"
+                          type="text"
+                          autocomplete="off"
+                          matInput
+                          placeholder="Enter VAT Number"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <button
+                      class="small-btn"
+                      [disabled]="editCompanyProfileForm.invalid"
+                      type="submit"
+                      mat-flat-button
+                      color="primary"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+
+                  <div class="col-md-6 text-right">
+                    <a (click)="onDeleteAccount()" class="delete-ac-link"
+                      >Delete Account</a
+                    >
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Payment"></mat-tab>
+      <mat-tab label="Invoices"></mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

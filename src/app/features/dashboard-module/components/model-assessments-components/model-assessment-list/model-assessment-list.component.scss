@@ -1,0 +1,89 @@
+@import "../../../../../../assets/scss/abstracts/abstracts";
+
+.assessment-list {
+  h5 {
+    color: $primary-color;
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.table {
+  &__search {
+    width: 90%;
+
+    input {
+      padding: 5px 10px;
+    }
+  }
+}
+
+.table {
+  // max-height: calc(100vh - 31rem);
+  // overflow-y: auto;
+}
+
+.edit-filter {
+  color: $red-color;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.box {
+  &__header {
+    padding: 8px !important;
+
+    h3 {
+      font-size: 1.6rem;
+      padding-left: 7px;
+    }
+  }
+}
+
+.assessment-filter-details {
+  border: 1px solid #eeeeee;
+
+  &__header {
+    h4 {
+      color: $primary-color;
+      font-size: 1.6rem;
+    }
+
+    a {
+      i {
+        font-size: 2.2rem;
+      }
+    }
+  }
+
+  &__body {
+    padding-top: 1.5rem;
+
+    &__data {
+      @include clearfix();
+      margin-bottom: 1.5rem;
+
+      &__left {
+        width: 15rem;
+        float: left;
+
+        span {
+          color: $grey-color-8;
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+      }
+
+      &__right {
+        width: calc(100% - 15rem);
+        float: left;
+
+        span {
+          color: $primary-color;
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

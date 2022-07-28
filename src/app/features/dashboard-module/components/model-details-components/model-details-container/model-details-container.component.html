@@ -1,0 +1,74 @@
+<div class="header-panel">
+  <div *ngIf="modelData" class="page-header__action text-right">
+    <span *ngIf="!isModelReference"
+      [ngClass]="{ 'green-color': modelData?.is_published, 'red-color': !modelData?.is_published}">
+      {{ modelData && (modelData?.is_published ? "Activate" : "Inactivate") }}
+    </span>
+
+    <span *ngIf="!isModelReference" class="pipe">|</span>
+
+    <a *ngIf="!isModelReference" (click)="onCopyAssessmentModel(modelData)" matTooltip="Copy Model">
+      <i class="fas fa-copy"></i>
+    </a>
+
+    <button *ngIf="isModelReference" (click)="onCopyAssessmentModel(modelData)" class="small-btn" type="button"
+      mat-flat-button color="primary">
+      Copy Model
+    </button>
+
+    <a *ngIf="!isModelReference" (click)="onDeleteConfirmation(modelData)" matTooltip="Delete Model">
+      <i class="fas fa-trash"></i>
+    </a>
+
+    <a *ngIf="!isModelReference" (click)="onActiveInActiveModel()" [ngClass]="{ 'inactive-link': false }"
+      [matTooltip]="modelData?.is_published ? 'InActive Model' : 'Active Model'">
+      <i class="fas fa-file-export"></i>
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 PR-0">
+    <div class="model-details-container">
+      <mat-tab-group #modelDetailTab (selectedTabChange)="tabChanged($event)"
+        [selectedIndex]="modelDetailTab.selectedIndex">
+        <mat-tab label="Basic Data">
+          <div class="MT-2" *ngIf="modelDetailTab.selectedIndex===modelDetailEnum.BASIC_DATA">
+            <app-model-basic-data-container [isModelReference]="isModelReference"
+              [isLoadingModelDetails]="isLoadingModelResults" [modelData]="modelData"
+              (updateModelData)="onUpdateModelData($event)">
+            </app-model-basic-data-container>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Domains">
+          <div *ngIf="modelDetailTab.selectedIndex===modelDetailEnum.DOMAINS">
+            <app-model-elements (shouldUpdateList)="onUpdateModelElementList($event)"
+              [isModelReference]="isModelReference" (shouldUpdateModelDetail)="onShouldUpdateModelDetail($event)"
+              [isLoadingModelElements]="isLoadingModelElementsResults"
+              [isModelElementListUpdated]="isModelElementListUpdated" [modelElementList]="modelElementList"
+              [modelData]="modelData"></app-model-elements>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Practices">
+          <div *ngIf="modelDetailTab.selectedIndex===modelDetailEnum.PRACTICES">
+            <app-assessment-model-criteria-list (criteriaCountUpdate)="onCriteriaFromThirdStepUpdate($event)"
+              [isModelReference]="isModelReference" [isModelElementListUpdated]="isModelElementListUpdated"
+              [isLoadingModelElements]="isLoadingModelElementsResults" [modelElementList]="modelElementList"
+              [modelData]="modelData">
+            </app-assessment-model-criteria-list>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Document requirements">
+          <div *ngIf="modelDetailTab.selectedIndex===modelDetailEnum.DOCUMENT_REQUIREMENTS">
+            <app-document-requirements [modelId]="id" [modelData]="modelData" [isModelReference]="isModelReference"
+              [modelElementList]="modelElementList">
+            </app-document-requirements>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

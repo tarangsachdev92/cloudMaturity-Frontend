@@ -1,0 +1,23 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>Add Members</h3>
+  </div>
+  <form [formGroup]="assessmentTeamForm" (ngSubmit)="onSubmitAssessmentTeam(assessmentTeamForm)">
+    <div class="modal__body">
+      <div class="form-control">
+        <span class="form-control__title">Members</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <mat-select multiple formControlName="members" placeholder="Select Team Members">
+            <mat-option *ngFor="let user of allowUserList" [value]="user._id">{{user.fullName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="modal__footer text-right">
+      <button type="submit" mat-flat-button color="primary">Save</button>
+      <button (click)="onCloseDialog()" type="button" mat-flat-button color="secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

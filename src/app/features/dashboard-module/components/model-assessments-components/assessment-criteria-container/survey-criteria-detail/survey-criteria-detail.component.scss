@@ -1,0 +1,232 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+p.criteria-description {
+  color: $black-color;
+  font-size: 1.8rem;
+  margin-bottom: 2.5rem;
+  line-height: 2.8rem;
+  width: 90%;
+}
+
+ol {
+  width: 50rem;
+  position: relative;
+  
+  li {
+    list-style: none;
+    margin-bottom: 1.2rem;
+    position: relative;
+    font-size: 1.6rem;
+    height: 4rem;
+    line-height: 3.7rem;
+    width: 50rem;
+    background-color: $white-color;
+    padding-left: 2rem;
+    transition: 0.2s all ease-in;
+    font-weight: 600;
+    border: 1px solid #e8e8e8;
+    border-radius: 1rem;
+
+    i.fa-check-circle {
+      color: $primary-color;
+      opacity: 0.04;
+      position: absolute;
+      right: 1.3rem;
+      top: 1rem;
+      font-size: 2rem;
+    }
+
+    &.active {
+      // border-color: $primary-color;
+      color: $primary-color;
+      background-color: rgba(173, 173, 173, 0.08);
+
+      i {
+        opacity: 1;
+      }
+    }
+
+    &:hover {
+      background-color: rgba(173, 173, 173, 0.08);
+    }
+
+    input[type="radio"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 9;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+}
+
+.file-section {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+
+  li {
+    list-style: none;
+    margin-bottom: 1rem;
+    width: 100%;
+
+    div.col-md-10 {
+      font-size: 1.6rem;
+    }
+  }
+
+  &__uploaded {
+    color: orange;
+  }
+
+  &__uploading {
+    color: green;
+  }
+}
+
+// .survey-form__attachment {
+//   margin-top: 1.5rem;
+
+//   div {
+//     width: 50rem;
+//     position: relative;
+//     height: 3.5rem;
+//     line-height: 3.5rem;
+//     position: relative;
+
+//     span {
+//       font-size: 1.6rem;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       display: block;
+//       padding-right: 2rem;
+//     }
+
+//     a {
+//       position: absolute;
+//       right: 0;
+//       top: 0;
+
+//       &:hover {
+//         i {
+//           color: $red-color;
+//         }
+//       }
+
+//       i {
+//         color: #dddddd;
+//       }
+//     }
+//   }
+// }
+
+.form-control--textarea {
+  height: auto;
+
+  textarea {
+    resize: auto !important;
+  }
+}
+
+.updated-by {
+  display: block;
+  font-size: 1.4rem;
+  color: #aaa;
+  position: absolute;
+  right: -32rem;
+  width: 30rem;
+  text-align: left;
+  top: 0;
+}
+
+.small-btn {
+  min-width: 9rem;
+}
+
+.right-part-survey-details{
+  b{
+    margin-bottom: .5rem;
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  .attach-document-btn{
+    margin-top: .25em;
+  }
+}
+
+.note-panel{
+  a{
+    color: $red-color;
+    display: block;
+    font-size: 1.8rem;
+  }
+
+  p{
+    color: #000000;
+    font-size: 1.8rem;
+    line-height: 2.8rem;
+    width: 90%;
+    margin: 2rem 0;
+  }
+}
+
+.table-box{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0;
+}
+
+.criteria-level{
+  margin-bottom: 1.5rem;
+  font-size: 1.7rem;
+
+  span{
+    color: #868686;
+  }
+  
+  b{
+    color: $primary-color !important;
+  }
+}
+
+.checked-question-items{
+  li{
+    position: relative;
+
+    i{
+      color: $red-color;
+      position: absolute;
+      left: 0.4rem;
+      top: 0.7rem;
+      font-size: 1.4rem;
+    }
+
+    span{
+      display: inline-block;
+      padding-left: 2.5rem;
+    }
+  }
+}
+
+.answer-response{
+  padding-left: 3.5rem;
+
+  p, span{
+    color: #959494;
+  }
+
+  span{
+    display: inline-block;
+  }
+
+  ul{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 0rem;
+  }
+}

@@ -1,0 +1,2 @@
+
+export * from './primeNg.module';

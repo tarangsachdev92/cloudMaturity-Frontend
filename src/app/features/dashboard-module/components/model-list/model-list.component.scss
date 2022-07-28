@@ -1,0 +1,220 @@
+@import "../../../../../assets/scss/abstracts/abstracts";
+
+.dashboard-action {
+  button {
+    margin-left: 1.5rem;
+  }
+}
+
+.model-box {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  width: 80%;
+  // animation-duration: 1s;
+  // animation-name: fadeIn;
+
+  &__add{
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #f3f3f3 !important;
+
+    .fa-plus{
+      color: $primary-color;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    h4{
+      color: $primary-color;
+      font-size: 2rem;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  a {
+    background-color: $white-color;
+    border: solid 1px $border-box-color;
+    display: block;
+    position: relative;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    margin-right: 4rem;
+    margin-bottom: 4rem;
+    min-width: calc(33.33% - 4rem);
+    max-width: calc(33.33% - 4rem);
+    min-height: 24.7rem;
+
+    &:hover {
+      border-color: rgba($primary-color, 0.6);
+
+      span.material-icons {
+        color: rgba($primary-color, 0.6) !important;
+        transition: 0.25s all ease-in;
+        right: 0.5rem;
+      }
+    }
+
+    strong {
+      position: absolute;
+      right: 1.5rem;
+      top: 1rem;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    h3 {
+      color: $primary-color;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: $black-color;
+      min-height: 8rem;
+      font-size: 1.6rem;
+    }
+
+    ul {
+      li {
+        list-style: none;
+        display: block;
+        margin-bottom: 1.5rem;
+        font-size: 1.6rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        span,
+        b {
+          font-size: 1.6rem;
+        }
+
+        span {
+          color: #959494;
+        }
+
+        b {
+          color: $black-color;
+        }
+      }
+    }
+
+    span.material-icons {
+      color: #959494;
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      font-size: 2.8rem;
+    }
+  }
+
+  &--list {
+    a {
+      margin-bottom: 3rem;
+      min-width: 100%;
+      max-width: 100%;
+      min-height: auto;
+
+      &:hover {
+        span.material-icons {
+          right: 2.5rem;
+        }
+      }
+
+      div {
+        width: calc(100% - 45rem);
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      strong {
+        display: inline-block;
+        text-align: left;
+        right: 10rem;
+        top: 3.9rem;
+        width: 9rem;
+        padding-left: 1rem;
+      }
+
+      ul {
+        display: inline-block;
+
+        li {
+          &:nth-child(2) {
+            margin-left: 4rem;
+            position: relative;
+
+            &::after {
+              background-color: rgba($grey-color-8, 0.4);
+              position: absolute;
+              left: -2rem;
+              height: 2.5rem;
+              width: 1px;
+              content: "";
+            }
+          }
+
+          &:nth-child(1),
+          &:nth-child(2) {
+            display: inline-block;
+          }
+        }
+      }
+
+      p {
+        min-height: auto;
+      }
+
+      span.material-icons {
+        right: 3.5rem;
+        bottom: 3.2rem;
+      }
+    }
+  }
+}
+
+.model-search {
+  position: fixed;
+  left: 22rem;
+  top: 1.6rem;
+  z-index: 2;
+
+  div {
+    position: relative;
+
+    input {
+      font-family: $font-family;
+      border: none;
+      box-shadow: none;
+      width: 27rem;
+      height: 4rem;
+      border-radius: 5rem;
+      padding: 1rem 5rem 1rem 2rem;
+
+      &:focus {
+        background-color: $grey-color-6;
+        outline: none;
+      }
+    }
+
+    span.material-icons {
+      position: absolute;
+      color: #939da0;
+      right: 2rem;
+      top: 1rem;
+      font-size: 2rem;
+    }
+  }
+}

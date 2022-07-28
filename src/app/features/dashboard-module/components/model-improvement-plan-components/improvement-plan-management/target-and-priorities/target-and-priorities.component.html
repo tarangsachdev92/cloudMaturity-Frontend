@@ -1,0 +1,259 @@
+<div class="row">
+  <div class="col-md-9">
+    <div *ngIf="!improvementPlan" class="no-target">
+      <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+      <h4>Loading...</h4>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isShowLayout === targetLayoutViewEnum.NO_TARGET_ADDED" class="row">
+  <div class="col-md-9">
+    <div class="no-target">
+      <i *ngIf="displayErrorMessage" class="fas fa-bullseye"></i>
+      <h4>{{displayErrorMessage}}</h4>
+      <!-- <h4>No any target added yet</h4> -->
+      <button *ngIf="isAddTargetAllowed" (click)="onAddTarget()" class="small-btn" type="button" mat-flat-button
+        color="primary">
+        Add Target
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="isShowLayout === targetLayoutViewEnum.TARGET_ADDED && improvementPlan && improvementPlan.initial_assessment_id"
+  class="assessment-details-box">
+  <form [formGroup]="addTargetForm">
+    <div class="col-md-4 col-sm-6 MB-4">
+      <div>
+        <span class="form-control__title">Assessment: </span>
+        <b>{{improvementPlan.initial_assessment_id.assessment_unique_id}}</b>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 MB-2">
+      <b>Target Type:</b>
+    </div>
+
+    <div class="col-md-4 col-sm-6 MB-2 MT-1">
+      <mat-radio-group formControlName="target_type">
+        <mat-radio-button *ngFor="let targetType of targetTypes" [value]="targetType.value">
+          {{targetType.display}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div *ngIf="targetTypeControl.value===0" class="col-md-4">
+      <div class="assessment-details-box__border">
+        <div class="MT-2">
+          <span>Current Score: </span>
+          <input type="text" [value]="getFinalScore(improvementPlan.initial_assessment_id.final_score)" disabled />
+        </div>
+        <div class="MT-3">
+          <span>Target Score:</span>
+          <div class="form-control target-dropdown">
+            <mat-form-field appearance="outline" [floatLabel]="'never'">
+              <mat-select appAutofocus placeholder="Select" formControlName="target">
+                <mat-option *ngFor="let targetScore of targetScoreList; let j = index" [value]="targetScore">
+                  {{targetScore}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="MT-3 MB-1">
+          <button (click)="onSaveTarget()" class="small-btn" type="button" mat-flat-button color="primary">Save</button>
+          <button (click)="onCancelTarget()" class="small-btn ML-2" type="button" mat-flat-button
+            color="secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="targetTypeControl.value===1" class="col-md-8">
+      <div class="assessment-details-box__border MB-2">
+        <div class="table MT-2">
+          <p-treeTable [value]="editTargetData" [columns]="cols">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th width="60%">Domain</th>
+                <th width="20%">Current Score</th>
+                <th width="20%">Target Score</th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowNode let-element="rowData" let-columns="columns;">
+              <tr [ttRow]="rowNode" expandedRows>
+                <td>
+                  <p-treeTableToggler class="element-target-name-description-td" [rowNode]="rowNode">
+                  </p-treeTableToggler>
+                  <!-- <span class="element-name-target">{{ element.element_name }}
+                  </span> -->
+                  <div class="element-target-name-description">
+                    <span>
+                      <b>
+                        [{{ element.element_name }}]
+                      </b>
+                      {{ element.description }}
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  {{element.score}}/{{viewTargetMaxLevel}}
+                </td>
+                <td class="editable-score">
+                  <div class="form-control target-dropdown target-dropdown-details">
+                    <mat-form-field appearance="outline" [floatLabel]="'never'" *ngIf="element.children.length===0">
+                      <mat-select placeholder="Select" [value]="element.target"
+                        (selectionChange)="inTargetScoreSelect($event,rowNode)">
+                        <mat-option *ngFor="let targetScore of targetScoreList; let j = index" [value]="targetScore">
+                          {{targetScore}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <!-- <input *ngIf="element.children.length===0" type="text" [value]="element.target"
+                    (input)="onChangeTargetInput($event,rowNode)" placeholder="Enter" placeholder="Enter" appOnlyNumber /> -->
+                </td>
+              </tr>
+            </ng-template>
+          </p-treeTable>
+        </div>
+        <div *ngIf="isElementTargetLoader">
+          <app-table-loader></app-table-loader>
+        </div>
+        <div class="MT-2 MB-1">
+          <button (click)="onSaveTarget()" class="small-btn" type="button" mat-flat-button color="primary">Save</button>
+          <button (click)="onCancelTarget()" class="small-btn ML-2" type="button" mat-flat-button
+            color="secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div
+  *ngIf="isShowLayout === targetLayoutViewEnum.PREVIEW_TARGET && improvementPlan && improvementPlan.initial_assessment_id && improvementPlan.target">
+  <div class="target-assessment-preview">
+
+    <div class="row">
+      <div class="col-md-9">
+        <div class="table-box">
+          <div class="row">
+            <div class="col-md-6 PL-0">
+              <h3>Basic Details</h3>
+            </div>
+
+            <div class="col-md-6 PR-0 text-right">
+              <a class="action-btn-table-box" (click)="onEditTarget()" matTooltip="Edit">
+                <i class="fas fa-pen"></i>
+              </a>
+
+              <!-- <a class="action-btn-table-box" (click)="onDeleteTarget()" matTooltip="Delete">
+                <i class="fas fa-trash"></i>
+              </a> -->
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 PL-0">
+              <div class="table-box__data">
+                <div class="table-box__data__left">
+                  <span>Assessment:</span>
+                </div>
+                <div class="table-box__data__right">
+                  <span>{{improvementPlan.initial_assessment_id.assessment_unique_id}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="table-box__data">
+                <div class="table-box__data__left">
+                  <span>Target type:</span>
+                </div>
+                <div class="table-box__data__right">
+                  <span>
+                    {{improvementPlan.target_type === 0 ? 'Overall Target' : 'Detailed Target'}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 PL-0">
+              <div class="table-box__data">
+                <div class="table-box__data__left">
+                  <span>Current Score:</span>
+                </div>
+                <div class="table-box__data__right">
+                  <span>{{getFinalScore(improvementPlan.initial_assessment_id.final_score)}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="table-box__data">
+                <div class="table-box__data__left">
+                  <span>Target Score:</span>
+                </div>
+                <div class="table-box__data__right">
+                  <span>{{improvementPlan.target.toFixed(2)}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-9 MT-2">
+        <div class="table-box">
+          <div class="table MT-2">
+            <p-treeTable [value]="viewTargetData" [columns]="cols">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th width="70%">Domain</th>
+                  <th width="15%">Current Score</th>
+                  <th width="15%">Target Score</th>
+                  <!-- <th width="10%">Priority</th> -->
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-rowNode let-element="rowData" let-columns="columns;">
+                <tr [ttRow]="rowNode" expandedRows>
+                  <td>
+                    <p-treeTableToggler class="element-target-name-description-td" [rowNode]="rowNode">
+                    </p-treeTableToggler>
+                    <div class="element-target-name-description">
+                      <span>
+                        <b>
+                          [{{ element.element_name }}]
+                        </b>
+                        {{ element.description }}
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    {{element.score}}/{{viewTargetMaxLevel}}
+                  </td>
+                  <td>
+                    {{element.target}}/{{viewTargetMaxLevel}}
+                  </td>
+                  <!-- <td>{{element.priority}}</td> -->
+                </tr>
+              </ng-template>
+            </p-treeTable>
+          </div>
+          <div *ngIf="isElementTargetLoader">
+            <app-table-loader></app-table-loader>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

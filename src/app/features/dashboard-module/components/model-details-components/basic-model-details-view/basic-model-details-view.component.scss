@@ -1,0 +1,31 @@
+@import "../../../../../../assets/scss/abstracts/abstracts";
+
+.criteria-details {
+  margin-bottom: 2rem;
+  min-height: 16rem;
+  max-height: 20rem;
+
+  .title-width {
+    min-width: 20rem;
+  }
+
+  b {
+    color: $primary-color;
+    display: inline-flex;
+    width: auto;
+    vertical-align: top;
+    font-size: 1.6rem;
+  }
+
+  span,
+  p {
+    color: $primary-color;
+    display: inline-flex;
+    font-size: 1.6rem;
+    width: calc(100% - 22rem);
+  }
+
+  p {
+    line-height: 2rem;
+  }
+}

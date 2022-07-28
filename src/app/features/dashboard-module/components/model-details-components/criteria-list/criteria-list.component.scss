@@ -1,0 +1,32 @@
+@import "../../../../../../assets/scss/abstracts/abstracts";
+
+.sub-element-details {
+
+  &__body {
+    height: calc(100vh - 21rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    a {
+      i {
+        font-size: 1.4rem;
+      }
+    }
+
+    p {
+      padding-right: 2rem;
+
+      a {
+        color: $red-color;
+      }
+    }
+  }
+}
+
+.link-primary{
+  text-decoration: underline;
+
+  &:hover{
+    color: $red-color;
+  }
+}

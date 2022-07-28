@@ -1,0 +1,29 @@
+.fa-paperclip{
+    color: #cccccc;
+    font-size: 2.2rem;
+    vertical-align: super;
+}
+
+.file-section {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  
+    li {
+      list-style: none;
+      margin-bottom: 1rem;
+      width: 100%;
+  
+      div.col-md-10 {
+        font-size: 1.6rem;
+      }
+    }
+  
+    &__uploaded {
+      color: orange;
+    }
+  
+    &__uploading {
+      color: green;
+    }
+  }
+  

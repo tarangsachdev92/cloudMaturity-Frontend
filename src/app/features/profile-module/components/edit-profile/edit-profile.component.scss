@@ -1,0 +1,16 @@
+@import "../../../../../assets/scss/abstracts/abstracts";
+
+.white-form{
+  padding: 2rem 1rem;
+}
+
+.delete-ac-link{
+  color: $red-color;
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-weight: 600;
+
+  &:hover{
+    text-decoration: underline;
+  }
+}

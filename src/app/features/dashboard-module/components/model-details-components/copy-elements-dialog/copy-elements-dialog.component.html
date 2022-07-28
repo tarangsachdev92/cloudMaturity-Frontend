@@ -1,0 +1,45 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>Copy Domains</h3>
+  </div>
+  <div>
+    <form
+      [formGroup]="copyElementForm"
+      (ngSubmit)="onSubmitCopyElementForm(copyElementForm)"
+    >
+      <div class="modal__body">
+        <div class="form-control">
+          <mat-form-field>
+            <mat-label>Select model</mat-label>
+            <mat-select
+              formControlName="model_id"
+              (selectionChange)="onModelChange($event)"
+            >
+              <mat-option *ngFor="let model of modelList" [value]="model._id">
+                {{ model.model_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-control">
+          <mat-form-field>
+            <mat-label>Select domains</mat-label>
+            <mat-select multiple formControlName="elements">
+              <mat-option
+                *ngFor="let modelElement of modelElementList"
+                [value]="modelElement._id"
+              >
+                {{ modelElement.element_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal__footer text-right">
+        <button type="submit" mat-flat-button color="primary">Save</button>
+        <button (click)="onCloseDialog(false)" type="button" mat-flat-button color="secondary">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

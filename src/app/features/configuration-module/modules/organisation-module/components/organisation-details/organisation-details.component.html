@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="white-form">
+      <div *ngIf="!isLoading">
+        <form
+          (ngSubmit)="onSubmitOrganisation(organisationForm)"
+          [formGroup]="organisationForm"
+        >
+          <div class="row">
+            <div class="col-md-7 PL-0">
+              <div class="form-control">
+                <span class="form-control__title">Name*</span>
+                <mat-form-field [floatLabel]="'never'" appearance="outline">
+                  <input
+                    appAutofocus
+                    autocomplete="off"
+                    formControlName="org_name"
+                    matInput
+                    placeholder="Enter organisation name"
+                    type="text"
+                  />
+                  <mat-error
+                    *ngIf="isRequiredField(formControls['org_name'])"
+                    >{{ validationMsg.ORG_NAME }}</mat-error
+                  >
+                  <mat-error *ngIf="isValidField(formControls['org_name'])">{{
+                    validationMsg.ORG_NAME_VALID
+                  }}</mat-error>
+                  <mat-error *ngIf="isValidLength(formControls['org_name'])">{{
+                    validationMsg.ORG_NAME_LENGTH
+                  }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 PL-0">
+              <div class="form-control form-control--textarea">
+                <span class="form-control__title">Description</span>
+                <mat-form-field [floatLabel]="'never'" appearance="outline">
+                  <textarea
+                    matInput
+                    formControlName="description"
+                    placeholder="Enter description"
+                  ></textarea>
+                  <mat-error *ngIf="isValidField(formControls['description'])"
+                    >{{ validationMsg.DESCRIPTION_VALID }}
+                  </mat-error>
+                  <mat-error *ngIf="isValidLength(formControls['description'])"
+                    >{{ validationMsg.DESCRIPTION_LENGTH }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button
+              class="small-btn"
+              color="primary"
+              mat-flat-button
+              type="submit"
+            >
+              Save
+            </button>
+            <button
+              class="small-btn ML-2"
+              (click)="onOrganisationList()"
+              color="secondary"
+              mat-flat-button
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="MT-3" *ngIf="isLoading">
+        <app-form-loader></app-form-loader>
+      </div>
+    </div>
+  </div>
+</div>

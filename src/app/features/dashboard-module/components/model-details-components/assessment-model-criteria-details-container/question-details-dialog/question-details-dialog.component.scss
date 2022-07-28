@@ -1,0 +1,64 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+.choice-box {
+  background: #f7f7f7;
+  padding: 1rem;
+  margin-bottom: 3rem;
+
+  ::-webkit-input-placeholder {
+    font-family: $font-family;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  ::-moz-placeholder {
+    font-family: $font-family;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  :-ms-input-placeholder {
+    font-family: $font-family;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  :-moz-placeholder {
+    font-family: $font-family;
+    color: rgba(0, 0, 0, 0.42);
+  }
+
+
+  ul {
+    margin: 2rem 0;
+    li {
+      list-style: none;
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+
+      .number-of-row{
+        width: 2rem;
+      }
+
+      input {
+        font-family: $font-family;
+        color: $primary-color;
+        background: #f7f7f7;
+        font-size: 1.6rem;
+        padding: 0.7rem;
+        border: 1px solid #efefef;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        width: calc(100% - 5rem);
+        font-weight: 600;
+    
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+
+      a {
+        color: #c3c0c0;
+        i {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}

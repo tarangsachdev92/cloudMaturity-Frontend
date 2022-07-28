@@ -1,0 +1,179 @@
+<div class="row">
+  <div class="col-md-12 MB-1 PR-0">
+    <div class="text-right">
+      <a *ngIf="isFilterApplied" (click)="onClearFilter()" class="MR-2 filter-link">
+        Clear Filter
+      </a>
+      <a (click)="onFilterToggle()" class="filter-link red-color">
+        {{ isShowFilter ? "Hide Filter" : "Show Filter" }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="table-box MB-2">
+  <div class="table MT-2">
+    <form [formGroup]="filterAssessmentForm">
+
+      <table class="filter-table">
+        <thead>
+          <tr>
+            <th width="12%">
+              <div>
+                <div>Assessment</div>
+                <div *ngIf="isShowFilter">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input formControlName="assessment_id" type="text" matInput autocomplete="off"
+                      placeholder="Select Assessment" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </th>
+            <th width="14%">
+              <div>Organisation</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select formControlName="org_id" placeholder="Select organisation">
+                    <mat-option *ngFor="let organisation of organisations" [value]="organisation._id">
+                      {{ organisation.org_name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th width="13%">
+              <div>Type</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select formControlName="assessment_type_id" placeholder="Select assessment type">
+                    <mat-option *ngFor="let assessmentType of assessmentTypes" [value]="assessmentType._id">
+                      {{ assessmentType.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th width="12%">
+              <div>Date</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-label>Select Date</mat-label>
+                  <input matInput autocomplete="off" [matDatepicker]="picker" />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+            <th width="6%">
+              <div>Score</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select formControlName="final_score" placeholder="Select score">
+                    <mat-option value="">All</mat-option>
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
+                    <mat-option [value]="3">3</mat-option>
+                    <mat-option [value]="4">4</mat-option>
+                    <mat-option [value]="5">5</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th width="10%">
+              <div>Status</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select formControlName="status" placeholder="Select Status">
+                    <mat-option selected value="">All</mat-option>
+                    <mat-option *ngFor="let status of statusList" [value]="status.value">
+                      {{ status.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th width="11%">
+              <div>Created By</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select formControlName="created_by" placeholder="Select User">
+                    <mat-option *ngFor="let user of userList" [value]="user._id">
+                      {{ user.fullName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th width="12%">
+              <div>Completed(%)</div>
+            </th>
+            <th width="10%">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let assessment of assessmentList; let i = index">
+            <td>
+              <a class="anchor-underline" (click)="onEditAssessment(assessment)">
+                {{ assessment.assessment_unique_id }}
+              </a>
+            </td>
+            <td>
+              <div>{{ assessment.org_name }}</div>
+            </td>
+            <td>
+              {{assessment.assessment_type_id?.name}}
+            </td>
+            <td>
+              <div>{{assessment.createdAt | date : "dd MMM yyyy"}}</div>
+            </td>
+            <td>{{ getFinalScore(assessment) }}</td>
+            <td>
+              <div [ngClass]="{
+                'green-color' : isCompleted(assessment), 
+                'orange-color' : isInProgress(assessment),
+                'red-color' : isPending(assessment)}">
+                {{getStatus(assessment.status_) | checkEmpty }}
+              </div>
+            </td>
+            <td>
+              {{ assessment.created_by?.fullName | checkEmpty }}
+            </td>
+            <td>
+              <div [ngClass]="{
+                'green-color': assessment.completedPercentage == 100
+              }">
+                {{
+                (assessment?.completedPercentage &&
+                assessment?.completedPercentage.toFixed(2)) ||
+                0
+                }}
+                %
+              </div>
+            </td>
+            <td>
+              <a (click)="onEditAssessment(assessment)" matTooltip="Edit">
+                <i class="fas fa-pen"></i>
+              </a>
+              <a (click)="onDeleteConfirmation(assessment)" matTooltip="Delete" class="ML-2">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
+    <app-no-data *ngIf="assessmentList.length === 0 && !isLoadingResults"></app-no-data>
+  </div>
+
+  <div *ngIf="isLoadingResults">
+    <app-table-loader></app-table-loader>
+  </div>
+
+  <div *ngIf="!isLoadingResults" class="row">
+    <div class="col-md-12 PL-0 PR-0 text-right">
+      <mat-paginator [length]="pager.totalRecords" [pageIndex]="pager.page - 1" (page)="pageChange($event)"
+        [pageSize]="pager.recordsPerPage" [pageSizeOptions]="pageSizeOptions">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

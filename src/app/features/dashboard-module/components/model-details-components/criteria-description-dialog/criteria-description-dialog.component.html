@@ -1,0 +1,63 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>{{ title }}</h3>
+  </div>
+  <form [formGroup]="criteriaFrom" (ngSubmit)="submitCriteria(criteriaFrom)">
+    <div class="modal__body">
+      <div formArrayName="criterias" *ngFor="let criteria of getCriteriaControls(); let i = index">
+        <div [formGroupName]="i" class="row">
+          <div class="col-md-4 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">ID*</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <input autocomplete="off" matInput formControlName="criteria_unique_id"
+                  placeholder="Enter practice ID" />
+                <mat-error *ngIf="isRequiredField(getCriteriaControls()[i].get('criteria_unique_id'))">{{
+                  validationMsg.PRACTICE_ID }}
+                </mat-error>
+                <mat-error *ngIf="isValidLength(getCriteriaControls()[i].get('criteria_unique_id'))">{{
+                  validationMsg.PRACTICE_ID_LENGTH }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="form-control">
+              <span class="form-control__title">Description *</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <input autocomplete="off" matInput formControlName="description"
+                  placeholder="Enter practice description" />
+                <mat-error *ngIf="isRequiredField(getCriteriaControls()[i].get('description'))">{{
+                  validationMsg.DESCRIPTION_REQUIRED }}
+                </mat-error>
+                <mat-error *ngIf="isValidLength(getCriteriaControls()[i].get('description'))">{{
+                  validationMsg.DESCRIPTION_LENGTH }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <a *ngIf="getCriteriaControls().length > 1" (click)="onRemoveCriteria(i)" matTooltip="Remove"
+              class="add-more-round-btn">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="!criteria">
+        <div class="col-md-4 PL-0">
+          <a (click)="onAddCriteria()" class="add-more-link">
+            <i class="fa fa-plus"></i>
+            Add More
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer text-right">
+      <button type="submit" mat-flat-button color="primary">Save</button>
+      <button (click)="onCloseDialog(false)" type="button" mat-flat-button color="secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

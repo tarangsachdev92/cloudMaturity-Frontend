@@ -1,0 +1,15 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>Attachments</h3>
+
+    <a (click)="onCloseDialog()" matTooltip="Close" class="modal__header__close">
+      <i class="fa fa-times"></i>
+    </a>
+  </div>
+  <div>
+    <ul>
+      <li *ngFor="let document of documents; let i = index" (click)="onDocumentPreview(document)"> {{i+1}}.
+        {{document.name}}</li>
+    </ul>
+  </div>
+</div>

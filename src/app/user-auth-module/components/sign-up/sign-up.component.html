@@ -1,0 +1,121 @@
+<div class="login-bg"></div>
+
+<div class="sign-up-container">
+  <div class="app-section">
+    <div class="app-section__box">
+      <div class="app-section__box__logo">
+        <mat-icon svgIcon="logo"></mat-icon>
+      </div>
+
+      <p class="text-center">Let's get started now</p>
+
+      <form (ngSubmit)="onSignUpSubmit(signUpForm)" [formGroup]="signUpForm">
+
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <div class="form-control">
+              <span class="form-control__title">Email*</span>
+              <mat-form-field [floatLabel]="'never'" appearance="outline">
+                <input appAutofocus autocomplete="off" formControlName="email" matInput placeholder="Enter email*"
+                  type="text">
+                <mat-error *ngIf="isRequiredField(formControls['email'])">{{validationMsg.EMAIL}}</mat-error>
+                <mat-error *ngIf="isValidField(formControls['email'])">{{validationMsg.EMAIL_VALID}}</mat-error>
+                <mat-error *ngIf="isValidLength(formControls['email'])">{{validationMsg.EMAIL_LENGTH}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-6">
+            <div class="form-control">
+              <span class="form-control__title">Full Name*</span>
+              <mat-form-field [floatLabel]="'never'" appearance="outline">
+                <input autocomplete="off" formControlName="name" matInput placeholder="Enter full name*" type="text">
+                <mat-error *ngIf="isRequiredField(formControls['name'])">{{validationMsg.FULL_NAME}}
+                </mat-error>
+                <mat-error *ngIf="isValidField(formControls['name'])">{{validationMsg.FULL_NAME_VALID}}
+                </mat-error>
+                <mat-error *ngIf="isValidLength(formControls['name'])">{{validationMsg.FULL_NAME_LENGTH}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <div class="form-control">
+              <span class="form-control__title">Password*</span>
+              <mat-form-field [floatLabel]="'never'" appearance="outline">
+                <input [type]="hidePassword ? 'password' : 'text'" autocomplete="off" formControlName="password"
+                  matInput placeholder="Enter password*">
+
+                <button (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hidePassword" class="password-show-hide-icon" mat-icon-button matSuffix
+                  tabindex="-5" type="button">
+                  <mat-icon svgIcon="{{hidePassword ? 'visibilityOff' : 'visibilityOn'}}"></mat-icon>
+                </button>
+
+                <mat-error *ngIf="isRequiredField(formControls['password'])">{{validationMsg.PASSWORD}}
+                </mat-error>
+                <mat-error *ngIf="isValidField(formControls['password'])">{{validationMsg.PASSWORD_VALID}}
+                </mat-error>
+                <mat-error *ngIf="isValidLength(formControls['password'])">{{validationMsg.PASSWORD_LENGTH}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-6">
+            <div class="form-control">
+              <span class="form-control__title">Company Name*</span>
+              <mat-form-field [floatLabel]="'never'" appearance="outline">
+                <input autocomplete="off" formControlName="company" matInput placeholder="Enter company*" type="text">
+                <mat-error *ngIf="isRequiredField(formControls['company'])">{{validationMsg.COMPANY_NAME}}
+                </mat-error>
+                <mat-error *ngIf="isValidLength(formControls['company'])">
+                  {{validationMsg.COMPANY_NAME_LENGTH}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="accept-terms">By signing up, you confirm that you’ve read and accepted our
+              <a>Terms</a> and <a>Privacy Policy.</a></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="MB-1">
+              <div id="captcha-signup">
+                <re-captcha formControlName="captcha"></re-captcha>
+              </div>
+              <div *ngIf="isRequiredField(formControls['captcha'])">
+                {{validationMsg.CAPTCHA_REQUIRED}}
+              </div>
+              <!-- <div class="error-message error-message--validation">
+                  <app-validation *ngIf="isRequiredField(formControls['captcha'])"
+                      [errMsg]="validationMsg.CAPTCHA_REQUIRED"></app-validation>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div>
+              <button [disabled]="signUpForm.invalid" color="primary" mat-flat-button type="submit">Sign
+                Up
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="text-center MT-3">
+        <span>Already have an account?<a (click)="onLogin()" class="primary-link"> Log In</a></span>
+      </div>
+    </div>
+  </div>
+</div>

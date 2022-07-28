@@ -1,0 +1,59 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+.assessment-team {
+  background-color: $white-color;
+  top: $header-height;
+  position: fixed;
+  right: 0;
+  width: 45rem;
+  height: calc(100vh - #{$header-height});
+  z-index: 1;
+  box-shadow: 0 0 5px #ddd;
+
+  &__header {
+    background-color: #f7f7f7;
+    padding: 2rem 1rem;
+
+    h3 {
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
+
+  &__body {
+    padding: 2rem;
+
+    ul {
+      li {
+        color: $primary-color;
+        list-style: none;
+        font-size: 1.6rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #f7f7f7;
+      }
+    }
+
+    &__delete {
+      color: $grey-color;
+
+      i {
+        font-size: 1.3rem;
+      }
+    }
+
+    &__add-more {
+      color: $red-color;
+      display: block;
+      margin: 1rem 0;
+      font-size: 1.7rem;
+
+      i {
+        font-size: 1.4rem;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

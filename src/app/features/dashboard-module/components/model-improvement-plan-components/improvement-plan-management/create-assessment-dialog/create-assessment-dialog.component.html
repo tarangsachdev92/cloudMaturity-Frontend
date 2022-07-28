@@ -1,0 +1,66 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>Create Assessment</h3>
+  </div>
+  <form [formGroup]="assessmentCreateForm" (ngSubmit)="onSubmitAssessmentForm(assessmentCreateForm)">
+    <div class="modal__body">
+      <div class="form-control">
+        <span class="form-control__title">Organisation</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <input type="text" formControlName="org_id" autocomplete="off" readonly matInput />
+        </mat-form-field>
+      </div>
+
+      <div class="form-control">
+        <span class="form-control__title">Model</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <input type="text" formControlName="model_id" autocomplete="off" readonly matInput />
+        </mat-form-field>
+      </div>
+
+      <div class="form-control">
+        <span class="form-control__title">Assessment Type* </span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <mat-select formControlName="assessment_type_id" placeholder="Select assessment type">
+            <mat-option *ngFor="let assessmentType of assessmentTypes" [value]="assessmentType._id">
+              {{ assessmentType.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="isRequiredField(formControls['assessment_type_id'])">
+            {{ validationMsg.ASSESSMENT_TYPE_NAME }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-control">
+        <span class="form-control__title">Level</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <mat-select formControlName="evaluation_level" placeholder="Select Level">
+            <mat-option [value]="level" *ngFor="let level of levels; let i = index">
+              {{ "Level " + level }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-control">
+        <span class="form-control__title">Partner </span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <mat-select formControlName="partner_id" placeholder="Select partner">
+            <mat-option *ngFor="let partner of partners" [value]="partner._id">{{ partner.partner_name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="isRequiredField(formControls['partner_id'])">{{ validationMsg.PARTNER_NAME }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="modal__footer text-right">
+      <button type="submit" mat-flat-button color="primary">Save</button>
+      <button (click)="onCloseDialog()" type="button" mat-flat-button color="secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

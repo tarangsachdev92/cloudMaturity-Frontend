@@ -1,0 +1,6 @@
+@import "../../../../../assets/scss/abstracts/abstracts";
+
+.custom-tab{
+    top: calc(#{$header-height} + 2rem);
+    position: sticky;
+}

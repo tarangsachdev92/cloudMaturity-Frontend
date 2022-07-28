@@ -1,0 +1,28 @@
+<div class="criteria-details white-form">
+  <div>
+    <div class="row">
+      <div class="col-md-9 PL-0">
+        <div class="MB-2">
+          <b class="title-width">Description:</b>
+          <p [ngClass]="{'data-view-loader' : isLoadingModelDetails}">
+            {{modelData?.description}}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-3 text-right PR-0">
+        <button *ngIf="!isLoadingModelDetails && !isModelReference" (click)="onEditModelDetails()" class="small-btn"
+          type="button" mat-flat-button color="primary">
+          Edit
+        </button>
+      </div>
+    </div>
+    <div class="MB-2">
+      <b class="title-width">Calculation Method:</b>
+      <span [ngClass]="{'data-view-loader' : isLoadingModelDetails}"> {{modelData?.calculation_method}}</span>
+    </div>
+    <div>
+      <b class="title-width">Maturity Levels Key: </b>
+      <span [ngClass]="{'data-view-loader' : isLoadingModelDetails}"> {{modelData?.schema_id?.schema_name}} </span>
+    </div>
+  </div>
+</div>

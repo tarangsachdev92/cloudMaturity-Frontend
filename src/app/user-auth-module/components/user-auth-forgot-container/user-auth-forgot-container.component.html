@@ -1,0 +1,24 @@
+<div class="login-bg"></div>
+
+<div class="forgot-password-flow-container">
+  <mat-horizontal-stepper (animationDone)="onAnimationFinish()" [linear]="isLinear" #stepper>
+    <mat-step>
+      <app-forgot-password *ngIf="stepper.selectedIndex == 0" (submitEmail)=onSubmitEmail($event)
+        [canFocusField]="!isAnimationOn && stepper.selectedIndex == 0" (otpClick)="onNextStep(1)"></app-forgot-password>
+    </mat-step>
+
+    <mat-step>
+      <app-utility-otp *ngIf="stepper.selectedIndex == 1" [email]="email" (backClick)="onBackClick($event)"
+        (resendClick)="resendForgotPasswordOtpClick($event)"
+        [canFocusField]="!isAnimationOn && stepper.selectedIndex == 1" (otpSubmit)=onVerifyOtp($event)>
+      </app-utility-otp>
+    </mat-step>
+
+    <mat-step>
+      <app-reset-password *ngIf="stepper.selectedIndex == 2"
+        [canFocusField]="!isAnimationOn && stepper.selectedIndex == 2"
+        (onResetPassword)="onResetPasswordSubmit($event)">
+      </app-reset-password>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

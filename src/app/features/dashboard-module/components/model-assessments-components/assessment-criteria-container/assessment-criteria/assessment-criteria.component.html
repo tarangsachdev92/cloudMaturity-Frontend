@@ -1,0 +1,13 @@
+<div class="assessment-criteria-container">
+  <div class="row MB-2">
+    <div class="col-md-12 PR-0"
+      [ngClass]="{'loading-criteria-details': isLoadingResults && !selectedElement && !assessmentDetail}">
+      <app-criteria-list-survey (updateSurveySuccess)="onUpdateSurveySuccess($event)" [nextElement]="nextElement"
+        [allChildElementList]="allChildElementList" [previousElement]="previousElement"
+        (selectElement)="onSelectElement($event)" [assessmentDetail]="assessmentDetail" [assessmentId]="assessmentId"
+        (next)="onClickNext($event)" (previous)="onClickPrevious($event)" [isSurveyUpdated]="isSurveyUpdated"
+        [selectedElement]="selectedElement">
+      </app-criteria-list-survey>
+    </div>
+  </div>
+</div>

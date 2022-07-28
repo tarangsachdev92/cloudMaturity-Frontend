@@ -1,0 +1,63 @@
+<div class="header-panel">
+  <div class="page-header__action text-right">
+    <a matTooltip="Print" (click)="onClickPrintImprovementPlanReport(improvementPlan)">
+      <i class="fa fa-print"></i>
+    </a>
+
+    <a matTooltip="Delete" class="ML-2">
+      <i class="fa fa-trash" (click)="deleteImprovementPlanHandler(improvementPlanId)"></i>
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 PR-0">
+    <div class="row">
+      <div class="col-md-12 PL-0 PR-0">
+        <div class="improvement-plan-container">
+          <mat-tab-group #tabGroupImprovementPlan (selectedTabChange)="tabChanged($event)"
+            [selectedIndex]="selectedTabIndex">
+            <mat-tab label="Improvement Plan">
+              <div class="MT-2" *ngIf="selectedTabIndex===0">
+                <app-improvement-plan [improvementPlan]="improvementPlan"
+                  [isImprovementPlanLoader]="isAssessmentLoader"> </app-improvement-plan>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Assessments">
+              <div class="MT-2" *ngIf="selectedTabIndex===1">
+                <app-assign-assessment [modelData]="modelData" [improvementPlan]="improvementPlan"
+                  [assessments]="assessments" [isLoadingAssessment]="isAssessmentLoader"
+                  (changeAssessmentData)="OnChangeAssessmentData($event)">
+                </app-assign-assessment>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Target & Priorities">
+              <div class="MT-2" *ngIf="selectedTabIndex===2">
+                <app-target-and-priorities [improvementPlan]="improvementPlan"
+                  (onSetImprovementPlanTarget)="onSetImprovementPlanTargetHandler($event)">
+                </app-target-and-priorities>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Gap Analysis">
+              <div class="MT-2" *ngIf="selectedTabIndex===3">
+                <app-gap-analysis [improvementPlanId]=" improvementPlanId" [improvementPlan]="improvementPlan"
+                  (updateGapData)="onUpdateGapData($event)">
+                </app-gap-analysis>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="Action Plan">
+              <div class="MT-2" *ngIf="selectedTabIndex===4">
+                <app-action-plan [improvementPlanId]=" improvementPlanId" [improvementPlan]="improvementPlan">
+                </app-action-plan>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

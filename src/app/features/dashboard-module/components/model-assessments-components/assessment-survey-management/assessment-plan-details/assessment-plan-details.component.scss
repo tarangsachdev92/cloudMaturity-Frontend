@@ -1,0 +1,36 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+td {
+  a {
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
+}
+
+.assessment-team-container {
+  &__close {
+    color: $primary-color;
+    position: fixed;
+    right: 2.2rem;
+    top: 9rem;
+    z-index: 7;
+    font-size: 2rem;
+  }
+}
+
+.previous-highlighted-row{
+  td{
+    &:first-child{
+      a{
+        color: blue;
+      }
+    }
+  }
+}
+
+.assessment-team-btn{
+  i{
+    color: $primary-color;
+  }
+}

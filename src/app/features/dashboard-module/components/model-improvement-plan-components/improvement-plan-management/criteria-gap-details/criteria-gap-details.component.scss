@@ -1,0 +1,67 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+.header-panel-inner{
+  margin-bottom: 1rem;
+
+  span{
+    display: inline-block;
+    margin-left: 1.5rem;
+  }
+
+  h3{
+    font-size: 1.8rem;
+  }
+}
+
+.assessment-filter-details {
+  border: 1px solid #eeeeee;
+
+  &__header {
+    padding: 8px 15px !important;
+
+    h4 {
+      color: $primary-color;
+      font-size: 1.6rem !important;
+    }
+
+    a {
+      i {
+        font-size: 2.2rem;
+      }
+    }
+  }
+
+  &__body {
+    background-color: $white-color;
+    border-bottom-left-radius: $border-radius-box;
+    border-bottom-right-radius: $border-radius-box;
+    padding-top: 1.5rem;
+
+    &__data {
+      @include clearfix();
+      margin-bottom: 1.5rem;
+
+      &__left {
+        width: 18rem;
+        float: left;
+
+        span {
+          color: $grey-color-8;
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+      }
+
+      &__right {
+        width: calc(100% - 18rem);
+        float: left;
+
+        span {
+          color: $primary-color;
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>{{ title }}</h3>
+    <span class="red-color">
+      {{ warningMessage }}
+    </span>
+  </div>
+  <form [formGroup]="subElementFrom" (ngSubmit)="onSubmitSubElement(subElementFrom)">
+    <div class="modal__body">
+      <div formArrayName="elements" *ngFor="let subElement of getSubElementsControls(); let i = index">
+        <div [formGroupName]="i" class="row">
+          <div class="col-md-4 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Name*</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <input formControlName="element_name" type="text" appAutofocus autocomplete="off" matInput
+                  placeholder="Enter sub domain name" />
+                <mat-error *ngIf="isRequiredField(getSubElementsControls()[i].get('element_name'))">{{
+                  validationMsg.ELEMENT_NAME }}</mat-error>
+                <mat-error *ngIf="isValidField(getSubElementsControls()[i].get('element_name'))">{{
+                  validationMsg.ELEMENT_NAME_VALID }}
+                </mat-error>
+                <mat-error *ngIf="isValidLength(getSubElementsControls()[i].get('element_name'))">{{
+                  validationMsg.ELEMENT_NAME_LENGTH }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="form-control">
+              <span class="form-control__title">Description</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <input formControlName="description" type="text" autocomplete="off" matInput
+                  placeholder="Enter sub domain description" />
+                <mat-error *ngIf="isValidLength(getSubElementsControls()[i].get('description'))">{{
+                  validationMsg.DESCRIPTION_LENGTH }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <a *ngIf="getSubElementsControls().length > 1" (click)="onRemoveSubElement(i)" matTooltip="Remove"
+              class="add-more-round-btn">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="!elementDetail">
+        <div class="col-md-4 PL-0">
+          <a (click)="onAddSubElement()" class="add-more-link">
+            <i class="fa fa-plus"></i>
+            Add More
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer text-right">
+      <button type="submit" mat-flat-button color="primary">Save</button>
+      <button (click)="onCloseDialog(false)" type="button" mat-flat-button color="secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

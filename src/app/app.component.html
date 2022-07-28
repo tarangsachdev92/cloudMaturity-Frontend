@@ -1,0 +1,11 @@
+<div *ngIf="isLoggedIn">
+  <app-navbar (menuClick)="panelMove = $event"></app-navbar>
+</div>
+
+<div [ngClass]="{'container' : isLoggedIn, 'container--move' : panelMove}">
+  <div [ngClass]="{'container__top' : isLoggedIn}">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>

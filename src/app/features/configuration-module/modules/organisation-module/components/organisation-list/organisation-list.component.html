@@ -1,0 +1,66 @@
+<div class="header-panel">
+  <button (click)="onAddOrganisation()" class="small-btn" color="primary" mat-flat-button type="button">
+    Add Organisation
+  </button>
+</div>
+
+<div class="row">
+  <div class="col-md-12 PR-0">
+    <div class="table-box">
+      <div class="table MT-2">
+        <div class="table__search" *ngIf="false">
+          <input [formControl]="searchFormControl" placeholder="Search Organisation..." type="text" />
+        </div>
+
+        <p-treeTable [value]="data">
+          <ng-template pTemplate="header">
+            <tr>
+              <th width="35%">Name</th>
+              <th width="55%">Description</th>
+              <th width="10%">Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowNode let-organisation="rowData">
+            <tr>
+              <td>
+                <div class="org-details">
+                  <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                  {{ organisation?.org_name }}
+                  <!-- *ngIf="organisation?.level < 4" -->
+                  <a (click)="onAddSubOrganisation(rowNode)" class="org-details__add inner-action"
+                    matTooltip="Add Sub Organisation">
+                    <i class="fa fa-plus"></i>
+                  </a>
+                </div>
+              </td>
+
+              <td>{{ organisation?.description }}</td>
+              <td>
+                <a matTooltip="Edit" (click)="onEditOrganisation(rowNode)">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <a class="ML-2" matTooltip="Delete" (click)="onDeleteConfirmation(rowNode)">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+          </ng-template>
+        </p-treeTable>
+
+        <app-no-data *ngIf="organisationList.length === 0 && !isLoadingResults"></app-no-data>
+      </div>
+
+      <div *ngIf="isLoadingResults">
+        <app-table-loader></app-table-loader>
+      </div>
+
+      <div class="row" *ngIf="pager.totalRecords > 10">
+        <div class="col-md-12 MT-2 text-right">
+          <mat-paginator [length]="pager.totalRecords" [pageIndex]="pager.page - 1" (page)="pageChange($event)"
+            [pageSize]="pager.recordsPerPage" [pageSizeOptions]="pageSizeOptions">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-md-7">
+    <div class="white-form">
+      <div class="profile-details">
+        <div class="profile-details__left">
+          <span class="profile-details__left__short-name">{{
+            nameInitials
+          }}</span>
+          <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmL43mSCo0MAu3fCgV8t6QRsNzyiatE_Har4TjE8M6NZ-i0tKDzA"
+                          alt=""> -->
+          <!--PLEASE DO NOT REMOVE CODE. THIS CODE WILL COME IF USER HAVE NOT UPLOADED PHOTO-->
+          <!--<div>
+                      <mat-icon svgIcon="viewProfile"></mat-icon>
+                    </div>-->
+        </div>
+        <div class="profile-details__right">
+          <h4>{{ companyDetail.fullName }}</h4>
+          <span>{{ companyDetail.email | checkEmpty }}</span>
+        </div>
+      </div>
+
+      <div class="profile-view">
+        <div class="profile-view__left">Company Name:</div>
+        <div class="profile-view__right">
+          {{ companyDetail.company | checkEmpty }}
+        </div>
+      </div>
+
+      <div class="profile-view">
+        <div class="profile-view__left">Registration Number:</div>
+        <div class="profile-view__right">
+          <a *ngIf="!companyDetail.regNo" (click)="onAddProfileDetails()"
+            >ADD</a
+          >
+          <span>{{ companyDetail.regNo }}</span>
+        </div>
+      </div>
+
+      <div class="profile-view">
+        <div class="profile-view__left">Members:</div>
+        <div class="profile-view__right">
+          <a *ngIf="!companyDetail.members" (click)="onAddProfileDetails()"
+            >ADD</a
+          >
+          <span>{{ companyDetail.members }}</span>
+        </div>
+      </div>
+
+      <div class="profile-view">
+        <div class="profile-view__left">Type of Company:</div>
+        <div class="profile-view__right">
+          <a *ngIf="!companyDetail.companyType" (click)="onAddProfileDetails()"
+            >ADD</a
+          >
+          <span>{{ companyDetail.companyType }}</span>
+        </div>
+      </div>
+
+      <div class="profile-view">
+        <div class="profile-view__left">Address:</div>
+        <div class="profile-view__right">
+          <a *ngIf="!companyDetail.address" (click)="onAddProfileDetails()"
+            >ADD</a
+          >
+          <span>{{ companyDetail.address }}</span>
+        </div>
+      </div>
+
+      <div class="profile-view">
+        <div class="profile-view__left">Country:</div>
+        <div class="profile-view__right">
+          <a *ngIf="!companyDetail.country" (click)="onAddProfileDetails()"
+            >ADD</a
+          >
+          <span>{{ companyDetail.country }}</span>
+        </div>
+      </div>
+
+      <div class="profile-view">
+        <div class="profile-view__left">Phone:</div>
+        <div class="profile-view__right">
+          <a *ngIf="!companyDetail.phone" (click)="onAddProfileDetails()"
+            >ADD</a
+          >
+          <span>{{ companyDetail.phone }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

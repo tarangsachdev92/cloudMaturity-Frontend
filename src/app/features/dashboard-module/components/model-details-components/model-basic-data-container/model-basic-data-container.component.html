@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-md-8 PL-0">
+    <div *ngIf="!isShowModelEditForm">
+      <app-basic-model-details-view [modelData]="modelData" [isModelReference]="isModelReference"
+        [isLoadingModelDetails]="isLoadingModelDetails" (editForm)="onEditForm()">
+      </app-basic-model-details-view>
+    </div>
+
+    <div *ngIf="isShowModelEditForm && !isModelReference">
+      <app-edit-model [modelData]="modelData" (modalSubmit)="onModalSubmit($event)"></app-edit-model>
+    </div>
+  </div>
+  <div class="col-md-4 PR-0">
+    <div class="box-view-right">
+      <div class="row">
+        <div class="col-md-6 PL-0">
+          <div class="box-gap box-gap--space" [ngClass]="{'loading-space-level' : !modelData}">
+            <div *ngIf="modelData">
+              <i class="fas fa-list"></i>
+              <b>{{modelData?.elements || 0}}</b>
+              <h3>Domains</h3>
+            </div>
+            <div *ngIf="!modelData" class="box-data-loading">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 PR-0">
+          <div class="box-gap box-gap--space" [ngClass]="{'loading-space-level' : !modelData}">
+            <div *ngIf="modelData">
+              <i class="far fa-list-alt"></i>
+              <b>{{modelData?.criterias || 0}}</b>
+              <h3>Practices</h3>
+            </div>
+            <div *ngIf="!modelData" class="box-data-loading">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 PL-0">
+    <div class="white-form level-chart-center">
+      <div *ngIf="modelData" class="level-chart">
+        <div class="level-chart__row" *ngFor="let level of modelData?.levels; let i = index; ">
+          <strong>{{i+1}}</strong>
+          <div>
+            <b>{{level.description}}</b>
+            <p>{{level.criterias}} Practices</p>
+          </div>
+          <span>Level {{level.level}}</span>
+        </div>
+      </div>
+
+      <div *ngIf="!modelData" class="element-details__body loader-box">
+        <div class="loader">Loading...</div>
+      </div>
+    </div>
+  </div>

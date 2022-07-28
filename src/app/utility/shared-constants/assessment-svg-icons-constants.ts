@@ -1,0 +1,22 @@
+export const AUTH_FLOW_SVG = [
+  "maturaLogo",
+  "visibilityOff",
+  "visibilityOn",
+  "matura_color",
+  'drop',
+  "cameraIcon",
+  "changeEmail",
+  "changePassword",
+  "editProfile",
+  "viewProfile",
+  "add",
+  "home",
+  "logout",
+  "employer",
+  "menu",
+  "user",
+  "edit",
+  "delete",
+  "logo",
+  "logo2"
+];

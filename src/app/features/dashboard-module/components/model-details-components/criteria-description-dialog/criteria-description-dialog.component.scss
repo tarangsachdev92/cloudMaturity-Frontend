@@ -1,0 +1,28 @@
+.file-section {
+  margin-bottom: 2rem;
+
+  li {
+    list-style: none;
+    margin-bottom: 1rem;
+
+    div.col-md-10 {
+      font-size: 1.6rem;
+    }
+  }
+
+  &__uploaded {
+    color: orange;
+  }
+
+  &__uploading {
+    color: green;
+  }
+}
+
+.modal{
+  &__body{
+    max-height: 60rem;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+  }
+}

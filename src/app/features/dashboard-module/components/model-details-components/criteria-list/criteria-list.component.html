@@ -1,0 +1,89 @@
+<div class="sub-element-details box">
+  <div>
+    <div class="sub-element-details__header box__header">
+      <div class="row">
+        <div class="col-md-9 col-sm-8 PL-0">
+          <h3>Practice / Level</h3>
+        </div>
+        <div class="col-md-3 col-sm-4 PR-0 text-right">
+          <!-- <a *ngIf="!isLoadingCriteria && levelCriteriaList.length" (click)="toggleSearchFilter()" matTooltip="Search Criteria Description">
+            <i class="fa fa-search"></i>
+          </a> -->
+
+          <a (click)="onAddCriteria()" *ngIf="!isModelReference" matTooltip="Add Practice">
+            <i class="fa fa-plus"></i>
+          </a>
+        </div>
+      </div>
+      <div *ngIf="isShowCriteriaSearch" class="box__header__search">
+        <div class="row">
+          <div class="col-md-4 col-sm-9 PL-0">
+            <input placeholder="Search Criteria Description..." type="text" appAutofocus (keyup)="filterCriteriaList()"
+              [formControl]="searchCriteriaFormControl" />
+          </div>
+          <div class="col-md-8 col-sm-3 PR-0 text-right">
+            <a (click)="toggleSearchFilter()" matTooltip="Close SearchBar">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-element-details__body box__body">
+      <mat-tab-group #tabGroup class="criteria-tab" (selectedTabChange)="tabChanged($event)">
+        <div *ngFor="let level of levels; let i = index">
+          <mat-tab label="Level {{ level }}">
+            <div class="table">
+              <table *ngIf="!isLoadingCriteria && levelCriteriaList.length">
+                <thead>
+                  <tr>
+                    <th width="10%">Sr. No.</th>
+                    <th width="15%">ID</th>
+                    <th width="60%">Description</th>
+                    <th width="20%" *ngIf="!isModelReference">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="
+                    let levelCriteria of displayCriteriaList;
+                    let i = index
+                  ">
+                    <td>
+                      <div>{{ i + 1 }}</div>
+                    </td>
+                    <td>
+                      <a class="link-primary" (click)="onCriteriaDetails(levelCriteria)">
+                        {{ levelCriteria?.criteria_unique_id }}
+                      </a>
+                      <!-- <span *ngIf="isModelReference">
+                        {{ levelCriteria?.criteria_unique_id }}
+                      </span> -->
+                    </td>
+                    <td>
+                      <app-read-more [text]="levelCriteria.description" [maxLength]="150">
+                      </app-read-more>
+                    </td>
+                    <td *ngIf="!isModelReference">
+                      <a (click)="onEditCriteria(levelCriteria)" matTooltip="Edit">
+                        <i class="fas fa-pen"></i>
+                      </a>
+                      <a class="ML-2" matTooltip="Delete">
+                        <i (click)="onDeleteConfirmation(levelCriteria)" class="fas fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div *ngIf="!isLoadingCriteria && displayCriteriaList.length === 0">
+                <app-no-data></app-no-data>
+              </div>
+            </div>
+          </mat-tab>
+        </div>
+      </mat-tab-group>
+      <div *ngIf="isLoadingCriteria" class="element-details__body loader-box">
+        <div class="loader">Loading...</div>
+      </div>
+    </div>
+  </div>
+</div>

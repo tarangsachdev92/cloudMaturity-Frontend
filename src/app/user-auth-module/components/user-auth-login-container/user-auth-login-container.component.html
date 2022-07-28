@@ -1,0 +1,10 @@
+<div class="login-bg"></div>
+
+<div class="login-flow-container">
+    <mat-horizontal-stepper (animationDone)="onAnimationFinish()" [linear]="isLinear" #stepper>
+        <mat-step>
+            <app-login [canFocusField]="!isAnimationOn && stepper.selectedIndex == 0" (loginClick)="onLoginSubmit($event)">
+            </app-login>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>

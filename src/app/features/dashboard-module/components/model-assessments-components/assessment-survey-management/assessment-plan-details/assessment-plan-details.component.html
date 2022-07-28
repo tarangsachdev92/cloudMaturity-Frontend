@@ -1,0 +1,139 @@
+<div class="assessment-plan-details">
+    <div class="assessment-plan-details__radio">
+        <div class="row">
+            <div class="col-md-9 PL-0">
+                <form [formGroup]="assessmentAuthorityForm">
+                    <div class="assessment-plan-details__radio__group">
+                        <label>Assessors authorization:</label>
+                        <mat-radio-group formControlName="authority">
+                            <mat-radio-button *ngFor="let authority of authorities" [value]="authority.value"
+                                (change)="onAuthorityChange($event)">
+                                {{authority.display}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-3 text-right PR-0">
+                <button (click)="onShowAssessmentTeam()" mat-icon-button type="button" color="primary"
+                    matTooltip="Assessment Team" class="assessment-team-btn">
+                    <i class="fas fa-user-friends"></i>
+                </button>
+                <button class="small-btn ML-2" color="primary" mat-flat-button type="button"
+                    (click)="onClickSave()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-box MB-2">
+        <div class="table MT-2">
+            <p-treeTable [value]="data">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th width="29%">
+                            Domain
+                        </th>
+                        <th width="6%">
+                            Score
+                        </th>
+                        <th width="10%">
+                            Status
+                        </th>
+                        <th width="13%">
+                            Assigned To
+                        </th>
+                        <th width="11%">
+                            Due Date
+                        </th>
+                        <th width="10%">
+                            Not Relevant
+                        </th>
+                        <th width="21%">
+                            Note
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowNode let-element="rowData">
+                    <!-- [ttRow]="rowNode" expandedRows -->
+                    <!-- {{rowNode | json}} -->
+                    <tr [id]="element?._id"
+                        [ngClass]="{'highlighted-row' : rowNode.node.expanded, 'previous-highlighted-row' : activeRowId === element?._id}">
+                        <td>
+                            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                            <span *ngIf="element?.haveChild" class="element-name-assessment-plan">
+                                {{element?.element_name}}-{{element?.description}}</span>
+                            <a *ngIf="!element?.haveChild" (click)="onClickRow(element)"
+                                class="element-name-assessment-plan">
+                                {{element?.element_name}}-{{element?.description}}</a>
+                        </td>
+
+                        <td>
+                            <span>{{ getCurrentScore(element) }}/{{maxLevel}}</span>
+                        </td>
+                        <td>
+                            <span [ngClass]="{'red-color' : isNotStarted(element.completedPercentage), 
+                                'green-color' : isDone(element.completedPercentage), 
+                                'orange-color' : isInProgress(element.completedPercentage)}">
+                                {{getStatus(element.completedPercentage)}}
+                                <small
+                                    *ngIf="isInProgress(element.completedPercentage)">({{element.completedPercentage.toFixed(2)}}%)</small>
+                            </span>
+                        </td>
+                        <td>
+                            <div *ngIf="!element?.haveChild" class="dropdown-treetable dropdown-treetable--assigned-to">
+                                <mat-form-field [floatLabel]="'never'">
+                                    <mat-select placeholder="Select" [ngModel]="element.who?._id"
+                                        (ngModelChange)="onWhoChange($event,rowNode)">
+                                        <mat-option *ngFor="let user of allUserList" [value]="user._id">
+                                            {{user.fullName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="!element?.haveChild" class="datepicker-treetable">
+                                <mat-form-field [floatLabel]="'never'">
+                                    <input autocomplete="off" (click)="picker.open()" [ngModel]="element.dueDate"
+                                        matInput (ngModelChange)="onDueDateChange($event,rowNode)"
+                                        [matDatepicker]="picker" placeholder="Choose a date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="!element?.haveChild" class="ML-4">
+                                <mat-checkbox [checked]="element.relevant" (change)="onChangeRelevant($event, rowNode)">
+                                </mat-checkbox>
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="!element?.haveChild">
+                                <textarea placeholder="Enter note" [ngModel]="element.note" matInput
+                                    (input)="onChangeNote($event,rowNode)"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-treeTable>
+
+            <div class="tree-table-loader" *ngIf="isLoadingResults">
+                <app-table-loader></app-table-loader>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isVisibleAssessmentTeam" class="assessment-team-container">
+    <div class="assessment-team-container__close">
+        <a (click)="onHideAssessmentTeam()" matTooltip="Close">
+            <i class="fa fa-times"></i>
+        </a>
+    </div>
+    <app-assessment-team [assessmentDetail]="assessmentDetail" [isLoadingResults]="isLoadingResults"
+        [assessmentTeamList]="assessmentTeamList">
+    </app-assessment-team>
+</div>

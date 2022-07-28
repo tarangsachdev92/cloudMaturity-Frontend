@@ -1,0 +1,97 @@
+<div class="login-container">
+  <div class="app-section">
+    <div class="app-section__box">
+      <div class="app-section__box__logo">
+        <mat-icon svgIcon="logo"></mat-icon>
+      </div>
+
+      <p class="text-center">Let's get started now</p>
+
+      <form (ngSubmit)="onLoginFormSubmit(loginForm)" [formGroup]="loginForm">
+        <div class="form-control">
+          <mat-form-field [floatLabel]="'never'" appearance="outline">
+            <input
+              #initialFormField
+              appAutofocus
+              autocomplete="off"
+              formControlName="email"
+              matInput
+              placeholder="Enter email*"
+              type="text"
+            />
+            <mat-error *ngIf="isRequiredField(formControls['email'])">{{
+              validationMsg.EMAIL
+            }}</mat-error>
+            <mat-error *ngIf="isValidField(formControls['email'])">{{
+              validationMsg.EMAIL_VALID
+            }}</mat-error>
+            <mat-error *ngIf="isValidLength(formControls['email'])">{{
+              validationMsg.EMAIL_LENGTH
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-control">
+          <mat-form-field [floatLabel]="'never'" appearance="outline">
+            <input
+              (keydown.enter)="onHidePassword()"
+              [type]="hidePassword ? 'password' : 'text'"
+              autocomplete="off"
+              formControlName="password"
+              matInput
+              placeholder="Enter password*"
+            />
+            <!-- (blur)="onBlur(loginForm)" -->
+            <button
+              (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hidePassword"
+              class="password-show-hide-icon"
+              mat-icon-button
+              matSuffix
+              tabindex="-6"
+            >
+              <mat-icon
+                svgIcon="{{ hidePassword ? 'visibilityOff' : 'visibilityOn' }}"
+              ></mat-icon>
+            </button>
+
+            <mat-error *ngIf="isRequiredField(formControls['password'])">{{
+              validationMsg.PASSWORD
+            }}</mat-error>
+            <mat-error *ngIf="isValidField(formControls['password'])">{{
+              validationMsg.PASSWORD_VALID
+            }}</mat-error>
+            <mat-error *ngIf="isValidLength(formControls['password'])">{{
+              validationMsg.PASSWORD_LENGTH
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button
+            [disabled]="loginForm.invalid"
+            color="primary"
+            mat-flat-button
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
+
+        <div class="MT-3">
+          <a (click)="onForgotPassword()" class="forgot-password"
+            >Forgot password?</a
+          >
+        </div>
+      </form>
+
+      <div class="text-center">
+        <span
+          >Don't have an account?
+          <a (click)="onSignUp()" class="primary-link">Sign Up</a></span
+        >
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="white-form">
+      <div *ngIf="!isLoading">
+        <form
+          [formGroup]="assessmentTypeForm"
+          (ngSubmit)="onSubmitAssessmentTypeForm(assessmentTypeForm)"
+        >
+          <div class="row">
+            <div class="col-md-7 PL-0">
+              <div class="form-control">
+                <span class="form-control__title">Assessment Type *</span>
+                <mat-form-field [floatLabel]="'never'" appearance="outline">
+                  <input
+                    type="text"
+                    appAutofocus
+                    formControlName="name"
+                    autocomplete="off"
+                    matInput
+                    placeholder="Enter assessment type"
+                  />
+                  <mat-error *ngIf="isRequiredField(formControls['name'])">{{
+                    validationMsg.ASSESSMENT_TYPE_NAME
+                  }}</mat-error>
+                  <mat-error *ngIf="isValidField(formControls['name'])"
+                    >{{ validationMsg.ASSESSMENT_TYPE_VALID }}
+                  </mat-error>
+                  <mat-error *ngIf="isValidLength(formControls['name'])"
+                    >{{ validationMsg.ASSESSMENT_TYPE_LENGTH }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 PL-0">
+              <div class="form-control form-control--textarea">
+                <span class="form-control__title">Description</span>
+                <mat-form-field [floatLabel]="'never'" appearance="outline">
+                  <textarea
+                    matInput
+                    formControlName="description"
+                    placeholder="Enter domain description"
+                  ></textarea>
+                  <mat-error *ngIf="isValidLength(formControls['description'])"
+                    >{{ validationMsg.DESCRIPTION_LENGTH }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-md-7 MB-3 PL-0">
+              <mat-checkbox>Partner mandatory in assessment</mat-checkbox>
+            </div>
+          </div> -->
+
+          <div>
+            <button
+              class="small-btn"
+              color="primary"
+              mat-flat-button
+              type="submit"
+            >
+              Save
+            </button>
+            <button
+              class="small-btn ML-2"
+              (click)="onAssessmentTypeList()"
+              color="secondary"
+              mat-flat-button
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="MT-3" *ngIf="isLoading">
+        <app-form-loader></app-form-loader>
+      </div>
+    </div>
+  </div>
+</div>

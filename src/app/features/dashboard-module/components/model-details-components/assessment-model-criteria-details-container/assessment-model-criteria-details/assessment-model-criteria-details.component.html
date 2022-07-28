@@ -1,0 +1,334 @@
+<div class="row MT-1">
+  <div class="col-md-10 PL-0 PR-0">
+    <div>
+      <div class="criteria-details white-form">
+        <div>
+          <div class="row">
+            <div class="col-md-8 PL-0">
+              <div class="MB-2">
+                <b class="title-width">Practice Name:</b>
+                <span [ngClass]="{ 'data-view-loader': isLoadingCriteria }">
+                  {{ criteriaDetail?.criteria_unique_id }}
+                </span>
+              </div>
+            </div>
+
+            <div *ngIf="!isLoadingCriteria && !isModelReference" class="col-md-4 PR-0 text-right">
+              <button (click)="onEditCriteria(criteriaDetail)" class="small-btn" type="button" mat-flat-button
+                color="primary">
+                Edit
+              </button>
+            </div>
+          </div>
+          <div class="MB-2">
+            <b class="title-width">Domain:</b>
+            <span [ngClass]="{ 'data-view-loader': isLoadingCriteria }">
+              {{ criteriaDetail?.element?.element_name }}
+            </span>
+          </div>
+          <div>
+            <b class="title-width">Description: </b>
+            <p [ngClass]="{ 'data-view-loader': isLoadingCriteria }">
+              {{ criteriaDetail?.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3 PL-0">
+        <ul class="custom-tab white-form custom-tab--criteria">
+          <li>
+            <a (click)="onChangeView(procedureViewEnum.ASSESSMENT_PROCEDURE)" [ngClass]="{
+                active: isShowView === procedureViewEnum.ASSESSMENT_PROCEDURE
+              }">
+              <h3>
+                <b>Assessment Procedure</b>
+                <span class="material-icons">
+                  keyboard_arrow_right
+                </span>
+              </h3>
+            </a>
+          </li>
+          <li>
+            <a (click)="onChangeView(procedureViewEnum.IMPLEMENTATION_PROCEDURE)" [ngClass]="{
+                active:
+                  isShowView === procedureViewEnum.IMPLEMENTATION_PROCEDURE
+              }">
+              <h3>
+                <b>Implementation Procedure</b>
+                <span class="material-icons">
+                  keyboard_arrow_right
+                </span>
+              </h3>
+            </a>
+          </li>
+          <li>
+            <a (click)="onChangeView(procedureViewEnum.ATTACHMENT)" [ngClass]="{
+                active: isShowView === procedureViewEnum.ATTACHMENT
+              }">
+              <h3>
+                <b>Attachments</b>
+                <span class="material-icons">
+                  keyboard_arrow_right
+                </span>
+              </h3>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-9 MB-2 PR-0">
+        <div class="box">
+          <div class="box__header">
+            <h3 *ngIf="isShowView === procedureViewEnum.ASSESSMENT_PROCEDURE">
+              Assessment Procedure
+            </h3>
+            <h3 *ngIf="isShowView === procedureViewEnum.IMPLEMENTATION_PROCEDURE">
+              Implementation Procedure
+            </h3>
+            <h3 *ngIf="isShowView === procedureViewEnum.ATTACHMENT">
+              Attachments
+            </h3>
+            <div class="new-data-link">
+              <a (click)="onClickAdd()"
+                *ngIf="!isModelReference && isShowView === procedureViewEnum.ASSESSMENT_PROCEDURE">
+                <i class="fa fa-plus"></i>
+                {{ tabAddBtnText }}
+              </a>
+
+              <a (click)="onAddTask()"
+                *ngIf="!isModelReference && isShowView === procedureViewEnum.IMPLEMENTATION_PROCEDURE">
+                <i class="fa fa-plus"></i>
+                Add Task
+              </a>
+
+              <a *ngIf="!isModelReference && isShowView === procedureViewEnum.ATTACHMENT" (click)="onAddAttachment()"
+                class="MR-1">
+                <i class="fa fa-plus"></i>
+                Add Attachment
+              </a>
+            </div>
+          </div>
+
+          <div class="box__body criteria-details-tab">
+            <div *ngIf="isShowView === procedureViewEnum.ASSESSMENT_PROCEDURE">
+              <mat-tab-group class="procedure-tab" mat-align-tabs="start" (selectedTabChange)="onTabChange($event)">
+                <mat-tab label="Requirements">
+                  <div class="table">
+                    <table *ngIf="!isLoadingRequirement">
+                      <thead>
+                        <tr>
+                          <th width="20%">Sr No.</th>
+                          <th width="65%">Description</th>
+                          <th width="5%"></th>
+                          <th width="15%" *ngIf="!isModelReference">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="
+                            let requirement of requirementList;
+                            let i = index
+                          ">
+                          <td>{{ i + 1}}</td>
+                          <td>
+                            <p class="full-width">
+                              {{ requirement.description }}
+                            </p>
+                          </td>
+                          <td></td>
+                          <td *ngIf="!isModelReference">
+                            <a matTooltip="Edit" (click)="onEditRequirement($event, requirement)">
+                              <i class="fas fa-pen"></i>
+                            </a>
+                            <a matTooltip="Delete" class="ML-1" (click)="onDeleteRequirement($event, requirement)">
+                              <i class="fas fa-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div *ngIf="isLoadingRequirement" class="loader-box">
+                      <div class="loader">Loading...</div>
+                    </div>
+                    <div *ngIf="!isLoadingRequirement && !requirementList.length">
+                      <app-no-data></app-no-data>
+                    </div>
+                  </div>
+                </mat-tab>
+
+                <mat-tab label="Questionnaire">
+                  <div class="table">
+                    <table *ngIf="!isLoadingQuestion">
+                      <thead>
+                        <tr>
+                          <th width="10%">Sr. No.</th>
+                          <th width="50%">Question</th>
+                          <th width="25%">Answer type</th>
+                          <th width="15%" *ngIf="!isModelReference">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let question of questionList; let i = index">
+                          <!-- <td>{{ question.unique_id }}</td> -->
+                          <td>{{ i + 1 }}</td>
+                          <td>
+                            <p class="full-width">{{ question.question }}</p>
+                          </td>
+                          <td>{{ questionTypeLabel(question) }}</td>
+                          <td *ngIf="!isModelReference">
+                            <a matTooltip="Edit" (click)="onEditQuestion($event, question)">
+                              <i class="fas fa-pen"></i>
+                            </a>
+                            <a matTooltip="Delete" (click)="onDeleteQuestion($event, question)" class="ML-1">
+                              <i class="fas fa-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div *ngIf="isLoadingQuestion" class="loader-box">
+                      <div class="loader">Loading...</div>
+                    </div>
+                    <div *ngIf="!isLoadingQuestion && !questionList.length">
+                      <app-no-data></app-no-data>
+                    </div>
+                  </div>
+                </mat-tab>
+
+                <mat-tab label="Objects Check list">
+                  <div class="table">
+                    <table *ngIf="!isLoadingDocument">
+                      <thead>
+                        <tr>
+                          <th width="10%">Sr. No.</th>
+                          <th width="75%">Document Name</th>
+                          <!-- <th width="20%">Identifiant</th> -->
+                          <th width="15%" *ngIf="!isModelReference">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let document of documentList; let i = index">
+                          <td>{{ i + 1 }}</td>
+                          <td>
+                            {{ document.name }}
+                          </td>
+                          <!-- <td>{{ document.identifiant }}</td> -->
+                          <td *ngIf="!isModelReference">
+                            <a matTooltip="Edit" (click)="onEditDocument($event, document)">
+                              <i class="fas fa-pen"></i>
+                            </a>
+                            <a matTooltip="Delete" (click)="onDeleteDocument($event, document)" class="ML-1">
+                              <i class="fas fa-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div *ngIf="isLoadingDocument" class="loader-box">
+                      <div class="loader">Loading...</div>
+                    </div>
+                    <div *ngIf="!isLoadingDocument && !documentList.length">
+                      <app-no-data></app-no-data>
+                    </div>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+
+            <div *ngIf="isShowView === procedureViewEnum.IMPLEMENTATION_PROCEDURE">
+              <div class="table">
+                <table *ngIf="!isLoadingTask">
+                  <thead>
+                    <tr>
+                      <th width="15%">Sr. No.</th>
+                      <th width="70%">Description</th>
+                      <!-- <th class="text-center" width="10%">Complexity</th> -->
+                      <!-- <th class="text-center" width="14%">Cost</th> -->
+                      <!-- <th class="text-center" width="14%">Duration</th> -->
+                      <!-- <th class="text-center" width="9%">Attachments</th> -->
+                      <th class="text-center" width="15%" *ngIf="!isModelReference">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let task of taskList; let i = index">
+                      <!-- <td>{{ task.unique_id }}</td> -->
+                      <td>{{ i + 1 }}</td>
+                      <td>
+                        <p class="full-width">{{ task.description }}</p>
+                      </td>
+                      <!-- <td class="text-center">{{ task.complexity }}</td> -->
+                      <!-- <td class="text-center">${{ task.cost }}</td> -->
+                      <!-- <td class="text-center">
+                        {{ task.duration }} Day{{
+                          task.duration > 1 ? "s" : ""
+                        }}
+                      </td> -->
+                      <!-- <td class="text-center">
+                        <span>{{ task.documents.length || 0 }}</span>
+                        <a
+                          (click)="onShowAllDocuments(task)"
+                          class="ML-1"
+                          matTooltip="Show all Attachments"
+                        >
+                          <i class="far fa-eye"></i>
+                        </a>
+                      </td> -->
+                      <td class="text-center" *ngIf="!isModelReference">
+                        <a matTooltip="Edit" (click)="onEditTask($event, task)">
+                          <i class="fas fa-pen"></i>
+                        </a>
+                        <a matTooltip="Delete" (click)="onDeleteTask($event, task)" class="ML-1">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div *ngIf="isLoadingTask" class="loader-box">
+                  <div class="loader">Loading...</div>
+                </div>
+                <div *ngIf="!isLoadingTask && !taskList.length">
+                  <app-no-data></app-no-data>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="isShowView === procedureViewEnum.ATTACHMENT">
+              <ul *ngIf="!isLoadingAttachment" class="box-attachment">
+                <li (click)="onDocumentPreview(attachment)" *ngFor="let attachment of attachmentList; let i = index">
+                  <span>{{ attachment.name }}</span>
+
+                  <a (click)="onDeleteAttachment($event, attachment)" matTooltip="Delete">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </li>
+              </ul>
+              <div *ngIf="isLoadingAttachment" class="loader-box">
+                <div class="loader">Loading...</div>
+              </div>
+              <div *ngIf="!isLoadingAttachment && !attachmentList.length">
+                <app-no-data></app-no-data>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="box-view-right">
+      <div class="box-gap box-gap--space" [ngClass]="{'loading-space-level' : isLoadingCriteria}">
+        <div *ngIf="!isLoadingCriteria">
+          <i class="fas fa-layer-group"></i>
+          <b>{{ criteriaDetail?.level }}</b>
+          <h3>Level</h3>
+        </div>
+        <div *ngIf="isLoadingCriteria" class="box-data-loading">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

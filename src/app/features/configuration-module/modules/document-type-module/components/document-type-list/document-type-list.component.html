@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12 PR-0">
+    <div class="header-panel">
+      <button (click)="onAddDocumentType()" class="small-btn" color="primary" mat-flat-button type="button">
+        Add Document Type
+      </button>
+    </div>
+
+    <div class="table-box">
+      <div class="table MT-2">
+        <table>
+          <thead>
+            <tr>
+              <th width="25%">Document Type</th>
+              <th width="65%">Description</th>
+              <th width="10%">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let documentType of documentTypeList; let i = index">
+
+              <td>
+                <span>{{documentType.type}}</span>
+              </td>
+              <td>
+                <div class="description-table-data">
+                  <app-read-more [maxLength]="150" [text]="documentType.description">
+                  </app-read-more>
+                </div>
+              </td>
+              <td>
+                <a (click)="onEditDocumentType(documentType)" matTooltip="Edit">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <a (click)="onDeleteConfirmation(documentType)" matTooltip="Delete" class="ML-2">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-no-data *ngIf="documentTypeList.length === 0 && !isLoadingResults"></app-no-data>
+      </div>
+
+      <div *ngIf="isLoadingResults">
+        <app-table-loader></app-table-loader>
+      </div>
+    </div>
+  </div>
+</div>

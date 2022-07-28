@@ -1,0 +1,13 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+table {
+  tbody {
+    tr {
+      cursor: pointer;
+
+      &:hover {
+        background: rgba($grey-color-5, 0.45);
+      }
+    }
+  }
+}

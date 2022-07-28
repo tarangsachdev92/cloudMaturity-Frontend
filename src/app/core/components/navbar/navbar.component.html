@@ -1,0 +1,97 @@
+<div id="header" class="header">
+  <div class="row">
+    <div class="col-md-4 PL-0">
+      <a class="logo-header" [routerLink]="dashboardUrl">
+        <mat-icon svgIcon="logo2"></mat-icon>
+      </a>
+    </div>
+    <div class="col-md-8 PR-0 text-right">
+      <ul class="header__navigation">
+        <li>
+          <a [routerLink]="dashboardUrl" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li>
+          <a [routerLink]="configurationUrl" routerLinkActive="active">Configurations</a>
+        </li>
+      </ul>
+
+      <ul class="header__profile">
+        <li class="header__notification">
+          <a [matMenuTriggerFor]="menuHelp">
+            <i class="fas fa-bars"></i>
+          </a>
+
+          <mat-menu class="header__menu" #menuHelp="matMenu" xPosition="before">
+            <button (click)="onModelReferenceList()" type="button" mat-menu-item *ngIf="!isSuperAdmin">
+              <i class="far fa-file-alt"></i>
+              Models References
+            </button>
+            <button type="button" mat-menu-item (click)="onClickHelp()">
+              <i class="far fa-question-circle"></i>
+              Help
+            </button>
+          </mat-menu>
+        </li>
+
+        <li class="header__notification">
+          <!-- <a (click)="onNotificationClick()">
+            <span>3</span>
+            <i class="far fa-bell"></i>
+          </a> -->
+
+          <div *ngIf="isShowNotification" class="header__notification__box">
+            <app-notifications></app-notifications>
+          </div>
+          <div *ngIf="isShowNotification" (click)="onHideNotification()" class="notification-layer-hide"></div>
+        </li>
+
+        <li>
+          <a (click)="isShowDropdown = true" class="header__right-nav">
+            <span class="header__short-name">
+              {{ nameInitials }}
+            </span>
+            <span class="header__name">{{
+              userData.fullName
+              }}</span>
+
+            <a class="header__sub-menu">
+              <i class="fas fa-caret-down"></i>
+            </a>
+
+          </a>
+
+          <div *ngIf="isShowDropdown" class="dropdown-actions">
+            <ul>
+              <li>
+                <div class="dropdown-actions__row">
+                  <div class="dropdown-actions__row__img">
+                    <span>
+                      {{ nameInitials }}
+                    </span>
+                  </div>
+                  <div class="dropdown-actions__row__details">
+                    <h3>{{ userData.fullName }}</h3>
+                    <span>{{ userData.company }}</span>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a (click)="onViewProfile()">
+                  View Profile
+                  <i class="fa fa-user"></i>
+                </a>
+              </li>
+              <li>
+                <a (click)="onLogOut()">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="isShowDropdown" class="layer-hide-dropdown" (click)="isShowDropdown = false"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

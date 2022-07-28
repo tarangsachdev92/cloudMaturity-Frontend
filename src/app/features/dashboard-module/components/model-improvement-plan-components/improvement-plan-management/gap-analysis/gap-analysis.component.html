@@ -1,0 +1,241 @@
+<div *ngIf="!selectedGap">
+  <div *ngIf="!gapAnalysisData && !isGapAnalysisLoader" class="row">
+    <div class="col-md-9">
+      <div class="no-target">
+        <i class="fas fa-sync-alt"></i>
+        <h4>No any gap generate yet</h4>
+        <button (click)="onGenerateGap(improvementPlanId)" class="small-btn" type="button" mat-flat-button
+          color="primary">
+          Generate Gap
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="gapAnalysisData && !isGapAnalysisLoader">
+    <div class="row">
+      <div class="col-md-9 PL-0">
+        <div>
+          <div class="assessment-filter-details box">
+            <div class="assessment-filter-details__header box__header">
+              <div class="row">
+                <div class="col-md-9 col-sm-8 PL-0">
+                  <h3>Basic Details</h3>
+                </div>
+                <div class="col-md-3 col-sm-4 PR-0 text-right"></div>
+              </div>
+            </div>
+            <div class="assessment-filter-details__body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="assessment-filter-details__body__data">
+                    <div class="assessment-filter-details__body__data__left">
+                      <span>Gap generated on:</span>
+                    </div>
+                    <div class="assessment-filter-details__body__data__right">
+                      <span>{{gapAnalysisData?.createdAt | date: "dd MMM yyyy" }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="assessment-filter-details__body__data">
+                    <div class="assessment-filter-details__body__data__left">
+                      <span>Assessment ID:</span>
+                    </div>
+                    <div class="assessment-filter-details__body__data__right">
+                      <span>{{improvementPlanData?.initial_assessment_id?.assessment_unique_id | checkEmpty}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="assessment-filter-details__body__data">
+                    <div class="assessment-filter-details__body__data__left">
+                      <span>Target Date:</span>
+                    </div>
+                    <div class="assessment-filter-details__body__data__right">
+                      <span>18 Nov 2020</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="assessment-filter-details__body__data">
+                    <div class="assessment-filter-details__body__data__left">
+                      <span>Assessment Date:</span>
+                    </div>
+                    <div class="assessment-filter-details__body__data__right">
+                      <span>{{improvementPlanData?.initial_assessment_id?.start_date | date: "dd MMM yyyy"}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row MT-2">
+          <div class="col-md-6 PL-0">
+            <div class="box-gap">
+              <h3>Initial Gaps</h3>
+              <b>{{gapAnalysisData?.initial_gaps}}</b>
+            </div>
+          </div>
+
+          <div class="col-md-6 PR-0">
+            <div class="box-gap">
+              <h3>Open Gaps</h3>
+              <b>{{gapAnalysisData?.open_gaps}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 PR-0">
+        <div class="box-gap box-gap-chart PB-0">
+          <h3>Implementation Progress</h3>
+          <div class="gauge-chart">
+            <ngx-gauge [type]="gaugeType" [value]="gapAnalysisData?.implementation_progress || 0 | formatDecimal" [label]="gaugeLabel"
+              [append]="gaugeAppendText" [size]="gaugeSize" [thick]="gaugeThick" [foregroundColor]="gaugeClr">
+            </ngx-gauge>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 PL-0 PR-0 MT-2">
+        <div class="text-right">
+          <a (click)="onClearFilter()"
+            *ngIf="formControls['element'].value || formControls['status'].value  || formControls['level'].value "
+            class="MR-2 filter-link">
+            Clear Filter
+          </a>
+          <a (click)="onFilterToggle()" class="filter-link">
+            {{isShowFilter ? 'Hide Filter' : 'Show Filter'}}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row MT-1">
+      <div class="col-md-12 PL-0 PR-0">
+        <div class="table-box MB-2">
+          <div class="table MT-2">
+            <form [formGroup]="gapFilterForm">
+              <table class="filter-table">
+                <thead>
+                  <tr>
+                    <th width="8%">
+                      <div>Gap ID</div>
+                    </th>
+                    <th width="9%">
+                      <div>Practice ID</div>
+                      <div *ngIf="isShowFilter">
+                        <mat-form-field [floatLabel]="'never'">
+                          <input autocomplete="off" type="text" formControlName="criteria_id" matInput
+                            placeholder="Search ID" />
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <th width="21%">
+                      <div>Description</div>
+                    </th>
+                    <th width="26%">
+                      <div>Domains</div>
+                      <div *ngIf="isShowFilter">
+                        <mat-form-field [floatLabel]="'never'">
+                          <mat-select formControlName="element" placeholder="Select domain">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let el of gapAnalysisData?.elements" [value]="el.element_id">
+                              {{el.element_name}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <th width="10%">
+                      <div>Level</div>
+                      <div *ngIf="isShowFilter">
+                        <mat-form-field [floatLabel]="'never'">
+                          <mat-select formControlName="level" placeholder="Select Level">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let level of levels" [value]="level">
+                              Level {{ level }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <th width="14%">
+                      <div>Initial State</div>
+                    </th>
+                    <th width="14%">
+                      <div>Current State</div>
+                      <div *ngIf="isShowFilter">
+                        <mat-form-field [floatLabel]="'never'">
+                          <mat-select formControlName="status" placeholder="Select State">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let status of statusChoiceList" [value]="status.value">
+                              {{status.display}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let gap of displayGapsData; let i = index">
+                    <td>
+                      <a (click)="onCriteriaGapDetails(gap)">
+                        {{gap.gap_id}}
+                      </a>
+                    </td>
+                    <td>
+                      {{gap.criteria?.criteria_unique_id}}
+                    </td>
+                    <td>
+                      {{gap.criteria?.description | checkEmpty }}
+                    </td>
+                    <td>{{getElementNameDescription(gap.element) | checkEmpty}}</td>
+                    <td>{{gap.criteria?.level | checkEmpty}}</td>
+                    <td>
+                      <span
+                        [ngClass]="{'green-color' : gap.initial_status===1,'orange-color' : gap.initial_status===2, 'red-color' : gap.initial_status===3}">
+                        {{getStatus(gap.initial_status)}}
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        [ngClass]="{'green-color' : gap.criteria?.status===1,'orange-color' : gap.criteria?.status===2, 'red-color' : gap.criteria?.status===3}">
+                        {{getStatus(gap.criteria?.status)}}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+            <div *ngIf="!isGapAnalysisLoader && displayGapsData.length===0">
+              <app-no-data></app-no-data>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    <div *ngIf="isGapAnalysisLoader">
+      <div class="no-target">
+        <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+        <h4>Loading...</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedGap">
+  <app-criteria-gap-details [selectedGap]="selectedGap" (back)="onClickBack()" (updateStatus)="onUpdateStatus($event)">
+  </app-criteria-gap-details>
+</div>

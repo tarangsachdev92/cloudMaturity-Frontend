@@ -1,0 +1,63 @@
+<div class="modal">
+  <form
+    [formGroup]="passwordForm"
+    (ngSubmit)="onSubmitPasswordForm(passwordForm)"
+  >
+    <div class="modal__header">
+      <h3>Delete Account</h3>
+
+      <div class="modal__header__close">
+        <a (click)="onCloseDialog(true)" matTooltip="Close">
+          <mat-icon svgIcon="close"></mat-icon>
+        </a>
+      </div>
+    </div>
+    <div class="modal__body">
+      <p *ngIf="warningMessage"><b>Warning:</b> {{ warningMessage }}</p>
+      <div class="form-control-new">
+        <div class="form-control">
+          <span class="form-control__title">Password</span>
+          <mat-form-field appearance="outline" [floatLabel]="'never'">
+            <input
+              formControlName="password"
+              required
+              autocomplete="off"
+              matInput
+              placeholder="Enter Password"
+              [type]="hidePassword ? 'password' : 'text'"
+            />
+
+            <button
+              tabindex="-6"
+              class="password-show-hide-icon"
+              mat-icon-button
+              matSuffix
+              (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hidePassword"
+              type="button"
+            >
+              <mat-icon
+                svgIcon="{{ hidePassword ? 'visibilityOff' : 'visibilityOn' }}"
+              ></mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer text-right">
+      <button type="submit" mat-flat-button color="primary" class="small-btn">
+        Delete Account
+      </button>
+      <button
+        (click)="onCloseDialog(true)"
+        type="button"
+        mat-flat-button
+        color="secondary"
+        class="ML-1 small-btn"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

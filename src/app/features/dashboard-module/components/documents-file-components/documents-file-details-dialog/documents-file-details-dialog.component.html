@@ -1,0 +1,76 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>Edit File</h3>
+  </div>
+  <form [formGroup]="documentRequirementForm" (ngSubmit)="onSubmitDocumentRequirementForm(documentRequirementForm)">
+    <div class="modal__body">
+      <div class="form-control">
+        <span class="form-control__title">File Type</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <mat-select (selectionChange)="onFileTypeChange($event)" formControlName="type"
+            placeholder="Select file type">
+            <mat-option *ngFor="let type of uploadTypeList" [value]="type.value">
+              {{type.display}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="isShowAttachment" class="form-control form-control--file-select">
+        <span class="form-control__title">Attachment</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <input readonly (click)="onFileSelect('document')" type="text" autocomplete="off" matInput
+            placeholder="Select attachment" />
+          <input type="file" (click)="onDocumentClick($event)" multiple id="document" hidden
+            (change)="onDocumentsSelection($event)" />
+          <i class="fa fa-paperclip" aria-hidden="true" matSuffix></i>
+        </mat-form-field>
+      </div>
+
+      <ul class="file-section" *ngIf="isShowAttachment">
+        <li class="file-section__uploaded" [ngClass]="{'file-section__uploading' : false}">
+          <div class="row">
+            <div class="col-md-10 PL-0" *ngIf="!newUploadFile && alreadyUploadedFile">
+              {{alreadyUploadedFile}}
+            </div>
+
+            <div class="col-md-10 PL-0" *ngIf="newUploadFile">
+              {{newUploadFile.name}}
+            </div>
+
+            <div class="col-md-2 PR-0 text-right" *ngIf="newUploadFile">
+              <a matTooltip="Remove" (click)="onDeleteUploadFile()">
+                <i class="fa fa-times"></i>
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div *ngIf="!isShowAttachment" class="form-control">
+        <span class="form-control__title">Link</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <input type="text" formControlName="link" autocomplete="off" matInput placeholder="Enter file link" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-control">
+        <span class="form-control__title">Status</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <mat-select formControlName="status" placeholder="Select status">
+            <mat-option *ngFor="let status of modelDocumentStatusList" [value]="status.value">
+              {{ status.display }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="modal__footer text-right">
+      <button type="submit" mat-flat-button color="primary">Save</button>
+      <button (click)="onCloseDialog()" type="button" mat-flat-button color="secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

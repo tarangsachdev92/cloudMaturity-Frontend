@@ -1,0 +1,68 @@
+<div class="element-details">
+  <div class="element-details__header">
+    <div class="row">
+      <div class="col-md-8 col-sm-7 PL-0">
+        <h3>Domains</h3>
+      </div>
+      <div class="col-md-4 col-sm-5 PR-0 text-right" *ngIf="dataSource.data.length">
+        <a (click)="expandCollapseAllNodes()">
+          {{expandCollapseText}}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="element-details__body">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <!-- This is the tree node template for leaf nodes -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onClickElementNode(node)"
+        [ngClass]="{ 'is-active': node.nodeSelectTime===nodeSelectTime, 'is-disable':node.expandable }">
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <div class="element-box-tree">
+          <div class="element-name">
+            <button mat-icon-button disabled></button>
+            <span class="element-name__top">{{ node.element_name }}</span>
+          </div>
+          <div class="element-description">
+            {{ node.description }}
+          </div>
+          <div class="element-criteria">
+            <b>Practice: {{ node.criterias }}</b>
+          </div>
+        </div>
+      </mat-tree-node>
+      <!-- This is the tree node template for expandable nodes -->
+      <mat-tree-node [ngClass]="{ 'is-active': node.nodeSelectTime===nodeSelectTime, 'is-disable': node.expandable }"
+        *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding (click)="onClickElementNode(node)">
+        <div class="element-box-tree">
+          <div class="element-name">
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.element_name">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{
+                treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
+                }}
+              </mat-icon>
+            </button>
+            <span class="element-name__top">{{ node.element_name }}</span>
+          </div>
+          <div class="element-description">
+            {{ node.description }}
+          </div>
+          <div class="element-criteria">
+            <b>Practice: {{ node.criterias }}</b>
+          </div>
+        </div>
+      </mat-tree-node>
+    </mat-tree>
+
+    <ul *ngIf="!isLoadingModelElements && dataSource.data.length===0">
+      <li>
+        <app-no-data></app-no-data>
+      </li>
+    </ul>
+
+    <div *ngIf="isLoadingModelElements" class="element-details__body loader-box">
+      <div class="loader">Loading...</div>
+    </div>
+  </div>
+</div>

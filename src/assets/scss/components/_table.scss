@@ -1,0 +1,197 @@
+.table-box{
+  padding: 0 2rem 2rem 2rem;
+  border-radius: $border-radius-box;
+  border: 1px solid $border-box-color;
+  background-color: $white-color;
+}
+
+.table {
+  &__search {
+    width: 25rem;
+    margin-bottom: 2rem;
+
+    input {
+      border: 1px solid $grey-color;
+      font-family: $font-family;
+      width: 100%;
+      border-radius: 3px;
+      box-shadow: none;
+      padding: 10px;
+
+      &:focus {
+        outline: none;
+        border-color: $red-color;
+      }
+    }
+  }
+}
+
+.table {
+  table {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+
+    thead {
+      border-top: 1px solid $grey-color-4;
+      border-bottom: 1px solid $grey-color-4;
+      text-align: left;
+      box-shadow: 0 4px 2px -2px $grey-color;
+
+      th {
+        color: rgba($black-color, 0.7);
+        background: $grey-color-7;
+        font-size: 1.7rem;
+        height: 5rem;
+        position: relative;
+
+        &:first-child {
+          padding-left: 1rem !important;
+        }
+
+        a {
+          display: block;
+
+          &.active {
+            color: $red-color;
+          }
+
+          mat-icon {
+            width: 1.6rem;
+            height: 1.3rem;
+            margin-left: 1rem;
+          }
+        }
+      }
+    }
+
+    tbody {
+      text-align: left;
+
+      tr {
+        border-bottom: 1px solid $grey-color-6;
+        position: relative;
+
+        &.selected {
+          background: $grey-color-6;
+        }
+
+        td {
+          color: $primary-color;
+          vertical-align: top;
+          font-size: 1.7rem;
+          font-weight: 600;
+          height: 6rem;
+          padding: 2rem 2rem 2rem 0;
+
+          app-read-more {
+            p {
+              color: $primary-color !important;
+              font-size: 1.8rem !important;
+            }
+          }
+
+          a {
+            margin-right: 1rem;
+          }
+
+          &:first-child {
+            padding-left: 1rem !important;
+          }
+
+          div {
+            word-break: break-word;
+          }
+        }
+
+        &:last-child {
+          border-bottom-width: 0;
+        }
+      }
+    }
+  }
+}
+
+.description-table-data {
+  padding-right: 3rem;
+
+  a {
+    color: $red-color;
+  }
+}
+
+.child-row {
+  background: $grey-color-4;
+  border-bottom: 0;
+
+  td {
+    font-size: 1.5rem;
+
+    &:first-child {
+      padding-left: 3rem !important;
+    }
+  }
+}
+
+.assessment-plan-details{
+  .ui-treetable-toggler{
+    vertical-align: top !important;
+  }
+}
+
+.filter-table{
+  thead{
+    th{
+      vertical-align: top;
+      padding-top: 2rem;
+      padding-bottom: 1.7rem;
+    }
+
+    mat-form-field{
+      width: 80%;
+      height: 5rem;
+    }
+
+    .mat-form-field-infix{
+      width: auto;
+
+      input{
+        line-height: 2rem;
+      }
+    }
+
+    .mat-form-field-label{
+      line-height: 2rem;
+    }
+
+    .mat-select-value-text{
+      line-height: 2rem;
+    }
+  }
+}
+
+.p-treetable .p-treetable-tbody > tr > td {
+  font-family: $font-family;
+  font-weight: 600;
+  padding: 2rem 2rem 2rem 0;
+}
+
+.p-treetable .p-treetable-thead > tr > th{
+  font-family: $font-family;
+  font-weight: 700;
+  font-size: 1.7rem;
+  padding-left: 0;
+  height: 5rem;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: #f9f9f9;
+}
+
+.p-treetable .p-treetable-tbody > tr > td .p-treetable-toggler{
+  height: 3rem;
+  width: 3rem;
+
+  .pi{
+    font-size: 1.6rem;
+  }
+}

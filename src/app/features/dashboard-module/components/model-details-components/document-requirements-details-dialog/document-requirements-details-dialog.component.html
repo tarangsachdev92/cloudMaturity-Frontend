@@ -1,0 +1,80 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>{{title}}</h3>
+  </div>
+  <form [formGroup]="documentRequirementForm" (ngSubmit)="onSubmitDocumentRequirementForm(documentRequirementForm)">
+    <div class="modal__body">
+      <div class="form-control">
+        <span class="form-control__title">Document Name</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <input type="text" formControlName="name" appAutofocus autocomplete="off" matInput
+            placeholder="Enter document name" />
+            <mat-error *ngIf="isValidLength(formControls['name'])"
+                    >{{ validationMsg.DOCUMENT_LENGTH }}
+                  </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-control">
+        <span class="form-control__title">Title</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <input type="text" formControlName="title" autocomplete="off" matInput placeholder="Enter title" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 PL-0">
+          <div class="form-control">
+            <span class="form-control__title">Type</span>
+            <mat-form-field appearance="outline" [floatLabel]="'never'">
+              <mat-select formControlName="type" placeholder="Select type">
+                <mat-option *ngFor="let type of documentTypeList; let j = index" [value]="type._id">
+                  {{type.type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-control">
+            <span class="form-control__title">Level</span>
+            <mat-form-field appearance="outline" [floatLabel]="'never'">
+              <mat-select formControlName="level" placeholder="Select level">
+                <mat-option *ngFor="let level of levels; let j = index" [value]="level">{{level}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-4 PR-0">
+          <div class="form-control">
+            <span class="form-control__title">Required</span>
+            <mat-form-field appearance="outline" [floatLabel]="'never'">
+              <mat-select formControlName="required" placeholder="Select required">
+                <mat-option [value]=true>Yes</mat-option>
+                <mat-option [value]=false>No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-control">
+        <span class="form-control__title">Domains</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <mat-select multiple formControlName="elements" placeholder="Select domains">
+            <mat-option *ngFor="let element of modelElementList; let j = index" [value]="element._id">
+              {{element.element_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="modal__footer text-right">
+      <button type="submit" mat-flat-button color="primary">Save</button>
+      <button (click)="onCloseDialog()" type="button" mat-flat-button color="secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

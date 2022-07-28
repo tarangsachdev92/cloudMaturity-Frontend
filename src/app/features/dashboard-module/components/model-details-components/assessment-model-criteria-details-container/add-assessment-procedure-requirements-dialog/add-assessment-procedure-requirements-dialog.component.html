@@ -1,0 +1,41 @@
+<div class="modal">
+    <div class="modal__header">
+        <h3>{{title}}</h3>
+    </div>
+
+    <form [formGroup]="requirementForm" (ngSubmit)="onSubmitRequirementsForm(requirementForm)">
+        <div class="modal__body">
+            <!-- <div class="form-control">
+                <span class="form-control__title">Id</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <input type="text" formControlName="unique_id" appAutofocus autocomplete="off" matInput
+                        placeholder="Enter Id" />
+                    <mat-error *ngIf="isRequiredField(formControls['unique_id'])">
+                        {{ validationMsg.REQUIREMENT_ID }}
+                    </mat-error>
+                </mat-form-field>
+            </div> -->
+
+            <div class="form-control form-control--textarea">
+                <span class="form-control__title">Description</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <textarea formControlName="description" matInput placeholder="Enter description"></textarea>
+                    <mat-error *ngIf="isRequiredField(formControls['description'])">
+                        {{ validationMsg.DESCRIPTION_REQUIRED }}
+                    </mat-error>
+                    <!-- <mat-error *ngIf="isValidLength(formControls['description'])">{{ validationMsg.DESCRIPTION_LENGTH }}
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div>
+                <div class="modal__footer text-right">
+                    <button type="submit" mat-flat-button color="primary">Save</button>
+                    <button (click)="onCloseDialog()" type="button" mat-flat-button color="secondary">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

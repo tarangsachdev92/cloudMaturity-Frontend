@@ -1,0 +1,15 @@
+<div class="breadcrumb">
+  <ul>
+    <li *ngFor="let route of breadcrumbs; let i = index">
+      <a *ngIf="i < breadcrumbs.length - 1" (click)="onClickBreadCrumb(route.displayData)">{{
+        route.displayData?.title
+        }}</a>
+      <strong *ngIf="i === breadcrumbs.length - 1">
+        {{ route.displayData?.title }}
+      </strong>
+      <span *ngIf="i < breadcrumbs.length - 1" class="material-icons">
+        keyboard_arrow_right
+      </span>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="white-form">
+      <mat-horizontal-stepper
+        (animationDone)="onAnimationFinish()"
+        [linear]="isLinear"
+        #stepper
+      >
+        <mat-step>
+          <div *ngIf="stepper.selectedIndex == 0">
+            <form
+              [formGroup]="changeEmailForm"
+              (ngSubmit)="onChangeEmailFormSubmit(changeEmailForm)"
+            >
+              <div class="row">
+                <div class="col-md-12 PL-0">
+                  <div class="form-control">
+                    <span class="form-control__title">New Email*</span>
+                    <mat-form-field appearance="outline" [floatLabel]="'never'">
+                      <input
+                        appAutofocus
+                        formControlName="email"
+                        type="text"
+                        autocomplete="off"
+                        matInput
+                        placeholder="Enter new email address"
+                      />
+                      <mat-error
+                        *ngIf="isRequiredField(formControls['email'])"
+                        >{{ validationMsg.EMAIL }}</mat-error
+                      >
+                      <mat-error *ngIf="isValidField(formControls['email'])">{{
+                        validationMsg.EMAIL_VALID
+                      }}</mat-error>
+                      <mat-error *ngIf="isValidLength(formControls['email'])">{{
+                        validationMsg.EMAIL_LENGTH
+                      }}</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 PL-0">
+                  <button
+                    class="small-btn"
+                    [disabled]="changeEmailForm.invalid"
+                    type="submit"
+                    mat-flat-button
+                    color="primary"
+                  >
+                    Change Email
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <div *ngIf="stepper.selectedIndex == 1">
+            <form
+              [formGroup]="currentPasswordForm"
+              (ngSubmit)="onCurrentPasswordFormSubmit(currentPasswordForm)"
+            >
+              <div class="row">
+                <div class="col-md-12 PL-0">
+                  <div class="form-control">
+                    <span class="form-control__title">Password*</span>
+                    <mat-form-field appearance="outline" [floatLabel]="'never'">
+                      <input
+                        type="password"
+                        appAutofocus
+                        autocomplete="off"
+                        formControlName="password"
+                        matInput
+                        placeholder="Enter current password"
+                      />
+
+                      <mat-error
+                        *ngIf="isRequiredField(controls['password'])"
+                        >{{ validationMsg.PASSWORD }}</mat-error
+                      >
+                      <mat-error *ngIf="isValidField(controls['password'])"
+                        >{{ validationMsg.PASSWORD_VALID }}
+                      </mat-error>
+                      <mat-error *ngIf="isValidLength(controls['password'])"
+                        >{{ validationMsg.PASSWORD_LENGTH }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 PL-0">
+                  <button
+                    class="small-btn"
+                    [disabled]="currentPasswordForm.invalid"
+                    type="submit"
+                    mat-flat-button
+                    color="primary"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <div *ngIf="stepper.selectedIndex == 2">
+            <div class="otp-profile">
+              <div class="row">
+                <div class="col-md-12 PL-0">
+                  <app-utility-otp
+                    [email]="email"
+                    (resendClick)="resendOTPClick($event)"
+                    [canFocusField]="
+                      !isAnimationOn && stepper.selectedIndex == 2
+                    "
+                    (otpSubmit)="onVerifyOtp($event)"
+                    (onBack)="onBackClick($event)"
+                  >
+                  </app-utility-otp>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</div>

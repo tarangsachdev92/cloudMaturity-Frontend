@@ -1,0 +1,40 @@
+<!-- <ul class="custom-tab">
+  <li>
+    <a [routerLink]="modelDetailsUrl" (click)="onClickModelDetails()" routerLinkActive="active">
+      <h3>Model Details</h3>
+    </a>
+  </li>
+  <li>
+    <a [routerLink]="assessmentDetailsUrl" routerLinkActive="active">
+      <h3>Assessments</h3>
+    </a>
+  </li>
+  <li>
+    <a [routerLink]="improvementPlanDetailsUrl" routerLinkActive="active">
+      <h3>Improvement Plan</h3>
+    </a>
+  </li>
+</ul> -->
+
+<ul class="custom-tab">
+  <li>
+    <a (click)="onClickModelDetails()" [ngClass]="{'active': isModelRelatedRoutes }">
+      <h3>Model Details</h3>
+    </a>
+  </li>
+  <li>
+    <a (click)="onClickAssessments()" [ngClass]="{'active': isAssessmentRelatedRoute }">
+      <h3>Assessments</h3>
+    </a>
+  </li>
+  <li>
+    <a (click)="onClickImprovementPlan()" [ngClass]="{'active': isImprovementRelatedRoute }">
+      <h3>Improvement Plan</h3>
+    </a>
+  </li>
+  <li>
+    <a (click)="onClickDocuments()" [ngClass]="{'active': isDocumentRelatedRoute }">
+      <h3>Documents</h3>
+    </a>
+  </li>
+</ul>

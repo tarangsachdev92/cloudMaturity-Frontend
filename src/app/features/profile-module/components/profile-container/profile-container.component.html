@@ -1,0 +1,85 @@
+<div class="page-header">
+  <div class="page--header__left">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+</div>
+
+<div class="row MT-2">
+  <div class="col-md-2 PL-0">
+    <ul class="custom-tab">
+      <!-- <li>
+        <a
+          [ngClass]="{ active: isShowView === profileViewEnum.VIEW_PROFILE }"
+          (click)="onProfileViewChange(profileViewEnum.VIEW_PROFILE)"
+        >
+          <h3>View Profile</h3>
+        </a>
+      </li> -->
+      <li *ngIf="userDetail">
+        <a
+          [ngClass]="{ active: isShowView === profileViewEnum.PERSONAL_DATA }"
+          (click)="onProfileViewChange(profileViewEnum.PERSONAL_DATA)"
+        >
+          <h3>Personal Data</h3>
+        </a>
+      </li>
+      <li *ngIf="isOwner">
+        <a
+          [ngClass]="{
+            active: isShowView === profileViewEnum.ACCOUNT_SETTINGS
+          }"
+          (click)="onProfileViewChange(profileViewEnum.ACCOUNT_SETTINGS)"
+        >
+          <h3>Account Settings</h3>
+        </a>
+      </li>
+      <li *ngIf="isOwner">
+        <a
+          [ngClass]="{ active: isShowView === profileViewEnum.CHANGE_EMAIL }"
+          (click)="onProfileViewChange(profileViewEnum.CHANGE_EMAIL)"
+        >
+          <h3>Change Email</h3>
+        </a>
+      </li>
+      <li *ngIf="userDetail">
+        <a
+          [ngClass]="{ active: isShowView === profileViewEnum.CHANGE_PASSWORD }"
+          (click)="onProfileViewChange(profileViewEnum.CHANGE_PASSWORD)"
+        >
+          <h3>Change Password</h3>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-10 PR-0">
+    <!-- <app-view-profile
+      *ngIf="isShowView === profileViewEnum.VIEW_PROFILE && userDetail"
+      (onEditProfile)="onProfileViewChange(profileViewEnum.EDIT_PROFILE)"
+      [companyDetail]="userDetail"
+    ></app-view-profile> -->
+
+    <app-personal-data
+      *ngIf="isShowView === profileViewEnum.PERSONAL_DATA && userDetail"
+      [userDetail]="userDetail"
+      (editPersonalProfile)="onEditPersonalProfile($event)"
+    ></app-personal-data>
+
+    <app-edit-profile
+      *ngIf="isShowView === profileViewEnum.ACCOUNT_SETTINGS && companyDetail"
+      [companyDetail]="companyDetail"
+      (editCompanyProfile)="onEditCompanyProfile($event)"
+    >
+    </app-edit-profile>
+
+    <app-change-password
+      *ngIf="isShowView === profileViewEnum.CHANGE_PASSWORD"
+      (onChangePassword)="onChangePasswordClick($event)"
+    ></app-change-password>
+
+    <app-change-email
+      (onEmailChangeSuccess)="onEmailChangeSuccess($event)"
+      *ngIf="isShowView === profileViewEnum.CHANGE_EMAIL"
+    >
+    </app-change-email>
+  </div>
+</div>

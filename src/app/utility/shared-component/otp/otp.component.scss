@@ -1,0 +1,37 @@
+@import "../../../../assets/scss/abstracts/abstracts";
+
+.otp-container {
+  @include authSection;
+
+  p {
+    color: $grey-color-3;
+    font-weight: 600;
+    font-size: 2rem;
+    margin: 0 0 3rem 0;
+
+    span {
+      color: $primary-color;
+    }
+  }
+
+  .otp-resend {
+    color: $grey-color-3;
+    display: inline-block;
+    font-size: 1.8rem;
+    margin-bottom: 3rem;
+
+    a {
+      color: $primary-color;
+    }
+  }
+
+  div.text-center {
+    border-top: 1px solid $grey-color;
+    padding-top: 3rem;
+    font-size: 1.8rem;
+
+    button {
+      color: $grey-color-2;
+    }
+  }
+}

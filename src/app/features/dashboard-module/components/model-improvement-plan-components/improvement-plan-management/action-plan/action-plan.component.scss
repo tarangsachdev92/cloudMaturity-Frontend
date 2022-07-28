@@ -1,0 +1,103 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+.assessment-filter-details {
+  border: 1px solid $border-box-color;
+  border-radius: $border-radius-box;
+
+  &__header {
+    border-top-left-radius: $border-radius-box;
+    border-top-right-radius: $border-radius-box;
+    padding: 8px 15px !important;
+
+    h4 {
+      color: $primary-color;
+      font-size: 1.6rem !important;
+    }
+
+    a {
+      font-weight: 600;
+    }
+  }
+
+  &__body {
+    background-color: $white-color;
+    border-bottom-left-radius: $border-radius-box;
+    border-bottom-right-radius: $border-radius-box;
+    padding-top: 1.5rem;
+
+    &__data {
+      @include clearfix();
+      margin-bottom: 1.5rem;
+
+      &__left {
+        width: 21rem;
+        float: left;
+
+        span {
+          color: $grey-color-8;
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+      }
+
+      &__right {
+        width: calc(100% - 21rem);
+        float: left;
+
+        span {
+          color: $primary-color;
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+
+table {
+  tbody {
+    td {
+      a {
+        color: $red-color;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.box-gap-chart {
+  height: 18rem;
+}
+
+.gauge-chart{
+    top: 0 !important;
+}
+
+.title-action{
+    color: $primary-color;
+    font-size: 2rem;
+    margin-top: 0.7rem;
+}
+
+
+table{
+  tbody{
+    tr{
+      td{
+        padding-bottom: 0 !important;
+      }
+    }
+  }
+}
+
+.action-column{
+  a{
+    i{
+      color: $primary-color;
+    }
+  }
+}

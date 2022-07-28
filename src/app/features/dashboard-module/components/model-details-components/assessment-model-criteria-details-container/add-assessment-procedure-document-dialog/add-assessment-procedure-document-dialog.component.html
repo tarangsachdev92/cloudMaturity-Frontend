@@ -1,0 +1,34 @@
+<div class="modal">
+    <div class="modal__header">
+        <h3>{{title}}</h3>
+    </div>
+
+    <form [formGroup]="addDocumentForm" (ngSubmit)="onSubmitDocumentForm(addDocumentForm)">
+        <div class="modal__body">
+            <div class="form-control">
+                <span class="form-control__title">Document</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <input type="text" autocomplete="off" matInput placeholder="Enter document name"
+                        formControlName="name" />
+                </mat-form-field>
+            </div>
+
+            <!-- <div class="form-control">
+                <span class="form-control__title">Identifiant</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <input type="text" formControlName="identifiant" autocomplete="off" matInput
+                        placeholder="Enter Identifiant" />
+                </mat-form-field>
+            </div> -->
+
+            <div>
+                <div class="modal__footer text-right">
+                    <button type="submit" mat-flat-button color="primary">Save</button>
+                    <button (click)="onCloseDialog()" type="button" mat-flat-button color="secondary">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

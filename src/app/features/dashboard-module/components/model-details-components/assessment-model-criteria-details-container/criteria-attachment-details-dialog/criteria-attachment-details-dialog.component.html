@@ -1,0 +1,40 @@
+<div class="modal">
+    <div class="modal__header">
+        <h3>Add Attachment</h3>
+    </div>
+    <form [formGroup]="attachmentForm" (submit)="onSubmitAttachmentForm(attachmentForm)">
+        <div class="modal__body">
+            <div class="form-control form-control--file-select">
+                <span class="form-control__title">Document</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                    <input readonly (click)="onFileSelect('attachment')" type="text" autocomplete="off" matInput
+                        placeholder="Select document" />
+                    <input type="file" multiple formControlName="attachment" id="attachment" hidden
+                        (click)="onAttachmentClick($event)" (change)="onAttachmentSelection($event)" />
+                    <i class="fa fa-paperclip" aria-hidden="true" matSuffix></i>
+                </mat-form-field>
+            </div>
+
+            <ul class="file-section">
+                <li class="file-section__uploaded" *ngFor="let file of uploadedFiles; let uploadFileIndex = index">
+                    <div class="row">
+                        <div class="col-md-10 PL-0">
+                            {{ file.name }}
+                        </div>
+                        <div class="col-md-2 PR-0 text-right">
+                            <a matTooltip="Remove" (click)="onRemoveCurrentAttachment(uploadFileIndex)">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="modal__footer text-right">
+            <button type="submit" mat-flat-button color="primary">Save</button>
+            <button (click)="onCloseDialog()" type="button" mat-flat-button color="secondary">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>

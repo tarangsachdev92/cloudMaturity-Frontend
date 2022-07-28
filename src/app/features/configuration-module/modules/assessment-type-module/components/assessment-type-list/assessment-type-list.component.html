@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="col-md-12 PR-0">
+    <div class="header-panel">
+      <button
+        (click)="onAddAssessmentType()"
+        class="small-btn"
+        color="primary"
+        mat-flat-button
+        type="button"
+      >
+        Add Assessment Type
+      </button>
+    </div>
+
+    <div class="table-box">
+      <div class="table MT-2">
+        <!-- <div class="table__search MT-2">
+          <input
+            type="text"
+            placeholder="Search Assessment Type..."
+            [formControl]="searchFormControl"
+          />
+        </div> -->
+        <table>
+          <thead>
+            <tr>
+              <th width="25%">
+                <a
+                  [ngClass]="{ active: sortKey === 'name' }"
+                  (click)="
+                    onClickSort(
+                      'name',
+                      sortKey === 'name' && sortOrder === '-1' ? '1' : '-1'
+                    )
+                  "
+                >
+                  Assessment Type
+                  <i
+                    class="fas"
+                    [ngClass]="{
+                      'fa-long-arrow-alt-up':
+                        sortKey === 'name' && sortOrder === '1',
+                      'fa-long-arrow-alt-down':
+                        sortKey === 'name' && sortOrder === '-1'
+                    }"
+                  >
+                  </i>
+                </a>
+              </th>
+              <th width="65%">Description</th>
+              <th width="10%">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr
+              *ngFor="let assessmentType of assessmentTypeList; let i = index"
+            >
+              <td>
+                <span>{{ assessmentType.name }}</span>
+              </td>
+              <td>
+                <div class="description-table-data">
+                  <app-read-more
+                    [maxLength]="150"
+                    [text]="assessmentType.description"
+                  >
+                  </app-read-more>
+                </div>
+              </td>
+              <td>
+                <a
+                  (click)="onEditAssessmentType(assessmentType)"
+                  matTooltip="Edit"
+                >
+                  <i class="fas fa-pen"></i>
+                </a>
+                <a
+                  (click)="onDeleteConfirmation(assessmentType)"
+                  matTooltip="Delete"
+                  class="ML-2"
+                >
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-no-data
+          *ngIf="assessmentTypeList.length === 0 && !isLoadingResults"
+        ></app-no-data>
+      </div>
+      <div *ngIf="isLoadingResults">
+        <app-table-loader></app-table-loader>
+      </div>
+      <div class="row" *ngIf="pager.totalRecords > 10">
+        <div class="col-md-12 MT-2 text-right">
+          <mat-paginator
+            [length]="pager.totalRecords"
+            (page)="pageChange($event)"
+            [pageSize]="pager.recordsPerPage"
+            [pageSizeOptions]="pageSizeOptions"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.mat-checkbox-inner-container {
+  height: 14px !important;
+  width: 14px !important;
+}
+
+.mat-checkbox-frame {
+  border-width: 1.5px !important;
+}
+
+.mat-checkbox-frame {
+  border-color: rgba(146, 146, 146, 0.54) !important;
+}
+
+.mat-radio-outer-circle, .mat-radio-inner-circle, .mat-radio-container{
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.mat-radio-outer-circle{
+    border-width: 1.5px !important;
+}
+
+.mat-radio-button .mat-radio-ripple {
+    left: calc(50% - 16px) !important;
+    top: calc(50% - 16px) !important;
+    height: 32px !important;
+    width: 32px !important;
+}
+
+.assessment-details-box{
+  mat-radio-button {
+    margin-right: 2rem;
+  }
+  
+  .mat-radio-outer-circle {
+    border-color: #d2d2d2;
+  }
+  
+  .mat-radio-label-content{
+    color: $primary-color;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+}

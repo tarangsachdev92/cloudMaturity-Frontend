@@ -1,0 +1,22 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+.assessment-criteria-container {
+  h5 {
+    color: $primary-color;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    height: 2rem;
+  }
+
+  .form-control {
+    height: auto;
+  }
+
+  .title-height{
+    height: 4rem;
+  }
+}
+
+.element-details__body.loader-box.table-box{
+  padding-bottom: 5rem;
+}

@@ -1,0 +1,174 @@
+<!-- <div class="header-panel">
+  <button
+    (click)="onAddContactDialog()"
+    type="button"
+    mat-flat-button
+    color="primary"
+    class="small-btn"
+  >
+    Add Contact
+  </button>
+</div> -->
+
+<div *ngIf="!isLoading" class="row">
+  <div class="col-md-5">
+    <div class="white-form">
+      <div *ngIf="!isLoading">
+        <form
+          [formGroup]="partnerForm"
+          (ngSubmit)="onSubmitPartnerForm(partnerForm)"
+        >
+          <div class="row">
+            <div class="col-md-12 PL-0 PR-0">
+              <div class="form-control">
+                <span class="form-control__title">Full Name*</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <input
+                    type="text"
+                    appAutofocus
+                    autocomplete="off"
+                    formControlName="partner_name"
+                    matInput
+                    placeholder="Enter partner full Name"
+                  />
+                  <mat-error
+                    *ngIf="isRequiredField(formControls['partner_name'])"
+                    >{{ validationMsg.FULL_NAME }}</mat-error
+                  >
+                  <mat-error *ngIf="isValidField(formControls['partner_name'])"
+                    >{{ validationMsg.FULL_NAME_VALID }}
+                  </mat-error>
+                  <mat-error *ngIf="isValidLength(formControls['partner_name'])"
+                    >{{ validationMsg.FULL_NAME_LENGTH }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 PL-0 PR-0">
+              <div class="form-control">
+                <span class="form-control__title">Email*</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <input
+                    type="text"
+                    autocomplete="off"
+                    formControlName="email"
+                    matInput
+                    placeholder="Enter partner email"
+                  />
+                  <mat-error *ngIf="isRequiredField(formControls['email'])">{{
+                    validationMsg.EMAIL
+                  }}</mat-error>
+                  <mat-error *ngIf="isValidField(formControls['email'])">{{
+                    validationMsg.EMAIL_VALID
+                  }}</mat-error>
+                  <mat-error *ngIf="isValidLength(formControls['email'])">{{
+                    validationMsg.EMAIL_LENGTH
+                  }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 PL-0 PR-0">
+              <div class="form-control">
+                <span class="form-control__title">Telephone No.</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <input
+                    type="text"
+                    autocomplete="off"
+                    formControlName="telNo"
+                    matInput
+                    placeholder="Enter telephone No."
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 PL-0 PR-0">
+              <div class="form-control form-control--textarea">
+                <span class="form-control__title">Description</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <textarea
+                    formControlName="description"
+                    matInput
+                    placeholder="Enter description"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              mat-flat-button
+              color="primary"
+              class="small-btn"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              (click)="onPartnerList()"
+              mat-flat-button
+              color="secondary"
+              class="small-btn ML-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="false" class="col-md-7 PR-0">
+    <div class="table-box">
+      <h3>Contacts</h3>
+      <div class="table MT-2">
+        <table>
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Telephone No</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let i of [1, 2, 3, 4]; let j = index">
+              <td>John Doe</td>
+              <td>johndoe@gmail.com</td>
+              <td>+91 9898954420</td>
+              <td>
+                <a matTooltip="Edit">
+                  <i class="fa fa-pen"></i>
+                </a>
+                <a class="ML-2" matTooltip="Delete">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-no-data *ngIf="false"></app-no-data>
+        <div *ngIf="false">
+          <app-table-loader></app-table-loader>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="MT-3" *ngIf="isLoading">
+  <div class="col-md-10">
+    <app-form-loader></app-form-loader>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="white-form">
+      <div *ngIf="!isLoading">
+        <form
+          [formGroup]="addUserForm"
+          (ngSubmit)="onSubmitUserForm(addUserForm)"
+        >
+          <div class="row">
+            <div class="col-md-6 PL-0">
+              <div class="form-control">
+                <span class="form-control__title">Full Name*</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <input
+                    type="text"
+                    appAutofocus
+                    autocomplete="off"
+                    formControlName="fullName"
+                    matInput
+                    placeholder="Enter user full name"
+                  />
+                  <mat-error
+                    *ngIf="isRequiredField(formControls['fullName'])"
+                    >{{ validationMsg.FULL_NAME }}</mat-error
+                  >
+                  <mat-error *ngIf="isValidField(formControls['fullName'])">{{
+                    validationMsg.FULL_NAME_VALID
+                  }}</mat-error>
+                  <mat-error *ngIf="isValidLength(formControls['fullName'])">{{
+                    validationMsg.FULL_NAME_LENGTH
+                  }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6 PR-0">
+              <div class="form-control">
+                <span class="form-control__title">Email*</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <input
+                    type="text"
+                    autocomplete="off"
+                    [disableFormControl]="id"
+                    formControlName="email"
+                    matInput
+                    placeholder="Enter user email"
+                  />
+                  <mat-error *ngIf="isRequiredField(formControls['email'])">{{
+                    validationMsg.EMAIL
+                  }}</mat-error>
+                  <mat-error *ngIf="isValidField(formControls['email'])">{{
+                    validationMsg.EMAIL_VALID
+                  }}</mat-error>
+                  <mat-error *ngIf="isValidLength(formControls['email'])">{{
+                    validationMsg.EMAIL_LENGTH
+                  }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 PL-0">
+              <div class="form-control">
+                <span class="form-control__title">Role*</span>
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <mat-select placeholder="Select role" formControlName="role">
+                    <mat-option
+                      *ngFor="let role of roleList"
+                      [value]="role.role"
+                      >{{ role.role_name }}</mat-option
+                    >
+                  </mat-select>
+                  <mat-error *ngIf="isRequiredField(formControls['role'])">{{
+                    validationMsg.ROLE
+                  }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              mat-flat-button
+              color="primary"
+              class="small-btn"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              class="small-btn ML-2"
+              (click)="onUserList()"
+              mat-flat-button
+              color="secondary"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="MT-3" *ngIf="isLoading">
+        <app-form-loader></app-form-loader>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<div class="row MT-1">
+  <div class="col-md-12 MB-1 PR-0">
+    <div class="text-right">
+      <a *ngIf="isFilterApplied" (click)="onClearFilter()" class="MR-2 filter-link">
+        Clear Filter
+      </a>
+      <a (click)="onFilterToggle()" class="filter-link red-color">
+        {{ isShowFilter ? "Hide Filter" : "Show Filter" }}
+      </a>
+      <button *ngIf="!isModelReference" (click)="onAddDocumentRequirement()" type="button" mat-flat-button
+        color="primary" class="small-btn ML-2">
+        Add Requirement
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="table-box MB-2">
+  <div class="table MT-2">
+    <form [formGroup]="filterDocumentForm">
+
+      <table class="filter-table">
+        <thead>
+          <tr>
+            <th width="14%">
+              <div>Document</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <input formControlName="name" type="text" autocomplete="off" matInput placeholder="Search" />
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="20%">
+              <div>Title</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <input formControlName="title" type="text" autocomplete="off" matInput placeholder="Search title" />
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="13%">
+              <div>Type</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select formControlName="type" placeholder="Select type">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let type of documentTypeList; let j = index" [value]="type._id">
+                      {{type.type}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="7%">
+              <div>Level</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <input formControlName="level" type="text" autocomplete="off" matInput placeholder="Search" />
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="10%">
+              <div>Required</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select formControlName="required" placeholder="Select">
+                    <mat-option value="">All</mat-option>
+                    <mat-option [value]="true">Yes</mat-option>
+                    <mat-option value="false">No</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="27%">
+              <div>Domains</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <input formControlName="element" type="text" autocomplete="off" matInput placeholder="Search" />
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th *ngIf="!isModelReference" width="10%" class="PL-action" width="11%">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let docReq of modelDocumentRequirementList; let j = index">
+            <td>{{ docReq.name }}</td>
+            <td>{{ docReq.title }}</td>
+            <td>{{ docReq.type?.type }}</td>
+            <td>{{ docReq.level }}</td>
+            <td>{{ docReq.required ? "Yes" : "No" }}</td>
+            <td>
+              <ul class="element-list-documents">
+                <li *ngFor="let el of getDocumentElements(docReq); let k = index">
+                  {{ el.element_name }}
+                </li>
+                <li class="element-list-documents__more" *ngIf="getMoreDocumentElements(docReq).length">
+                  <a [matMenuTriggerFor]="menu">+[{{ getMoreDocumentElements(docReq).length }} More]</a>
+                  <mat-menu #menu="matMenu">
+                    <ul class="element-list-requirements">
+                      <li *ngFor="
+                        let moreElement of getMoreDocumentElements(docReq);
+                        let l = index
+                      ">
+                        {{ moreElement.element_name }}
+                      </li>
+                    </ul>
+                  </mat-menu>
+                </li>
+              </ul>
+            </td>
+            <td *ngIf="!isModelReference">
+              <a (click)="onEditDocumentRequirement(docReq)" matTooltip="Edit">
+                <i class="fas fa-pen"></i>
+              </a>
+              <a (click)="onDeleteDocumentRequirement(docReq)" matTooltip="Delete" class="ML-2">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
+  </div>
+
+  <app-no-data *ngIf="modelDocumentRequirementList.length === 0 && !isLoadingResults"></app-no-data>
+
+  <div *ngIf="isLoadingResults">
+    <app-table-loader></app-table-loader>
+  </div>
+
+  <div class="row" *ngIf="pager.totalRecords > 10">
+    <div class="col-md-12 PL-0 PR-0 text-right">
+      <mat-paginator [length]="pager.totalRecords" (page)="pageChange($event)" [pageSize]="pager.recordsPerPage"
+        [pageSizeOptions]="pageSizeOptions">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

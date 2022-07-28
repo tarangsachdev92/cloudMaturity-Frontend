@@ -1,0 +1,276 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+.table-box {
+  h3 {
+    color: $primary-color;
+    font-size: 1.8rem;
+    padding: 1.8rem 0;
+  }
+}
+
+.score-box {
+  background: $white-color;
+  border: 1px solid $border-box-color;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 17.5rem;
+  width: 17.5rem;
+  margin: 0 auto;
+  border-radius: 50%;
+
+  span {
+    color: #869195;
+    font-size: 2rem;
+  }
+
+  b {
+    color: $primary-color;
+    display: block;
+    font-size: 2.2rem;
+    margin-top: 0.8rem;
+  }
+}
+
+.box-inital-score {
+  padding: 0.6rem 2rem !important;
+}
+
+.box-gap.box-gap--space {
+  min-height: 15.2rem;
+
+  .fas.fa-star-half-alt,
+  .fa-circle-notch {
+    margin-top: 1.5rem;
+  }
+}
+
+.current-desired {
+  position: relative;
+  margin-bottom: 2rem;
+  border-right: 1px solid #e9e9e9;
+  height: 30rem;
+  padding-top: 7rem;
+  padding-right: 35px;
+
+  > .row {
+    justify-content: center;
+  }
+
+  .fa-caret-right {
+    color: #dbdbdb;
+    position: absolute;
+    font-size: 4rem;
+    top: 5rem;
+    left: 1.5rem;
+  }
+
+  &--goal {
+    h2,
+    h5,
+    i {
+      color: $red-color !important;
+    }
+  }
+
+  &__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    text-align: center;
+    flex-direction: column;
+    background: #f8f8f8;
+    border: 1px solid #efefef;
+    padding: 2rem 1rem;
+    border-radius: 1rem;
+
+    h2,
+    h5,
+    i {
+      color: $primary-color;
+    }
+
+    h5 {
+      font-size: 1.8rem;
+    }
+
+    h2 {
+      font-size: 3.2rem;
+      margin-top: 1rem;
+    }
+
+    i {
+      display: block;
+      font-size: 1.6rem;
+      margin: 1rem 0;
+    }
+  }
+}
+
+.fa-tasks {
+  color: #e2ad4b;
+}
+
+.chart-improvement-plan {
+  &--polar{
+    ul{
+      li{
+        display: inline-block;
+        margin-right: 2rem;
+        
+        &:first-child{
+          span{
+            background-color: $primary-color !important;
+          }
+        }
+
+        &:last-child{
+          span{
+            background-color: $red-color !important;
+          }
+        }
+      }
+    }
+  }
+
+  ul {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    li {
+      position: relative;
+      list-style: none;
+
+      span {
+        @include square(1.2rem);
+        display: inline-block;
+        background-color: #3cacc5;
+        border-radius: 0.2rem;
+        vertical-align: middle;
+        position: relative;
+        top: -1px;
+      }
+
+      small {
+        font-size: 1.4rem;
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  &--action {
+    ul {
+      li {
+        span {
+          background-color: #e2ad4b;
+        }
+      }
+    }
+  }
+}
+
+.improvement-plan-box-row {
+  @include flexCenter();
+  height: 30rem;
+  border-left: 0;
+  border-top: 0;
+  border-bottom: 0;
+  border-right: 1px solid #e9e9e9;
+  border-radius: 0;
+  margin-bottom: 2rem;
+  flex-direction: column;
+
+  .gauge-chart {
+    height: 50px !important;
+    margin-top: 1rem !important;
+  }
+
+  &__box {
+    left: -15px;
+    position: relative;
+    text-align: center;
+
+    i {
+      display: block;
+      font-size: 3.4rem;
+      color: #76c2d4;
+    }
+
+    h4 {
+      color: #869195;
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+
+    b {
+      color: $primary-color !important;
+      font-size: 20px;
+      font-weight: normal;
+    }
+  }
+}
+
+.improvement-plan-box-row {
+  .box-gap.box-gap--space {
+    border: none;
+  }
+}
+
+.box-gap.box-gap-chart.improvement-plan-box-row {
+  h3 {
+    color: #869195 !important;
+    padding: 0;
+    margin-top: 2rem;
+  }
+}
+
+.expand-chart{
+  position: relative;
+  
+  &--expanded{
+    background-color: $white-color;
+    height: calc(100vh - #{$header-height});
+    top: $header-height;
+    width: 100%;
+    position: fixed;
+    right: 0;
+    z-index: 5;
+
+    .full-width-chart{
+      position: relative;
+      width: 80vw;
+      height: 75vh;
+      top: 5vh;
+      left: 10vw;
+    }
+
+    ul{
+      position: relative;
+      top: 3rem;
+    }
+  }
+
+  &__expand-icon{
+    position: absolute;
+    right: -1rem;
+    top: -3rem;
+
+    i{
+      font-size: 1.8rem;
+    }
+  }
+
+  &__collapse-icon{
+    position: absolute;
+    right: 5rem;
+    top: 5rem;
+
+    i{
+      font-size: 1.8rem;
+    }
+  }
+}

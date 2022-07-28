@@ -1,0 +1,71 @@
+<div class="page-header">
+  <div class="page-header__left">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="dashboard-action text-right">
+    <button (click)="onDashboardViewChange('box')" type="button" [ngClass]="{ active: !isShowListView }"
+      class="action-view" mat-icon-button>
+      <span class="material-icons"> apps </span>
+    </button>
+    <button (click)="onDashboardViewChange('list')" type="button" [ngClass]="{ active: isShowListView }"
+      class="action-view" mat-icon-button>
+      <span class="material-icons"> list </span>
+    </button>
+    <button (click)="onAddModel()" class="small-btn" type="button" mat-flat-button color="primary">
+      Add Model {{isSuperAdmin ? 'Reference':''}}
+    </button>
+  </div>
+</div>
+
+<div class="model-search">
+  <div>
+    <input [formControl]="modelSearchCtrl" type="text" placeholder="Search Model" />
+
+    <span *ngIf="!modelSearchCtrl.value" class="material-icons"> search </span>
+
+    <a *ngIf="modelSearchCtrl.value" (click)="modelSearchCtrl.setValue('')" matTooltip="Clear">
+      <span class="material-icons"> close </span>
+    </a>
+  </div>
+</div>
+
+<div *ngIf="!isLoadingResults" class="model-box MT-2" [ngClass]="{ 'model-box--list': isShowListView }">
+  <a *ngFor="let assessmentModel of assessmentModelList; let j = index" (click)="onModelDetails(assessmentModel)">
+    <strong [ngClass]="{ 'green-color': assessmentModel.is_published, 'red-color': !assessmentModel.is_published}">
+      {{ assessmentModel.is_published ? "Active" : "Inactive" }}
+    </strong>
+
+    <div>
+      <h3>{{ assessmentModel.model_name }}</h3>
+      <p>{{ assessmentModel.description }}</p>
+    </div>
+
+    <ul>
+      <li>
+        <span>Domains: <b>{{ assessmentModel.elements }}</b></span>
+      </li>
+      <li>
+        <span>Practices: <b>{{assessmentModel.criterias}}</b></span>
+      </li>
+      <li>
+        <span>Calculation Method:
+          <b>{{ assessmentModel.calculation_method }}</b></span>
+      </li>
+    </ul>
+
+    <span class="material-icons"> keyboard_arrow_right </span>
+  </a>
+
+  <a (click)="onAddModel()" class="model-box__add">
+    <i class="fas fa-plus"></i>
+    <h4> Add Model {{isSuperAdmin ? 'Reference':''}} </h4>
+    <!-- <h4>Add Model Reference</h4> -->
+  </a>
+</div>
+
+<div class="model-box MT-2" *ngIf="isLoadingResults">
+  <div *ngFor="let i of [1, 2, 3, 4, 5, 6]" [ngClass]="{
+      'model-box-loader': !isShowListView,
+      'model-list-loader': isShowListView
+    }"></div>
+</div>

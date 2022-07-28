@@ -1,0 +1,5 @@
+<p [innerHTML]="currentText">
+</p>
+<a (click)="toggleView($event)" *ngIf="currentText && currentText.length > maxLength" [class.hidden]="hideToggle">
+    Read {{isCollapsed ? 'more' : 'less'}}
+</a>

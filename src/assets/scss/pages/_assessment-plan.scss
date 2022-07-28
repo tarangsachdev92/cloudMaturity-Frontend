@@ -1,0 +1,185 @@
+.assessment-plan-details, .assessment-details-box__border {
+  &__radio {
+    padding: 2rem 0;
+
+    &__group {
+      border-radius: $border-radius-box;
+      border: 1px solid $border-box-color;
+      background-color: $white-color;
+      padding: 1rem 2rem !important;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    label {
+      color: $primary-color;
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin-right: 2rem;
+    }
+
+    mat-radio-button {
+      margin-right: 2rem;
+    }
+
+    .mat-radio-outer-circle {
+      border-color: #d2d2d2;
+    }
+
+    .mat-radio-label-content {
+      color: $primary-color;
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+  }
+
+  .element-name-assessment-plan {
+    width: calc(100% - 8rem);
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .ui-treetable .ui-treetable-tbody>tr {
+    &:focus {
+      outline: none !important;
+    }
+  }
+
+
+  td {
+    ::-webkit-input-placeholder {
+      color: rgba(0, 0, 0, 0.42);
+    }
+
+    ::-moz-placeholder {
+      color: rgba(0, 0, 0, 0.42);
+    }
+
+    :-ms-input-placeholder {
+      color: rgba(0, 0, 0, 0.42);
+    }
+
+    :-moz-placeholder {
+      color: rgba(0, 0, 0, 0.42);
+    }
+
+    p-treetabletoggler{
+      height: 2.2rem;
+      min-width: 3.7rem;
+      display: inline-block;
+    }
+  }
+
+  textarea {
+    font-family: $font-family;
+    color: $primary-color;
+    font-size: 1.6rem;
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid $white-color;
+    padding: 0 4px 4px 4px;
+    resize: none;
+    font-weight: 600;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color !important;
+    }
+
+    &:hover {
+      border-color: $grey-color;
+    }
+  }
+
+  .highlighted-row {
+    background-color: rgba(63, 81, 97, 0.03) !important;
+  }
+}
+
+.datepicker-treetable {
+  .mat-form-field-infix {
+    padding: 0 !important;
+    height: 1.7em !important;
+    border-top: 0;
+  }
+
+  .mat-form-field-label {
+    top: 0.8em !important;
+  }
+
+  input {
+    color: $primary-color;
+    font-weight: 600;
+    line-height: 1.5em;
+  }
+
+  .mat-select-value {
+    color: $primary-color !important;
+    font-weight: 600;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: transparent;
+  }
+
+  .mat-form-field-wrapper {
+    &:hover {
+      .mat-form-field-underline {
+        background-color: $grey-color !important;
+      }
+
+      .mat-datepicker-toggle {
+        opacity: 1;
+      }
+    }
+  }
+
+  .mat-datepicker-toggle {
+    opacity: 0;
+    position: relative;
+    top: -0.3em !important;
+  }
+}
+
+.dropdown-treetable {
+  .mat-form-field-infix {
+    padding: 0 !important;
+    height: 1.7em !important;
+    line-height: 1.3em;
+    border-top: 0;
+  }
+
+  &--assigned-to{
+    .mat-form-field-label-wrapper{
+      top: -1.35em !important;
+      height: 3em;
+    }
+  }
+
+  .mat-select-value {
+    color: $primary-color !important;
+    font-weight: 600;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: transparent;
+  }
+
+  .mat-form-field-wrapper {
+    &:hover {
+      .mat-form-field-underline {
+        background-color: $grey-color !important;
+      }
+
+      .mat-select-arrow {
+        opacity: 1;
+      }
+    }
+  }
+
+  .mat-select-arrow {
+    opacity: 0;
+  }
+}

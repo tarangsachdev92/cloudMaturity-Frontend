@@ -1,0 +1,192 @@
+<div class="row MT-1">
+  <div class="col-md-12 PR-0">
+    <div class="survey-basic-details box">
+      <div class="survey-basic-details__header box__header header-space-padding">
+        <div *ngIf="practiceCtrl.value" class="row">
+          <div class="col-md-9 PL-0">
+            <a class="back-link-plan" (click)="onBack()">
+              <i class="fa fa-angle-left"></i>
+              <span>Back</span>
+            </a>
+
+            <div class="form-control form-control--criteria">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select [formControl]="practiceCtrl" (selectionChange)="onSelectElement($event)">
+                  <mat-option *ngFor="let element of allChildElementList" [value]="element.element_id">
+                    {{ element.element_name }} - <small>{{element.description}}</small>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="next-prev-criteria loading-heading-none">
+              <a [ngClass]="{'disabled' : !previousElement}" [matTooltip]="previousElement?.element_name"
+                (click)="onClickPrevious()">
+                <span class="material-icons"> keyboard_arrow_left </span>
+              </a>
+
+              <a [ngClass]="{'disabled' : !nextElement}" [matTooltip]="nextElement?.element_name"
+                (click)="onClickNext()">
+                <span class="material-icons"> keyboard_arrow_right </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!practiceCtrl.value" class="box-data-loading">
+          <div class="data-view-loader"></div>
+        </div>
+      </div>
+      <div class="survey-basic-details__body PB-1-5">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="box-view-right">
+              <div class="box-gap box-gap--space">
+                <div class="loading-data-none">
+                  <i class="fas fa-circle-notch"></i>
+                  <!-- [ngClass]="{
+                    'red-color': isNotStarted(
+                      selectedElement?.completedPercentage
+                    ),
+                    'green-color': isDone(selectedElement?.completedPercentage),
+                    'orange-color': isInProgress(
+                      selectedElement?.completedPercentage
+                    )
+                  }" -->
+                  <b>{{ selectedElement?.completedPercentage.toFixed(2) }}%</b>
+                  <h3>Progress</h3>
+                </div>
+                <div class="box-data-loading">
+                  <span></span><span></span><span></span>
+                </div>
+                <!-- {{ getStatus(selectedElement?.completedPercentage) }} -->
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="box-view-right">
+              <div class="box-gap box-gap--space">
+                <div class="criteria-dashboard-left">
+                  <div class="loading-data-none">
+                    <i class="far fa-list-alt"></i>
+                    <b>{{ selectedElement?.totalCriterias }}</b>
+                    <h3>Total practices</h3>
+                  </div>
+                  <div class="box-data-loading">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+
+                <div class="criteria-dashboard-right">
+                  <ul class="implemented-row">
+                    <li>
+                      <div class="implemented-row__status loading-heading-none">
+                        <span class="green-ind"></span>
+                        {{ selectedElement?.implementedCriterias }} Implemented
+                      </div>
+                      <div class="box-data-loading">
+                        <div class="data-view-loader"></div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="implemented-row__status loading-heading-none">
+                        <span class="orange-ind"></span>
+                        {{ selectedElement?.partiallyImplementedCriterias }}
+                        Partially Implemented
+                      </div>
+                      <div class="box-data-loading">
+                        <div class="data-view-loader"></div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="implemented-row__status loading-heading-none">
+                        <span class="red-ind"></span>
+                        {{ selectedElement?.notImplementedCriterias }} Not
+                        Implemented
+                      </div>
+                      <div class="box-data-loading">
+                        <div class="data-view-loader"></div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="implemented-row__details">
+                        <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                      </div>
+                      <div class="implemented-row__status loading-heading-none">
+                        <span class="grey-ind"></span>
+                        {{ selectedElement?.notRatedCriterias }} Not Rated
+                      </div>
+                      <div class="box-data-loading">
+                        <div class="data-view-loader"></div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="box-view-right">
+              <div class="box-gap box-gap--space">
+                <div class="loading-data-none">
+                  <i class="fas fa-star-half-alt"></i>
+                  <b>{{ getCurrentScore(selectedElement) }}/{{ maxLevel }}</b>
+                  <h3>Score</h3>
+                </div>
+
+                <div class="box-data-loading">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedElement?.element_name" class="box inside-box">
+      <div class="box__body criteria-panel criteria-panel-custom-tab" id="criteriaPanel">
+        <div class="criteria-panel__details">
+          <ul *ngIf="criteriaList.length">
+            <li *ngFor="let criteria of criteriaList; let i = index" (click)="onSelectCriteria(criteria)">
+              <a [ngClass]="{
+                  'active': criteria._id === this.selectedCriteria?._id,
+                  'green-ind': isImplemented(criteria.status),
+                  'orange-ind': isPartiallyImplemented(criteria.status),
+                  'red-ind': isNotImplemented(criteria.status),
+                  'grey-ind': isNotRated(criteria.status)
+                }">{{ criteria.criteria_unique_id }}</a>
+            </li>
+          </ul>
+
+          <div class="group-criteria-details">
+            <app-survey-criteria-detail *ngIf="selectedCriteria" [criteria]="selectedCriteria"
+              (updateAssessmentCriteriaRequirement)="onUpdateAssessmentCriteriaRequirement($event)"
+              (surveyUpdateFormSubmit)="onSurveyUpdateFromSubmit($event)">
+            </app-survey-criteria-detail>
+
+            <div *ngIf="criteriaList.length === 0 && !criteriaLoader" class="no-criteria-found">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>No practices found</span>
+            </div>
+
+            <div *ngIf="criteriaLoader" class="element-details__body loader-box">
+              <div class="loader">Loading...</div>
+            </div>
+          </div>
+        </div>
+        <!-- <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
+          <mat-tab
+            *ngFor="let level of levels; let i = index"
+            label="Level {{ level }}"
+          >
+            
+          </mat-tab>
+        </mat-tab-group> -->
+      </div>
+    </div>
+  </div>
+</div>

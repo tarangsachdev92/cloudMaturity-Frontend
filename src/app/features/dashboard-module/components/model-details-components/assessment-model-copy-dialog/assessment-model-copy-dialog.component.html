@@ -1,0 +1,37 @@
+<div class="modal">
+  <div class="modal__header">
+    <h3>Copy Model {{ modelData?.model_name }}</h3>
+  </div>
+  <form
+    [formGroup]="assessmentModelCopyFrom"
+    (ngSubmit)="onSubmitAssessmentModelCopyFrom(assessmentModelCopyFrom)"
+  >
+    <div class="modal__body">
+      <div class="form-control">
+        <span class="form-control__title">Model Name*</span>
+        <mat-form-field appearance="outline" [floatLabel]="'never'">
+          <input
+            autocomplete="off"
+            matInput
+            formControlName="model_name"
+            placeholder="Enter model name"
+          />
+          <mat-error *ngIf="isRequiredField(formControls['model_name'])"
+            >{{ validationMsg.MODEL_NAME }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="modal__footer text-right">
+      <button type="submit" mat-flat-button color="primary">Save</button>
+      <button
+        (click)="onCloseDialog(false)"
+        type="button"
+        mat-flat-button
+        color="secondary"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,15 @@
+@import "../../../../assets/scss/abstracts/abstracts";
+
+.no-records-found{
+  color: $primary-color;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10rem 0;
+
+  i{
+    color: $primary-color;
+    font-size: 4rem;
+    margin-bottom: 2rem;
+  }
+}

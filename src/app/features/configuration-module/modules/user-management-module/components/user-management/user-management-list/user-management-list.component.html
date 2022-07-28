@@ -1,0 +1,139 @@
+<div class="header-panel">
+  <button (click)="onAddUser()" type="button" mat-flat-button color="primary" class="small-btn">
+    Add User
+  </button>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-box">
+      <div class="table">
+        <div class="table__search MT-2">
+          <form [formGroup]="filterForm">
+            <div class="row">
+              <div class="col-md-4 PL-0">
+                <input type="text" placeholder="Search User..." formControlName="search" />
+              </div>
+            </div>
+          </form>
+        </div>
+        <table>
+          <thead>
+            <tr [ngClass]="{ active: false }" (click)="onRowClick()">
+              <th width="20%">
+                <a [ngClass]="{ active: sortKey === 'fullName' }" (click)="
+                    onClickSort(
+                      'fullName',
+                      sortKey === 'fullName' && sortOrder === '-1' ? '1' : '-1'
+                    )
+                  ">
+                  Name
+                  <i class="fas" [ngClass]="{
+                      'fa-long-arrow-alt-up':
+                        sortKey === 'fullName' && sortOrder === '1',
+                      'fa-long-arrow-alt-down':
+                        sortKey === 'fullName' && sortOrder === '-1'
+                    }">
+                  </i>
+                </a>
+              </th>
+              <th width="40%">
+                <a [ngClass]="{ active: sortKey === 'email' }" (click)="
+                    onClickSort(
+                      'email',
+                      sortKey === 'email' && sortOrder === '-1' ? '1' : '-1'
+                    )
+                  ">
+                  Email
+                  <i class="fas" [ngClass]="{
+                      'fa-long-arrow-alt-up':
+                        sortKey === 'email' && sortOrder === '1',
+                      'fa-long-arrow-alt-down':
+                        sortKey === 'email' && sortOrder === '-1'
+                    }">
+                  </i>
+                </a>
+              </th>
+              <th width="10%">
+                <a [ngClass]="{ active: sortKey === 'role' }" (click)="
+                    onClickSort(
+                      'role',
+                      sortKey === 'role' && sortOrder === '-1' ? '1' : '-1'
+                    )
+                  ">
+                  Role
+                  <i class="fas" [ngClass]="{
+                      'fa-long-arrow-alt-up':
+                        sortKey === 'role' && sortOrder === '1',
+                      'fa-long-arrow-alt-down':
+                        sortKey === 'role' && sortOrder === '-1'
+                    }">
+                  </i>
+                </a>
+              </th>
+              <th width="15%">
+                <a [ngClass]="{ active: sortKey === 'isActive' }" (click)="
+                    onClickSort(
+                      'isActive',
+                      sortKey === 'isActive' && sortOrder === '-1' ? '1' : '-1'
+                    )
+                  ">
+                  Status
+                  <i class="fas" [ngClass]="{
+                      'fa-long-arrow-alt-up':
+                        sortKey === 'isActive' && sortOrder === '1',
+                      'fa-long-arrow-alt-down':
+                        sortKey === 'isActive' && sortOrder === '-1'
+                    }">
+                  </i>
+                </a>
+              </th>
+              <th width="15%">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let user of userList; let i = index">
+              <td>
+                <div>{{ user.fullName }}</div>
+              </td>
+              <td>
+                <div>{{ user.email }}</div>
+              </td>
+              <td>
+                <div>{{ user.role_name }}</div>
+              </td>
+              <td>
+                <div>
+                  <a *ngIf="user.isActive" (click)="userEnableDisable(user)" class="green-color">
+                    Active
+                  </a>
+                  <a *ngIf="!user.isActive" (click)="userEnableDisable(user)" class="red-color">Inactive</a>
+                </div>
+              </td>
+              <td>
+                <a (click)="onEditUser(user)" class="ML-2" matTooltip="Edit">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <a (click)="onDeleteConfirmation(user)" matTooltip="Delete" class="ML-2">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-no-data *ngIf="userList.length === 0 && !isLoadingResults"></app-no-data>
+      </div>
+      <div *ngIf="isLoadingResults">
+        <app-table-loader></app-table-loader>
+      </div>
+      <div class="row" *ngIf="pager.totalRecords > 10">
+        <div class="col-md-12 MT-2 text-right">
+          <mat-paginator [length]="pager.totalRecords" [pageIndex]="pager.page - 1" (page)="pageChange($event)"
+            [pageSize]="pager.recordsPerPage" [pageSizeOptions]="pageSizeOptions">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<div class="row MT-1">
+  <div class="col-md-12 MB-1 PR-0">
+    <div class="text-right">
+      <a *ngIf="isFilterApplied" (click)="onClearFilter()" class="MR-2 filter-link">
+        Clear Filter
+      </a>
+      <a (click)="onFilterToggle()" class="filter-link red-color">
+        {{ isShowFilter ? "Hide Filter" : "Show Filter" }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="table-box MB-2">
+  <div class="table MT-2">
+    <form [formGroup]="filterImprovementPlanForm">
+      <table class="filter-table">
+        <thead>
+          <tr>
+            <th width="10%">
+              <div>Plan Id</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <input formControlName="plan_id" type="text" autocomplete="off" matInput placeholder="Search" />
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="17%">
+              <div>Organisation</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select formControlName="org_id" placeholder="Select organisation">
+                    <mat-option *ngFor="let organisation of organisations" [value]="organisation._id">
+                      {{ organisation.org_name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="12%">
+              <div>Valid From</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-label>Select Date</mat-label>
+                  <input formControlName="valid_from" matInput autocomplete="off" [matDatepicker]="pickerFrom" />
+                  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="12%">
+              <div>Valid To</div>
+              <div *ngIf="isShowFilter">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-label>Select Date</mat-label>
+                  <input formControlName="valid_to" matInput autocomplete="off" [matDatepicker]="pickerTo" />
+                  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerTo></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th width="12%">
+              <div>Initial Score</div>
+            </th>
+
+            <th width="14%">
+              <div>Implementation progress Gaps</div>
+            </th>
+
+            <th width="13%">
+              <div>Implementation progress Actions</div>
+            </th>
+
+            <th width="10%" class="PL-action" width="11%">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let ip of improvementPlanList; let i = index">
+            <td>
+              <a class="anchor-underline" (click)="onEditImprovementPlan(ip)">{{ip.plan_id}}</a>
+            </td>
+            <td>{{ip.organization}}</td>
+            <td>{{ip.valid_from | date: "dd/MM/yyyy" | checkEmpty}}</td>
+            <td>{{ip.valid_to | date: "dd/MM/yyyy" | checkEmpty}}</td>
+            <td>{{ip.initialScore | checkEmpty}}</td>
+            <td>{{ip.gapProgress | formatDecimal}}%</td>
+            <td>{{ip.actionProgress | formatDecimal}}%</td>
+            <td>
+              <a (click)="onEditImprovementPlan(ip)" matTooltip="Edit">
+                <i class="fas fa-pen"></i>
+              </a>
+              <a (click)="onDeleteConfirmation(ip)" matTooltip="Delete" class="ML-2">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+
+  <app-no-data *ngIf="improvementPlanList.length === 0 && !isLoadingResults"></app-no-data>
+
+  <div *ngIf="isLoadingResults">
+    <app-table-loader></app-table-loader>
+  </div>
+
+  <div *ngIf="!isLoadingResults" class="row">
+    <div class="col-md-12 PL-0 PR-0 text-right">
+      <mat-paginator [length]="pager.totalRecords" [pageIndex]="pager.page - 1" (page)="pageChange($event)"
+        [pageSize]="pager.recordsPerPage" [pageSizeOptions]="pageSizeOptions">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

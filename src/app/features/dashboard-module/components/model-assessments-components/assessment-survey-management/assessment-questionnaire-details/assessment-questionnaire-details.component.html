@@ -1,0 +1,234 @@
+<div class="questionnaire">
+  <div class="row">
+    <div class="col-md-9 PL-0">
+      <div class="white-form">
+        <div class="row">
+          <div class="col-md-2 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Domain</span>
+              <nz-tree-select [nzAllowClear]="false" [nzNodes]="elementNodes" class="custom-tree-select"
+                [nzNotFoundContent]="'No records!!'" nzShowSearch nzPlaceHolder="Select domain"
+                [formControl]="elementCtrl">
+              </nz-tree-select>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="form-control">
+              <span class="form-control__title">Level</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select [formControl]="levelCtrl" placeholder="Select Level">
+                  <mat-option value="">All</mat-option>
+                  <mat-option *ngFor="let level of levels" value=" {{ level }}">
+                    {{ level }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-control">
+              <span class="form-control__title">Assigned To</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select [formControl]="assignedToCtrl" placeholder="Select Level">
+                  <mat-option value="">All</mat-option>
+                  <mat-option *ngFor="let user of allUserList" [value]="user._id">
+                    {{ user.fullName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-control">
+              <span class="form-control__title">Practice</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select [formControl]="criteriaCtrl" placeholder="Select Practice">
+                  <mat-option value="">All</mat-option>
+                  <mat-option *ngFor="let criteria of criteriaList; let j = index" [value]="criteria.criteria_id">
+                    {{ criteria.criteria_unique_id }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <button type="button" (click)="onApplyButtonClick()" class="small-btn MT-3" mat-flat-button color="primary">
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isApplied" class="row">
+        <div class="col-md-12 PL-0">
+          <!-- <ul>
+            <li>
+              <a [ngClass]="{ active: true }">All</a>
+            </li>
+
+            <li *ngFor="let i of [1, 2, 3, 4, 5]">
+              <a [ngClass]="{ active: false }">AC.1.00{{ i }}</a>
+            </li>
+          </ul> -->
+
+          <div class="row">
+            <div class="col-md-6 PL-0">
+              <div class="select-all-questions">
+                <mat-checkbox [checked]="isAllChecked()" (change)="onSelectAllQuestion($event)">Select All Questions
+                </mat-checkbox>
+              </div>
+            </div>
+            <div *ngIf="isApplied" class="col-md-6 PR-0">
+              <div class="form-control search-question-control">
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <input type="text" matInput placeholder="Search question" (input)="onChangeSearch($event)"
+                    [formControl]="searchQuestionCtrl" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div *ngFor="let question of displayQuestionsList; let j = index">
+            <div class="question-box question-box--radio" *ngIf="question.type === questionType.YES_NO">
+              <div class="question-box__question">
+                <mat-checkbox [checked]="question.checked" (change)="onSelectQuestion($event, question._id)">
+                </mat-checkbox>
+                <h4>
+                  <b>Q {{ question.question_index }}:</b>
+                  {{ question.question }}
+                  <i>[{{question.criteria_unique_id}}]</i>
+                </h4>
+              </div>
+
+              <mat-radio-group (change)="onChangeType1Answer($event,question)" [value]="question.answer">
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+
+              <div class="question-box__given-by">
+                <small *ngIf="question.answered_by">Answer given by: {{question.answered_by?.fullName}}
+                  ({{question.answered_date | date: "dd MMM, yyyy"}})</small>
+                <small *ngIf="question.assigned_to">Assigned to: {{question.assigned_to?.fullName}}</small>
+              </div>
+            </div>
+
+            <div class="question-box question-box--checkbox" *ngIf="question.type===questionType.MULTI_SELECT">
+              <div class="question-box__question">
+                <mat-checkbox [checked]="question.checked" (change)="onSelectQuestion($event,question._id)">
+                </mat-checkbox>
+                <h4>
+                  <b>Q {{question.question_index}}:</b> {{question.question}}
+                  <i>[{{question.criteria_unique_id}}]</i>
+                </h4>
+              </div>
+
+              <div class="question-box--checkbox__group">
+                <div *ngFor="let choice of question.question_choices; let ci = index">
+                  <mat-checkbox [checked]="isChecked(choice,question)"
+                    (change)="onCheckType2Option($event,question,ci)"> {{ choice }}
+                  </mat-checkbox>
+                </div>
+              </div>
+
+              <div class="question-box__action" *ngIf="question.isUpdated">
+                <button class="small-btn" color="primary" (click)="onType2Answer(question)" mat-flat-button
+                  type="button">
+                  Save
+                </button>
+                <button class="ML-2 small-btn" color="secondary" mat-flat-button type="button">
+                  Cancel
+                </button>
+              </div>
+
+              <div class="question-box__given-by">
+                <small *ngIf="question.answered_by">Answer given by: {{question.answered_by?.fullName}}
+                  ({{question.answered_date | date: "dd MMM, yyyy"}})</small>
+                <small *ngIf="question.assigned_to">Assigned to: {{question.assigned_to?.fullName}}</small>
+              </div>
+            </div>
+
+            <div class="question-box question-box--input" *ngIf="question.type === questionType.TEXT">
+              <div class="question-box__question">
+                <mat-checkbox [checked]="question.checked" (change)="onSelectQuestion($event, question._id)">
+                </mat-checkbox>
+                <h4>
+                  <b>Q {{ question.question_index }}:</b>
+                  {{ question.question }}
+                  <i>[{{ question.criteria_unique_id }}]</i>
+                </h4>
+              </div>
+
+              <textarea (input)="onChangeType3Answer($event,question)" [value]="question.answer || ''"
+                placeholder="Enter your answer"></textarea>
+
+              <div class="question-box__action" *ngIf="question.isUpdated">
+                <button class="small-btn" color="primary" (click)="onType3Answer(question)" mat-flat-button
+                  type="button">
+                  Save
+                </button>
+                <button class="ML-2 small-btn" color="secondary" mat-flat-button type="button">
+                  Cancel
+                </button>
+              </div>
+
+              <div class="question-box__given-by">
+                <small *ngIf="question.answered_by">Answer given by: {{question.answered_by?.fullName}}
+                  ({{question.answered_date | date: "dd MMM, yyyy"}})</small>
+                <small *ngIf="question.assigned_to">Assigned to: {{question.assigned_to?.fullName}}</small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isApplied" id="questionnaireRight" class="col-md-3 questionnaire__right PL-0 PR-0">
+      <div class="box-gap box-gap-chart PB-0">
+        <h3>Questionnaire Progress</h3>
+        <h5><span>{{answeredQuestions}}</span> / {{totalQuestions}}</h5>
+        <div class="gauge-chart">
+          <ngx-gauge [type]="gaugeType" [value]="questionnaireProgress || 0 | formatDecimal" [label]="gaugeLabel"
+            [append]="gaugeAppendText" [size]="gaugeSize" [thick]="gaugeThick" [foregroundColor]="gaugeClr">
+          </ngx-gauge>
+        </div>
+      </div>
+
+      <div *ngIf="isShowAssigneeForm" class="box-gap box-gap-chart MT-2 PB-0">
+        <h3>Assign Questions</h3>
+
+        <b>
+          <div>checked Questions:</div>
+          <span *ngFor="let question of getCheckedQuestion(); let l = index">
+            Q{{ question.question_index }}
+            <span *ngIf="l+1 < getCheckedQuestion().length">,</span>
+          </span>
+        </b>
+
+        <form [formGroup]="assigneeForm" (ngSubmit)="onSubmitAssigneeForm(assigneeForm)">
+          <div class="form-control MT-3">
+            <span class="form-control__title">Assignee</span>
+            <mat-form-field appearance="outline" [floatLabel]="'never'">
+              <mat-select formControlName="assigned_to" placeholder="Select Assignee">
+                <mat-option *ngFor="let user of allUserList" [value]="user._id">
+                  {{ user.fullName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <button type="submit" class="small-btn" mat-flat-button color="primary">
+            Save
+          </button>
+          <button type="button" mat-flat-button color="secondary" class="small-btn ML-2">
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,196 @@
+.box {
+  border: 1px solid $border-box-color;
+  border-radius: $border-radius-box;
+
+  &__header {
+    background: $white-color;
+    border-top-left-radius: $border-radius-box;
+    border-top-right-radius: $border-radius-box;
+    padding: 15px;
+    position: relative;
+
+    &__search {
+      background: $grey-color-4;
+      position: absolute;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      width: 100%;
+      left: 0;
+      top: 0;
+      padding: 8px 15px;
+
+      input {
+        border: 1px solid $grey-color;
+        font-family: $font-family;
+        width: 100%;
+        border-radius: 3px;
+        box-shadow: none;
+        padding: 6px;
+
+        &:focus {
+          outline: none;
+          border-color: $red-color;
+        }
+      }
+
+      a {
+        margin-top: 7px;
+        display: inline-block;
+      }
+    }
+
+    h3 {
+      color: $primary-color;
+      font-size: 1.8rem;
+    }
+
+    a {
+      color: $primary-color;
+      font-size: 1.6rem;
+      margin-left: 1.5rem;
+    }
+  }
+
+  &__body {
+    background-color: $white-color;
+    border-bottom-left-radius: $border-radius-box;
+    border-bottom-right-radius: $border-radius-box;
+    height: calc(100vh - 25rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    ul {
+      li {
+        list-style: none;
+
+        &:first-child {
+          a {
+            margin-top: 0.5rem;
+          }
+        }
+
+        > a {
+          position: relative;
+          display: block;
+          border-bottom: 1px solid $grey-color-5;
+          padding: 15px;
+
+          &.active {
+            background: rgba($grey-color-5, 0.45);
+          }
+
+          &:hover {
+            background: rgba($grey-color-5, 0.45);
+          }
+
+          div {
+            margin-bottom: 0.8rem;
+
+            span,
+            b,
+            p {
+              font-size: 1.6rem;
+            }
+
+            b {
+              color: $primary-color;
+              font-weight: 600;
+            }
+
+            span,
+            p {
+              color: $black-color;
+            }
+
+            p {
+              line-height: 2.4rem;
+
+              a {
+                color: $red-color;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+
+            &:first-child {
+              margin-bottom: 1rem;
+              padding-bottom: 1rem;
+              border-bottom: 1px solid rgba($grey-color-5, 0.5);
+
+              span {
+                color: $black-color;
+                font-weight: 600;
+              }
+            }
+
+            &:nth-child(2) {
+              b {
+                display: block;
+                margin-top: 1rem;
+                margin-bottom: 0.5rem;
+              }
+            }
+
+            &:nth-child(3) {
+              margin-top: 1.5rem;
+            }
+
+            &:last-child {
+              position: absolute;
+              right: 15px;
+              top: 15px;
+              margin-bottom: 0;
+
+              a {
+                color: $primary-color;
+                display: inline-block;
+                margin-left: 1.5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    table {
+      thead {
+        box-shadow: none;
+
+        th {
+          background: transparent;
+        }
+      }
+
+      tbody {
+        tr {
+          &.active {
+            background: rgba($grey-color-5, 0.45);
+          }
+        }
+
+        tr.green-color {
+          td {
+            color: $green-color;
+            a {
+              i {
+                color: $primary-color;
+              }
+
+              &:hover {
+                i {
+                  color: $red-color;
+                }
+              }
+            }
+          }
+
+          div {
+            color: $green-color;
+          }
+        }
+      }
+    }
+  }
+}

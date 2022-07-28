@@ -1,0 +1,232 @@
+<div *ngIf="!actionPlanData && !isImprovementActionPlanLoader" class=" row">
+  <div class="col-md-9">
+    <div class="no-target">
+      <i class="fas fa-window-maximize"></i>
+      <h4>No any action plan generate yet</h4>
+      <button (click)="onGenerateActionPlan(improvementPlanId)" class="small-btn" type="button" mat-flat-button
+        color="primary">
+        Generate Action Plan
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="actionPlanData">
+  <div class="row">
+    <div class="col-md-9 PL-0">
+      <div class="assessment-filter-details box">
+        <div class="assessment-filter-details__header box__header">
+          <div class="row">
+            <div class="col-md-9 col-sm-8 PL-0">
+              <h3>Basic Details</h3>
+            </div>
+            <div class="col-md-3 col-sm-4 PR-0 text-right">
+              <!-- <a matTooltip="Delete">
+                <i class="fas fa-trash"></i>
+              </a> -->
+            </div>
+          </div>
+        </div>
+        <div class="assessment-filter-details__body">
+          <div class="row">
+            <div class="col-md-9">
+              <div class="assessment-filter-details__body__data">
+                <div class="assessment-filter-details__body__data__left">
+                  <span>Action plan generated on:</span>
+                </div>
+                <div class="assessment-filter-details__body__data__right">
+                  <span>{{actionPlanData?.createdAt | date: "dd MMM yyyy" }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row MT-2">
+        <div class="col-md-6 PL-0">
+          <div class="box-gap">
+            <h3>Total Actions</h3>
+            <b>{{actionPlanData?.totalActions}}</b>
+          </div>
+        </div>
+        <div class="col-md-6 PR-0">
+          <div class="box-gap">
+            <h3>Open Actions</h3>
+            <b>{{actionPlanData?.openActions}}</b>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 PR-0">
+      <div class="box-gap box-gap-chart PB-0">
+        <h3>Completion</h3>
+        <div class="gauge-chart">
+          <ngx-gauge [type]="gaugeType" [value]="actionPlanData?.implementation_progress || 0 | formatDecimal"
+            [label]="gaugeLabel" [append]="gaugeAppendText" [size]="gaugeSize" [thick]="gaugeThick"
+            [foregroundColor]="gaugeClr">
+          </ngx-gauge>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row MT-3">
+    <div class="col-md-8 PL-0">
+      <h4 class="title-action">Actions</h4>
+    </div>
+    <div class="col-md-4 PR-0 text-right">
+      <a (click)="onFilterToggle()" class="filter-link red-color MR-2">
+        {{ isShowFilter ? "Hide Filter" : "Show Filter" }}
+      </a>
+
+      <button (click)="onAddActionPlanDialog()" type="button" class="small-btn" mat-flat-button color="primary">
+        Add Action Plan
+      </button>
+    </div>
+  </div>
+
+  <div class="row MT-2">
+    <div class="col-md-12 PL-0 PR-0">
+      <div class="table-box MB-2">
+        <div class="table MT-2">
+          <form [formGroup]="filterActionForm">
+            <table class="filter-table">
+              <thead>
+                <tr>
+                  <th width="7%">
+                    <div>Sr. No.</div>
+                  </th>
+                  <th width="26%">
+                    <div>Action</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input autocomplete="off" type="text" formControlName="action" matInput
+                          placeholder="Search Action" />
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <th width="14%">
+                    <div>Practice ID</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input autocomplete="off" type="text" formControlName="criteria_id" matInput
+                          placeholder="Search ID" />
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <th width="14%">
+                    <div>Assigned To</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-select formControlName="assigned_to" placeholder="Select User">
+                          <mat-option value="">All</mat-option>
+                          <mat-option *ngFor="let user of userList" [value]="user._id">
+                            {{ user.fullName }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <th width="12%">
+                    <div>Due Date</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-label>Select Date</mat-label>
+                        <input formControlName="due_date" matInput autocomplete="off" [matDatepicker]="pickerTo" />
+                        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerTo></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <th width="15%">
+                    <div>Status</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-select formControlName="status" placeholder="Select Status">
+                          <mat-option value="">All</mat-option>
+                          <mat-option *ngFor="let status of actionStatusList" [value]="status.value">
+                            {{ status.display }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <th width="12%">
+                    <div>Action</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let action of displayActionData; let i = index">
+                  <td>
+                    {{ i + 1 }}
+                  </td>
+                  <td>{{action.description}}</td>
+                  <td>
+                    <a> {{action.criteria?.criteria_unique_id | checkEmpty}}</a>
+                  </td>
+                  <td>
+                    <div class="dropdown-treetable">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-select placeholder="Select User" [ngModelOptions]="{standalone: true}"
+                          [ngModel]="action.assigned_to?._id" (ngModelChange)="onAssignedToChange($event,action)">
+                          <mat-option *ngFor="let user of userList" [value]="user._id">
+                            {{ user.fullName }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="datepicker-treetable">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input autocomplete="off" (click)="picker.open()" matInput [matDatepicker]="picker"
+                          [ngModelOptions]="{standalone: true}" [ngModel]="action.due_date" matInput
+                          (ngModelChange)="onDueDateChange($event,action)" placeholder="Choose a date" />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </td>
+                  <td>
+                    <mat-slide-toggle [checked]="action.status===1" (change)="onStatusChange($event,action)">
+                      <span class="ML-1" [ngClass]="{
+                        'red-color': +action.status===0,
+                        'green-color':+action.status===1
+                      }">{{getActionStatus(action)}}</span>
+                    </mat-slide-toggle>
+                  </td>
+                  <td class="action-column">
+                    <a (click)="onEditAction(action)" matTooltip="Edit">
+                      <i class="fas fa-pen"></i>
+                    </a>
+                    <a (click)="onDeleteAction(action)" matTooltip="Delete" class="ML-2">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+          <div *ngIf="isImprovementActionPlanLoader">
+            <app-table-loader></app-table-loader>
+          </div>
+
+          <div *ngIf="!isImprovementActionPlanLoader && false">
+            <app-no-data></app-no-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-9">
+    <div *ngIf="isImprovementActionPlanLoader">
+      <div class="no-target">
+        <i class="fa fa-spin fa-spinner" aria-hidden="true"></i>
+        <h4>Loading...</h4>
+      </div>
+    </div>
+  </div>
+</div>

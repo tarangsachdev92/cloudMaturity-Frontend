@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-md-8 PL-0">
+    <div class="survey-basic-details box">
+      <div class="survey-basic-details__header box__header">
+        <div class="row">
+          <div class="col-md-9 col-sm-8 PL-0">
+            <h3>
+              <!-- Average Score: (<span>{{ getFinalScore(assessmentDetail) }}/{{
+                  assessmentDetail?.max_level || 0
+                }}</span>) -->
+              Assessment Details
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="survey-basic-details__body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="survey-basic-details__body__data">
+              <div class="survey-basic-details__body__data__left">
+                <span>Model:</span>
+              </div>
+              <div class="survey-basic-details__body__data__right">
+                <span [ngClass]="{'data-view-loader' : !assessmentDetail}">
+                  {{ assessmentDetail?.model_name }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="survey-basic-details__body__data">
+              <div class="survey-basic-details__body__data__left">
+                <span>Created By:</span>
+              </div>
+              <div class="survey-basic-details__body__data__right">
+                <span [ngClass]="{'data-view-loader' : !assessmentDetail}">
+                  {{ assessmentDetail?.created_by?.fullName }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="survey-basic-details__body__data">
+              <div class="survey-basic-details__body__data__left">
+                <span>Organisation:</span>
+              </div>
+              <div class="survey-basic-details__body__data__right">
+                <span [ngClass]="{'data-view-loader' : !assessmentDetail}">
+                  {{ assessmentDetail?.org_name }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="survey-basic-details__body__data">
+              <div class="survey-basic-details__body__data__left">
+                <span>Created On:</span>
+              </div>
+              <div class="survey-basic-details__body__data__right">
+                <span [ngClass]="{'data-view-loader' : !assessmentDetail}">{{
+                  assessmentDetail?.created_at
+                  | date: "dd MMM yyyy"
+                  }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="survey-basic-details__body__data">
+              <div class="survey-basic-details__body__data__left">
+                <span>Type:</span>
+              </div>
+              <div class="survey-basic-details__body__data__right">
+                <span [ngClass]="{'data-view-loader' : !assessmentDetail}">
+                  {{ assessmentDetail?.assessmentType }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="survey-basic-details__body__data">
+              <div class="survey-basic-details__body__data__left">
+                <span>Status:</span>
+              </div>
+              <div class="survey-basic-details__body__data__right">
+                <span [ngClass]="{
+                  'green-color' : isCompleted(assessmentDetail), 
+                  'orange-color' : isInProgress(assessmentDetail),
+                  'red-color' : isPending(assessmentDetail),
+                  'data-view-loader' : !assessmentDetail
+                  }">{{ getStatus(assessmentDetail) }}</span>
+
+                <!-- <span *ngIf="false" class="green-color">Completed</span>
+                <span *ngIf="true" class="red-color">Remaining</span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2 PR-0">
+    <div class="box-view-right">
+      <div class="box-gap box-gap--space">
+        <div *ngIf="assessmentDetail">
+          <i class="fas fa-star-half-alt"></i>
+          <b>{{ getFinalScore(assessmentDetail) }} / {{
+            assessmentDetail?.max_level || 0
+            }}</b>
+          <h3>Score</h3>
+        </div>
+        <div *ngIf="!assessmentDetail" class="box-data-loading">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2 PR-0">
+    <div class="box-view-right">
+      <div class="box-gap box-gap--space">
+        <div *ngIf="assessmentDetail">
+          <i class="fas fa-circle-notch"></i>
+          <b>{{assessmentDetail?.completedPercentage.toFixed(2)}}%</b>
+          <h3>Progress</h3>
+        </div>
+        <div *ngIf="!assessmentDetail" class="box-data-loading">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

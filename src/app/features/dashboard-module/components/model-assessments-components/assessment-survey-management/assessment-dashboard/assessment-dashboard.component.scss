@@ -1,0 +1,469 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+.bullet-chart {
+  position: relative;
+  overflow-y: auto;
+  max-height: 50rem;
+  margin-top: 0;
+
+  li {
+    list-style: none;
+
+    &:first-child {
+      .bullet-chart__row__graph__axes {
+        &:after {
+          height: calc(100% - 1rem);
+          top: 1rem;
+        }
+        &::before {
+          display: block !important;
+        }
+      }
+    }
+  }
+
+  &__row {
+    @include clearfix();
+
+    &__name {
+      float: left;
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 15rem;
+      padding-right: 1.5rem;
+
+      .disabled{
+        pointer-events: none;
+        text-decoration: none;
+
+        b{
+          color: $black-color;
+        }
+      }
+
+      a {
+        text-decoration: underline;
+
+        span {
+          color: $primary-color !important;
+        }
+
+        &:hover {
+          span {
+            color: $red-color !important;
+          }
+        }
+      }
+
+      span {
+        color: $primary-color;
+        font-size: 1.6rem;
+        line-height: 6rem;
+      }
+    }
+
+    &__graph {
+      background: $grey-color-4;
+      position: relative;
+      float: left;
+      width: calc(100% - 15em);
+      height: 6rem;
+      padding: 1rem 0;
+
+      &::after,
+      &::before {
+        background: $white-color;
+        position: absolute;
+        height: 1rem;
+        width: 100%;
+        content: "";
+        left: 0;
+        z-index: 0;
+      }
+
+      &:after {
+        top: 0;
+      }
+
+      &:before {
+        bottom: 0;
+      }
+
+      &__axes {
+        &:after,
+        &:before {
+          position: absolute;
+          z-index: 1;
+        }
+
+        &:after {
+          border-left: 1px dashed rgba($primary-color, 0.4);
+          height: 100%;
+          width: 0;
+          top: 0;
+          content: "";
+        }
+
+        &:before {
+          top: -2rem;
+          left: 0;
+          font-size: 1.8rem;
+          display: none;
+        }
+
+        &--one {
+          &:after {
+            left: 0;
+          }
+        }
+
+        &--two {
+          &:after {
+            left: 20%;
+          }
+
+          &:before {
+            content: "1";
+            left: calc(20% - 0.7rem);
+          }
+        }
+
+        &--three {
+          &:after {
+            left: 40%;
+          }
+
+          &:before {
+            content: "2";
+            left: calc(40% - 0.7rem);
+          }
+        }
+
+        &--four {
+          &:after {
+            left: 60%;
+          }
+
+          &:before {
+            content: "3";
+            left: calc(60% - 0.7rem);
+          }
+        }
+
+        &--five {
+          &:after {
+            left: 80%;
+          }
+
+          &:before {
+            content: "4";
+            left: calc(80% - 0.7rem);
+          }
+        }
+
+        &--six {
+          &:after {
+            left: 100%;
+          }
+
+          &:before {
+            content: "5";
+            left: calc(100% - 0.7rem);
+          }
+        }
+      }
+
+      @keyframes fadeIn {
+        0% {
+          width: 0%;
+        }
+      }
+
+      @-moz-keyframes fadeIn {
+        0% {
+          width: 0%;
+        }
+      }
+
+      @-webkit-keyframes fadeIn {
+        0% {
+          width: 0%;
+        }
+      }
+
+      @-o-keyframes fadeIn {
+        0% {
+          width: 0%;
+        }
+      }
+
+      @-ms-keyframes fadeIn {
+        0% {
+          width: 0%;
+        }
+      }
+
+      &__score {
+        transition: 0.5s all ease-out;
+        height: 2rem;
+        background: rgba(214, 79, 78, 0.2);
+        margin-top: 1rem;
+        animation: fadeIn ease 2s;
+        -webkit-animation: fadeIn ease 2s;
+        -moz-animation: fadeIn ease 2s;
+        -o-animation: fadeIn ease 2s;
+        -ms-animation: fadeIn ease 2s;
+      }
+
+      &__min,
+      &__max {
+        @include square(1.5rem);
+        display: inline-block;
+        position: absolute;
+        top: 2.25rem;
+        border-radius: 50%;
+        z-index: 0;
+      }
+
+      &__min {
+        background: #dd4d79;
+      }
+
+      &__max {
+        background: #5578c2;
+      }
+
+      &__average {
+        background: $primary-color;
+        display: inline-block;
+        position: absolute;
+        top: 1.75rem;
+        border-radius: 0.5rem;
+        height: 2.5rem;
+        width: 1rem;
+        z-index: 0;
+      }
+    }
+  }
+}
+
+.result-by-elements {
+  height: auto !important;
+  padding-bottom: 3rem;
+
+  h3 {
+    color: $primary-color;
+    font-size: 1.8rem;
+  }
+
+  h4 {
+    display: block;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2rem;
+  }
+}
+
+.criteria-by-elements {
+  height: auto !important;
+
+  &__header {
+    label {
+      color: $grey-color-8;
+    }
+
+    small {
+      color: $primary-color;
+      font-weight: 600;
+    }
+
+    label,
+    small {
+      font-size: 1.8rem;
+    }
+
+    .criteria-element-graph__status {
+      width: 5rem;
+      height: 2rem;
+      vertical-align: middle;
+    }
+
+    b {
+      display: inline-block;
+      margin-left: 1rem;
+    }
+  }
+}
+
+.criteria-element-graph-explaination {
+  padding-top: 2rem;
+
+  li {
+    display: inline-block;
+    margin-right: 3rem;
+    margin-bottom: 1rem;
+
+    b {
+      color: $grey-color-8;
+      font-weight: 500;
+
+      i {
+        color: $primary-color;
+        font-weight: 600;
+        font-style: normal;
+      }
+    }
+  }
+}
+
+.criteria-element-graph {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 92%;
+  margin: 0 auto 2rem auto;
+  display: flex;
+  padding-bottom: 2rem;
+
+  &__scroll {
+    max-height: calc(100vh - 38rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    li{
+      &:last-child{
+        background: #f9f9f9 !important;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $white-color;
+  }
+
+  &::-webkit-scrollbar {
+    background-color: rgba(#868c90, 0.5);
+    width: 7px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(#868c90, 0.5);
+    border-radius: 1rem;
+  }
+
+  ul {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    vertical-align: bottom;
+    background: #f9f9f9;
+    margin-right: 2rem;
+
+    li {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2rem;
+      padding: 0.8rem 1.5rem;
+
+      &:first-child {
+        padding-top: 2.5rem !important;
+      }
+
+      &:last-child {
+        // border-top: 1px solid #f3f3f3;
+        background-color: $white-color;
+        font-weight: 600;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 14rem;
+        display: inline-block;
+      }
+    }
+  }
+  &__status {
+    height: 4rem;
+    border-radius: 2rem;
+    font-size: 1.6rem;
+    padding: 0 1.5rem;
+    line-height: 3.7rem;
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 11rem;
+    text-align: center;
+
+    &--implemented {
+      background-color: rgba(79, 214, 110, 0.1);
+      border-color: #4fd66e;
+    }
+
+    &--partially-implemented {
+      background-color: rgba(250, 158, 60, 0.2);
+      border-color: #fa9e3c;
+    }
+
+    &--not-implemented {
+      border-color: $red-color;
+      background-color: rgba(214, 79, 79, 0.1);
+    }
+
+    &--not-rated {
+      border-color: rgba($grey-color-8, 0.5);
+      background-color: rgba($grey-color, 0.2);
+    }
+  }
+}
+
+.loader-box {
+  background-color: $white-color;
+  border-bottom-left-radius: $border-radius-box;
+  border-bottom-right-radius: $border-radius-box;
+  padding-bottom: 4rem;
+}
+
+.back-to-previous-level {
+  color: $red-color;
+  position: absolute;
+  font-size: 1.6rem;
+  top: 7rem;
+  z-index: 1;
+}
+
+.bullet-chart-level{
+  margin-top: 0;
+  overflow: visible !important;
+  margin-top: 4rem;
+
+  .bullet-chart__row__graph{
+    height: 0;
+    padding: 0;
+  }
+
+  .bullet-chart__row__graph__axes{
+    &::after{
+      display: none;
+    }
+  }
+}
+
+.box{
+  &__body{
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+}
+
+.criteria-element-graph__status{
+  min-width: 11rem !important;
+  width: auto;
+}

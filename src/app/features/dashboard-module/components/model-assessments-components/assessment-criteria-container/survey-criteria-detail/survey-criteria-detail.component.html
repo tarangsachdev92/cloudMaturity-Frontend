@@ -1,0 +1,414 @@
+<div>
+  <form [formGroup]="implementationForm">
+    <div class="row">
+      <div class="col-md-7 PL-0">
+        <div class="criteria-level">
+          <span>Level : <b>{{criteria.level}}</b></span>
+        </div>
+
+        <p class="criteria-description">
+          {{ criteria?.description }}
+        </p>
+
+        <ol>
+          <li *ngFor="let statusChoice of statusChoiceList; let i = index" [ngClass]="{
+              active: isCheckedChoice === statusChoice.value
+            }">
+            <span>{{ statusChoice.display }}</span>
+            <input type="radio" name="status" formControlName="status" [value]="statusChoice.value"
+              (change)="onChoiceChange(statusChoice.value)" />
+
+            <i class="fas fa-check-circle"></i>
+
+            <i *ngIf="criteria.status && criteria.updated_by && isCheckedChoice === statusChoice.value"
+              class="updated-by">
+              By: {{ criteria.updated_by.fullName }}
+              {{ criteria.updatedAt ? "(" + (criteria.updatedAt | date: "dd MMM, yyyy") + ")" : "" }}
+            </i>
+          </li>
+        </ol>
+
+        <div class="criteria-details-assessment">
+          <div class="row">
+            <div class="col-md-12 MB-2 PL-0">
+              <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header collapsedHeight="60px" expandedHeight="60px">
+                    <mat-panel-title> Requirements </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="table table-box">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th width="10%">
+                            <mat-checkbox (change)="
+                                onCheckChangeSelectAllRequirements($event)
+                              " [checked]="isAllRequirementsCompleted()"></mat-checkbox>
+                          </th>
+                          <th width="90%">Description</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr *ngFor="
+                            let requirement of criteria?.requirements;
+                            let i = index
+                          ">
+                          <td>
+                            <mat-checkbox [checked]="requirement.completed" (change)="
+                                onCheckChangeSingleRequirement(
+                                  $event,
+                                  requirement
+                                )
+                              ">
+                            </mat-checkbox>
+                          </td>
+                          <td>
+                            <p class="full-width">
+                              {{ requirement.description }}
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div *ngIf="!criteria?.requirements?.length">
+                      <app-no-data></app-no-data>
+                    </div>
+
+                    <button *ngIf="criteria?.requirements?.length" class="small-btn MT-3"
+                      (click)="onSaveAssessmentRequirement()" type="button" mat-flat-button color="primary">
+                      Save
+                    </button>
+                  </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header collapsedHeight="60px" expandedHeight="60px">
+                    <mat-panel-title> Questions </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="table table-box">
+                    <table>
+                      <!-- <thead>
+                        <tr>
+                          <th width="10%">
+                            <mat-checkbox> </mat-checkbox>
+                          </th>
+                          <th width="15%">ID</th>
+                          <th width="100%">Question</th>
+                          <th width="25%">Answer type</th>
+                        </tr>
+                      </thead> -->
+
+                      <tbody>
+                        <tr *ngFor="
+                            let question of criteria?.questions;
+                            let i = index
+                          ">
+                          <!-- <td>
+                            <mat-checkbox> </mat-checkbox>
+                          </td> -->
+                          <!-- <td>{{ question.unique_id }}</td> -->
+                          <td>
+                            <div class="MB-1">
+                              <p class="full-width">
+                                <b>Q{{i + 1}}.</b>
+                                {{ question.question }}
+                              </p>
+                            </div>
+
+                            <div class="answer-response">
+                              <span *ngIf="question.type === questionType.YES_NO">
+                                <p *ngIf="question.answer===true">Yes</p>
+                                <p *ngIf="question.answer===false">No</p>
+                              </span>
+                              <div *ngIf="question.type === questionType.MULTI_SELECT">
+                                <ul class="checked-question-items">
+                                  <li *ngFor="let choice of question.question_choices">
+                                    <i [ngClass]="{'fa fa-check' : isSelected(question,choice)}"></i>
+                                    <span>{{choice}}</span>
+                                  </li>
+                                </ul>
+                              </div>
+                              <p *ngIf="question.type === questionType.TEXT">
+                                {{question.answer}}
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div *ngIf="!criteria?.questions?.length">
+                      <app-no-data></app-no-data>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header collapsedHeight="60px" expandedHeight="60px">
+                    <mat-panel-title> Objects list </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="table table-box">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th width="10%">
+                            <mat-checkbox></mat-checkbox>
+                          </th>
+                          <th width="90%">Object</th>
+                          <!-- <th width="20%">Identifiant</th> -->
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr *ngFor="
+                            let document of criteria?.documents;
+                            let i = index
+                          ">
+                          <td>
+                            <mat-checkbox></mat-checkbox>
+                          </td>
+                          <td>
+                            {{ document.name }}
+                          </td>
+                          <!-- <td>{{ document.identifiant }}</td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div *ngIf="!criteria?.documents.length">
+                      <app-no-data></app-no-data>
+                    </div>
+                    <button *ngIf="criteria?.documents?.length" class="small-btn MT-3" color="primary" mat-flat-button
+                      type="button">Save</button>
+                  </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header collapsedHeight="60px" expandedHeight="60px">
+                    <mat-panel-title> Attachments </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="table table-box">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th width="100%">Attachment Name</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr *ngFor="
+                            let attachment of criteria?.attachments;
+                            let i = index
+                          ">
+                          <td>
+                            <a (click)="onAttachmentPreview(attachment)">{{ attachment.name }}</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+
+          <!-- <mat-tab-group class="procedure-tab" mat-align-tabs="start">
+            <mat-tab label="Requirements">
+              <div class="table table-box">
+                <table>
+                  <thead>
+                    <tr>
+                      <th width="10%">
+                        <mat-checkbox (change)="onCheckChangeSelectAllRequirements($event)"
+                          [checked]="isAllRequirementsCompleted()"></mat-checkbox>
+                      </th>
+                      <th width="20%">ID</th>
+                      <th width="65%">Description</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let requirement of criteria?.requirements; let i = index">
+                      <td>
+                        <mat-checkbox [checked]="requirement.completed"
+                          (change)="onCheckChangeSingleRequirement($event, requirement)">
+                        </mat-checkbox>
+                      </td>
+                      <td>{{requirement.unique_id}}</td>
+                      <td>
+                        <p class="full-width">
+                          {{requirement.description}}
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <button *ngIf="criteria?.requirements?.length" class="small-btn MT-3" (click)="onSaveAssessmentRequirement()"
+                type="button" mat-flat-button color="primary">
+                Save
+              </button>
+            </mat-tab>
+            <mat-tab label="Questions">
+              <div class="table table-box">
+                <table>
+                  <thead>
+                    <tr>
+                      <th width="10%">
+                        <mat-checkbox> </mat-checkbox>
+                      </th>
+                      <th width="15%">ID</th>
+                      <th width="50%">Question</th>
+                      <th width="25%">Answer type</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let question of criteria?.questions; let i = index">
+                      <td>
+                        <mat-checkbox> </mat-checkbox>
+                      </td>
+                      <td>{{question.unique_id}}</td>
+                      <td>
+                        <p class="full-width">{{question.question}}</p>
+                      </td>
+                      <td>{{questionTypeLabel(question)}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-tab>
+            <mat-tab label="Documents">
+              <div class="table table-box">
+                <table>
+                  <thead>
+                    <tr>
+                      <th width="80%">Document Name</th>
+                      <th width="20%">Identifiant</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let document of criteria?.documents; let i = index">
+                      <td>{{document.name}}</td>
+                      <td>{{document.identifiant}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-tab>
+            <mat-tab label="Attachments">
+              <div class="table table-box">
+                <table>
+                  <thead>
+                    <tr>
+                      <th width="100%">Attachment Name</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let attachment of criteria?.attachments; let i = index">
+                      <td>{{attachment.name}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-tab>
+          </mat-tab-group> -->
+        </div>
+      </div>
+
+      <div class="col-md-5 right-part-survey-details PR-0">
+
+        <div class="MB-2">
+          <div class="row">
+            <div class="col-md-7 PL-0">
+              <div><b>Relevant:</b></div>
+              <mat-slide-toggle [checked]="criteria.relevant" (change)="onChangeRelevant($event)"></mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+
+        <b>Upload Documents:</b>
+        <div>
+          <button class="attach-document-btn" (click)="onFileSelect('attachment')" mat-button type="button">
+            <i class="fa fa-paperclip"></i>
+            Select documents
+          </button>
+
+          <input type="file" hidden formControlName="attachment" id="attachment" multiple
+            (click)="onAttachmentClick($event)" (change)="onAttachmentSelection($event)" />
+        </div>
+
+        <ul class="file-section">
+          <li class="file-section__uploading" *ngFor="
+              let attachment of alreadyUploadedAssessmentAttachment;
+              let attachmentIndex = index
+            ">
+            <div class="row">
+              <div class="col-md-10 PL-0">
+                <a (click)="onAttachmentPreview(attachment)">
+                  {{ attachment.name }}
+                </a>
+              </div>
+              <div class="col-md-2 PR-0 text-right">
+                <a matTooltip="Remove" (click)="
+                    onRemoveAlreadyUploadedAssessmentAttachment(
+                      attachment,
+                      criteria,
+                      attachmentIndex
+                    )
+                  ">
+                  <i class="fa fa-times"></i>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="row MT-3">
+          <div class="col-md-12 PR-0 PL-0">
+            <b>Note:</b>
+
+            <div class="note-panel">
+              <div>
+                <button *ngIf="!criteria.note" class="attach-document-btn" (click)="onShowNote()" mat-button
+                  type="button">
+                  <i class="far fa-sticky-note"></i>
+                  Add note
+                </button>
+
+                <button *ngIf="criteria.note" class="attach-document-btn" (click)="onShowNote()" mat-button
+                  type="button">
+                  <i class="far fa-sticky-note"></i>
+                  Edit note
+                </button>
+              </div>
+
+              <p *ngIf="!isShowNoteButton">{{ criteria.note }}</p>
+            </div>
+
+            <div *ngIf="isShowNoteButton">
+              <div class="form-control form-control--textarea MT-1">
+                <mat-form-field appearance="outline" [floatLabel]="'never'">
+                  <textarea formControlName="note" matInput placeholder="Enter note"></textarea>
+                </mat-form-field>
+              </div>
+
+              <button (click)="onSaveNote()" class="small-btn" type="button" mat-flat-button color="primary">
+                Save
+              </button>
+
+              <button (click)="onCancelNote()" class="small-btn ML-2" type="button" mat-flat-button color="secondary">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

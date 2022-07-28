@@ -1,0 +1,66 @@
+<div class="row MT-1">
+  <div class="col-md-8 PL-0">
+    <div class="white-form">
+      <form [formGroup]="addImprovementPlanForm" (ngSubmit)="onSubmitImprovementPlanForm(addImprovementPlanForm)">
+        <div class="row">
+          <div class="col-md-6 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Organisation</span>
+              <nz-tree-select [nzNodes]="nodes" class="custom-tree-select" [nzNotFoundContent]="'No records!!'"
+                nzShowSearch nzPlaceHolder="Select organisation" formControlName="org_id">
+              </nz-tree-select>
+            </div>
+          </div>
+          <div class="col-md-6 PR-0">
+            <div class="form-control">
+              <span class="form-control__title">Model</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select disabled formControlName="model_id" placeholder="Loading...">
+                  <mat-option *ngFor="let model of models" [value]="model._id">{{ model.model_name }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="isRequiredField(formControls['model_id'])">{{ validationMsg.MODEL_NAME }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Valid From</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <input readonly (click)="validFromDate.open()" matInput formControlName="valid_from"
+                  [matDatepicker]="validFromDate" placeholder="Select from date" />
+                <mat-datepicker-toggle matSuffix [for]="validFromDate"></mat-datepicker-toggle>
+                <mat-datepicker #validFromDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6 PR-0">
+            <div class="form-control">
+              <span class="form-control__title">Valid to</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <input readonly (click)="validToDate.open()" matInput formControlName="valid_to"
+                  [matDatepicker]="validToDate" placeholder="Select to date" />
+                <mat-datepicker-toggle matSuffix [for]="validToDate"></mat-datepicker-toggle>
+                <mat-datepicker #validToDate></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 PL-0">
+            <button type="submit" mat-flat-button color="primary" class="small-btn">
+              Save & Next
+            </button>
+            <button (click)="onShowList()" class="small-btn ML-2" type="button" mat-flat-button color="secondary">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

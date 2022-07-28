@@ -1,0 +1,434 @@
+<div class="row">
+  <div class="col-md-12 MT-2 MB-2 PL-0 PR-0">
+    <div class="box">
+      <div class="box__body result-by-elements">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="MT-2">
+              <h3 class="MB-2">Overall Result by Domains</h3>
+              <div *ngIf="!isLoadingResults">
+                <canvas height="700" width="700" baseChart [datasets]="scoreDataRadarChart.radarChartData"
+                  [colors]="scoreDataRadarChart.assetChartColors" [options]="scoreDataRadarChart.radarChartOptions"
+                  [labels]="scoreDataRadarChart.radarChartLabels" [chartType]="scoreDataRadarChart.radarChartType">
+                </canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <h3 class="MT-2 MB-1">Result by Domains and Sub domains</h3>
+            <div *ngIf="!isLoadingResults">
+              <a class="back-to-previous-level" *ngIf="selectedElement" (click)="onClickPreviousElement()">
+                Back to previous level
+              </a>
+
+              <ul class="bullet-chart bullet-chart-level">
+                <li>
+                  <div class="bullet-chart__row">
+                    <div class="bullet-chart__row__name">&nbsp;</div>
+                    <div class="bullet-chart__row__graph">
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--one"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--two"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--three"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--four"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--five"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--six"></div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <ul class="bullet-chart">
+                <li *ngFor="
+                    let element of elementsResult;
+                    let elementIndex = index
+                  ">
+                  <div class="bullet-chart__row">
+                    <div class="bullet-chart__row__name">
+                      <a [ngClass]="{ disabled: !element.subElements.length }" (click)="onClickElement(element)">
+                        <span>
+                          <b>{{ element.element_name }}</b>
+                        </span>
+                      </a>
+                    </div>
+                    <div class="bullet-chart__row__graph">
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--one"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--two"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--three"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--four"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--five"></div>
+                      <div class="bullet-chart__row__graph__axes bullet-chart__row__graph__axes--six"></div>
+                      <div [ngStyle]="
+                          getDynamicStyleAverageScore(
+                            element.score,
+                            maxScoreGoal
+                          )
+                        " class="bullet-chart__row__graph__score" [matTooltip]="getScoreGoalToolTip(element.score)">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="isLoadingResults" class="loader-box text-center">
+          <div class="loader">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box MT-2">
+      <div class="box__header">
+        <h3>Practices by domains</h3>
+      </div>
+
+      <div class="box__body criteria-by-elements">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="form-control">
+              <span class="form-control__title">Level</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select [formControl]="levelFormControl" (selectionChange)="bindAssessmentCriteria()">
+                  <mat-option value="">All</mat-option>
+                  <mat-option [value]="level" *ngFor="let level of levels; let i = index">
+                    {{ "Level " + level }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-control">
+              <span class="form-control__title">Domain</span>
+              <nz-tree-select [nzAllowClear]="false" [formControl]="elementCtrl" [nzNodes]="elementNodes"
+                class="custom-tree-select" [nzNotFoundContent]="'No records!!'" nzShowSearch
+                nzPlaceHolder="Select domain">
+              </nz-tree-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+            <div class="box-view-right">
+              <div class="box-gap box-gap--space">
+                <div>
+                  <i class="far fa-list-alt"></i>
+                  <b>{{ criteriaStatics?.totalCriterias || 0 }}
+                  </b>
+                  <h3>Total Practices</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="box-view-right">
+              <div class="box-gap box-gap--space">
+                <div>
+                  <i class="fas fa-check-double"></i>
+                  <b>
+                    {{ criteriaStatics?.implementedCriterias || 0}}
+                    <small>
+                      (
+                      {{
+                      getPercentage(criteriaStatics?.implementedCriterias,criteriaStatics?.totalCriterias) |
+                      formatDecimal
+                      }}%
+                      )
+                    </small>
+                  </b>
+                  <h3>Implemented</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="box-view-right">
+              <div class="box-gap box-gap--space">
+                <div>
+                  <i class="fas fa-check"></i>
+                  <b>
+                    {{ criteriaStatics?.partiallyImplementedCriterias || 0 }}
+                    <small>
+                      (
+                      {{
+                      getPercentage(criteriaStatics?.partiallyImplementedCriterias,criteriaStatics?.totalCriterias) |
+                      formatDecimal
+                      }}%
+                      )
+                    </small>
+                  </b>
+                  <h3>Partially Imp.</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="box-view-right">
+              <div class="box-gap box-gap--space">
+                <div>
+                  <i class="far fa-dot-circle"></i>
+                  <b>
+                    {{ criteriaStatics?.notImplementedCriterias || 0 }}
+                    <small>
+                      (
+                      {{
+                      getPercentage(criteriaStatics?.notImplementedCriterias,criteriaStatics?.totalCriterias) |
+                      formatDecimal
+                      }}%
+                      )
+                    </small>
+                  </b>
+                  <h3>Not Implemented</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="box-view-right">
+              <div class="box-gap box-gap--space">
+                <div>
+                  <i class="far fa-circle"></i>
+                  <b>
+                    {{ criteriaStatics?.notRatedCriterias || 0 }}
+                    <small>
+                      (
+                      {{
+                      getPercentage(criteriaStatics?.notRatedCriterias,criteriaStatics?.totalCriterias) |
+                      formatDecimal
+                      }}%
+                      )
+                    </small>
+                  </b>
+                  <h3>Not Rated</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-right">
+              <a *ngIf="isFilterApplied" (click)="onClearFilter()" class="MR-2 filter-link">
+                Clear Filter
+              </a>
+              <a (click)="onFilterToggle()" class="filter-link red-color">
+                {{ isShowFilter ? "Hide Filter" : "Show Filter" }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table MT-2">
+              <table class="filter-table">
+                <thead>
+                  <tr>
+                    <th width="15%">
+                      <div>Practice</div>
+                      <div *ngIf="isShowFilter">
+                        <mat-form-field [floatLabel]="'never'">
+                          <input [formControl]="practiceCtrl" (input)="bindAssessmentCriteria()" type="text"
+                            autocomplete="off" matInput placeholder="Search" />
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <th width="50%">Description</th>
+                    <th width="5%"></th>
+                    <th width="10%">Level</th>
+                    <th width="20%">
+                      Status
+                      <div *ngIf="isShowFilter">
+                        <mat-form-field [floatLabel]="'never'">
+                          <mat-select placeholder="Select status" [formControl]="statusCtrl"
+                            (selectionChange)="bindAssessmentCriteria()">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let status of statusChoiceList" [value]="status.value">
+                              {{status.display}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="!criteriaLoader && criteriaList.length">
+                  <tr *ngFor="let criteria of criteriaList; let j = index">
+                    <td>{{criteria.criteria_unique_id}}</td>
+                    <td>
+                      <p>{{criteria.description}}</p>
+                    </td>
+                    <td></td>
+                    <td>{{criteria.level}}</td>
+                    <td>
+                      <!-- <span [ngClass]="{'green-color' : true}">Implemented</span> -->
+                      <span class="criteria-element-graph__status" [ngClass]="{
+                        'criteria-element-graph__status--implemented': isImplemented(
+                          criteria.status
+                        ),
+                        'criteria-element-graph__status--partially-implemented': isPartiallyImplemented(
+                          criteria.status
+                        ),
+                        'criteria-element-graph__status--not-implemented': isNotImplemented(
+                          criteria.status
+                        ),
+                        'criteria-element-graph__status--not-rated': isNotRated(
+                          criteria.status
+                        )
+                      }">
+                        <p *ngIf="isImplemented(
+                          criteria.status
+                        )">Implemented</p>
+                        <p *ngIf="isPartiallyImplemented(
+                          criteria.status
+                        )">Partially Implemented</p>
+                        <p *ngIf="isNotImplemented(
+                          criteria.status
+                        )">Not Implemented</p>
+                        <p *ngIf="isNotRated(
+                          criteria.status
+                        )">Not Rated</p>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <app-no-data *ngIf="!criteriaLoader && criteriaList.length===0"></app-no-data>
+
+              <div *ngIf="criteriaLoader">
+                <app-table-loader></app-table-loader>
+              </div>
+
+              <div>
+                <mat-paginator [length]="criteriaPager.totalRecords" [pageIndex]="criteriaPager.page - 1"
+                  (page)="pageChange($event)" [pageSize]="criteriaPager.recordsPerPage"
+                  [pageSizeOptions]="pageSizeOptions">
+                </mat-paginator>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="box MT-2">
+      <div class="box__header">
+        <h3>Practices by domains</h3>
+      </div>
+
+      <div *ngIf="isLoadingResults" class="loader-box text-center">
+        <div class="loader">Loading...</div>
+      </div>
+
+      <div *ngIf="!isLoadingResults" class="box__body criteria-by-elements">
+        <div class="row MT-2 criteria-by-elements__header">
+          <div class="col-md-2 PR-0">
+            <div class="form-control">
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select [formControl]="levelFormControl" (selectionChange)="onLevelChange($event)">
+                  <mat-option value="">All</mat-option>
+                  <mat-option [value]="level" *ngFor="let level of levels; let i = index">
+                    {{ "Level " + level }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-2 text-center MT-2 PL-0 PR-0">
+            <label>Total : &nbsp;</label>
+            <small>{{
+              currentCriteriaByElementsData?.totalCriterias || 0
+              }}
+              Practices</small>
+          </div>
+
+          <div class="col-md-8">
+            <ul class="criteria-element-graph-explaination">
+              <li>
+                <span class="criteria-element-graph__status criteria-element-graph__status--implemented"></span>
+                <b>Implemented
+                  <i>({{
+                    currentCriteriaByElementsData?.implementedCriterias || 0
+                    }})</i></b>
+              </li>
+
+              <li>
+                <span
+                  class="criteria-element-graph__status criteria-element-graph__status--partially-implemented"></span>
+                <b>Partially Implemented
+                  <i>({{
+                    currentCriteriaByElementsData?.partiallyImplementedCriterias ||
+                    0
+                    }})</i></b>
+              </li>
+
+              <li>
+                <span class="criteria-element-graph__status criteria-element-graph__status--not-implemented"></span>
+                <b>Not Implemented
+                  <i>({{
+                    currentCriteriaByElementsData?.notImplementedCriterias ||
+                    0
+                    }})</i></b>
+              </li>
+
+              <li>
+                <span class="criteria-element-graph__status criteria-element-graph__status--not-rated"></span>
+                <b>Not Rated
+                  <i>({{
+                    currentCriteriaByElementsData?.notRatedCriterias || 0
+                    }})</i></b>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="criteria-element-graph">
+              <ul *ngFor="
+                  let element of currentCriteriaByElementsData?.elements;
+                  let i = index
+                ">
+                <div class="criteria-element-graph__scroll">
+                  <li *ngFor="let criteria of element.criterias; let j = index">
+                    <span [matTooltip]="criteria.description" class="criteria-element-graph__status" [ngClass]="{
+                        'criteria-element-graph__status--implemented': isImplemented(
+                          criteria.status
+                        ),
+                        'criteria-element-graph__status--partially-implemented': isPartiallyImplemented(
+                          criteria.status
+                        ),
+                        'criteria-element-graph__status--not-implemented': isNotImplemented(
+                          criteria.status
+                        ),
+                        'criteria-element-graph__status--not-rated': isNotRated(
+                          criteria.status
+                        )
+                      }">
+                      {{ criteria.criteria_unique_id }}
+                    </span>
+                  </li>
+                </div>
+                
+                <li>
+                  {{ element.name }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

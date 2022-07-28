@@ -1,0 +1,15 @@
+@import "../../../../../../../assets/scss/abstracts/abstracts";
+
+ul{
+    padding-left: 0.5rem;
+    height: 35rem;
+    overflow: auto;
+
+    li{
+        color: $primary-color;
+        list-style: none;
+        font-size: 1.6rem;
+        padding: .8rem 0;
+        font-weight: 600;
+    }
+}

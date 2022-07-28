@@ -1,0 +1,200 @@
+<div class="row MT-2">
+  <div class="col-md-9 PL-0">
+    <div *ngIf="!isLoadingAssessment && initialAssessment" class="row">
+      <div class="col-md-10 PL-0">
+        <div class="survey-basic-details box">
+          <div class="survey-basic-details__header box__header">
+            <div class="row">
+              <div class="col-md-9 col-sm-8 PL-0">
+                <h3>Initial Assessment</h3>
+              </div>
+              <div class="col-md-3 PR-0 text-right">
+                <!-- <a *ngIf="initialAssessment" (click)="onDeleteAssessment(initialAssessment)" matTooltip="Delete">
+                  <i class="fas fa-trash"></i>
+                </a> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="survey-basic-details__body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="survey-basic-details__body__data">
+                  <div class="survey-basic-details__body__data__left">
+                    <span>Assessment ID:</span>
+                  </div>
+                  <div class="survey-basic-details__body__data__right">
+                    <a class="assessment-id-link" (click)="onAssessmentClick(initialAssessment)">{{
+                      initialAssessment.assessment_unique_id }}</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="survey-basic-details__body__data">
+                  <div class="survey-basic-details__body__data__left">
+                    <span>Created On:</span>
+                  </div>
+                  <div class="survey-basic-details__body__data__right">
+                    <span>{{
+                      initialAssessment.start_date | date: "dd/MM/yyyy"
+                      }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="survey-basic-details__body__data">
+                  <div class="survey-basic-details__body__data__left">
+                    <span>Type:</span>
+                  </div>
+                  <div class="survey-basic-details__body__data__right">
+                    <span>
+                      {{initialAssessment.assessment_type_id?.name}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="survey-basic-details__body__data">
+                  <div class="survey-basic-details__body__data__left">
+                    <span>Status:</span>
+                  </div>
+                  <div class="survey-basic-details__body__data__right">
+                    <span [ngClass]="{
+                        'green-color': initialAssessment.status_ == 1,
+                        'orange-color': initialAssessment.status_ == 0
+                      }">
+                      {{
+                      initialAssessment.status_ == 1
+                      ? "Completed"
+                      : "In-Progress"
+                      }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 PR-0">
+        <div class="box-view-right">
+          <div class="box-gap box-gap--space">
+            <div>
+              <i class="fas fa-star-half-alt"></i>
+              <b>{{ getFinalScore(initialAssessment) }}/5</b>
+              <h3>Score</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="survey-basic-details box" *ngIf="!isLoadingAssessment && !initialAssessment">
+      <div class="survey-basic-details__header box__header no-initial-assessment">
+        <h3>No Initial Assessment Are Added</h3>
+      </div>
+    </div>
+
+    <div class="survey-basic-details box" *ngIf="isLoadingAssessment">
+      <div class="survey-basic-details__header box__header no-initial-assessment">
+        <h3>Loading Initial Assessment</h3>
+      </div>
+    </div>
+
+    <div class="assign-assessment-panel">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="step === 0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h4 class="MT-0">Other Assessments</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="table-box">
+            <div class="table MT-2">
+              <table>
+                <thead>
+                  <tr>
+                    <th width="14%">Sr. No.</th>
+                    <th width="23%">Assessment</th>
+                    <th width="18%">Date</th>
+                    <th width="20%">Status</th>
+                    <th width="17%">Current Score</th>
+                    <th width="8%">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="
+                      let otherAssessment of otherAssessments;
+                      let i = index
+                    ">
+                    <td>
+                      {{ i + 1 }}
+                    </td>
+                    <td>
+                      <a (click)="onAssessmentClick(otherAssessment)">{{
+                        otherAssessment.assessment_unique_id
+                        }}</a>
+                    </td>
+                    <td>
+                      {{ otherAssessment.start_date | date: "dd/MM/yyyy" }}
+                    </td>
+                    <td>
+                      <span [ngClass]="{
+                        'green-color' : isCompleted(otherAssessment), 
+                        'orange-color' : isInProgress(otherAssessment),
+                        'red-color' : isPending(otherAssessment)}">
+                        {{getStatus(otherAssessment.status_) | checkEmpty }}
+                        ({{
+                        (
+                        otherAssessment?.completedPercentage &&
+                        otherAssessment?.completedPercentage.toFixed(2)
+                        ) ||
+                        0
+                        }}
+                        %)
+                      </span>
+
+                    </td>
+                    <td>{{ getFinalScore(otherAssessment) }}/5</td>
+                    <td>
+                      <a (click)="onDeleteAssessment(otherAssessment)" class="ML-2" matTooltip="Delete">
+                        <i class="fas fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="text-center no-data-text" *ngIf="otherAssessments.length === 0">
+                <h3>No Other Assessments are added</h3>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div *ngIf="false" class="row">
+      <div class="col-md-6 PL-0 MT-2">
+        <div class="table-box MB-2">
+          <h4>A01 Domain 1</h4>
+          <canvas height="700" width="700" baseChart [datasets]="chartData" [labels]="chartLabels"
+            [colors]="assetChartColors" [options]="radarChartOptions" [chartType]="radarChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 PR-0 text-right">
+    <button [disabled]="!improvementPlan" (click)="onCreateAssessmentDialog()" class="small-btn" type="button"
+      mat-flat-button color="primary">
+      Create Assessment
+    </button>
+  </div>
+</div>

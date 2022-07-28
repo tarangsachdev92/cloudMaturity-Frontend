@@ -1,0 +1,30 @@
+<div class="login-bg"></div>
+
+<div class="sign-up-flow-container">
+  <mat-horizontal-stepper
+    (animationDone)="onAnimationFinish()"
+    [linear]="isLinear"
+    #stepper
+  >
+    <mat-step>
+      <app-sign-up
+        *ngIf="stepper.selectedIndex == 0"
+        [canFocusField]="!isAnimationOn && stepper.selectedIndex == 0"
+        (onSignUp)="onSignUp($event)"
+      >
+      </app-sign-up>
+    </mat-step>
+
+    <mat-step>
+      <app-utility-otp
+        *ngIf="stepper.selectedIndex == 1 && signUpParams"
+        [email]="signUpParams.email"
+        (resendClick)="resendSignUpOtpClick($event)"
+        [canFocusField]="!isAnimationOn && stepper.selectedIndex == 1"
+        (otpSubmit)="onVerifyOtp($event)"
+        (backClick)="onBackClick($event)"
+      >
+      </app-utility-otp>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

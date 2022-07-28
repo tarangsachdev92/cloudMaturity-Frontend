@@ -1,0 +1,175 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="white-form">
+      <div *ngIf="!isLoading">
+        <form
+          [formGroup]="maturityLevelSchemaForm"
+          (ngSubmit)="onSubmitMaturityLevelSchemaForm(maturityLevelSchemaForm)"
+        >
+          <div class="row">
+            <div class="col-md-7 PL-0">
+              <div class="form-control">
+                <span class="form-control__title">Name*</span>
+                <mat-form-field [floatLabel]="'never'" appearance="outline">
+                  <input
+                    appAutofocus
+                    formControlName="schema_name"
+                    autocomplete="off"
+                    matInput
+                    placeholder="Enter schema name"
+                    type="text"
+                  />
+                  <mat-error
+                    *ngIf="isRequiredField(formControls['schema_name'])"
+                    >{{ validationMsg.MATURITY_LEVEL_SCHEMA_NAME }}
+                  </mat-error>
+                  <mat-error *ngIf="isValidField(formControls['schema_name'])"
+                    >{{ validationMsg.MATURITY_LEVEL_SCHEMA_VALID }}
+                  </mat-error>
+                  <mat-error *ngIf="isValidLength(formControls['schema_name'])"
+                    >{{ validationMsg.MATURITY_LEVEL_SCHEMA_LENGTH }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7 PL-0">
+              <div class="form-control form-control--textarea">
+                <span class="form-control__title">Schema Description</span>
+                <mat-form-field [floatLabel]="'never'" appearance="outline">
+                  <textarea
+                    formControlName="description"
+                    matInput
+                    placeholder="Enter description"
+                  ></textarea>
+                  <mat-error *ngIf="isValidLength(formControls['description'])"
+                    >{{ validationMsg.DESCRIPTION_LENGTH }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="multiple-control" formArrayName="levels">
+            <div class="row MB-1">
+              <div class="col-md-8 PL-0">
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="form-control center-field">
+                      <span class="form-control__title">Level</span>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="form-control">
+                      <span class="form-control__title">Level Description*</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="level-boxes">
+              <div
+                *ngFor="let maturityLevel of getLevelControls(); let i = index"
+              >
+                <div class="row" [formGroupName]="i">
+                  <div class="col-md-2 PL-0">
+                    <div class="form-control center-field">
+                      <div class="center-field__number">{{ i + 1 }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-8 PL-0">
+                    <div class="form-control">
+                      <mat-form-field
+                        [floatLabel]="'never'"
+                        appearance="outline"
+                      >
+                        <input
+                          autocomplete="off"
+                          formControlName="description"
+                          matInput
+                          placeholder="Enter Level Description"
+                        />
+                        <mat-error
+                          *ngIf="
+                            isRequiredField(
+                              getLevelControls()[i].get('description')
+                            )
+                          "
+                        >
+                          {{ validationMsg.MATURITY_LEVEL_DESCRIPTION }}
+                        </mat-error>
+                        <mat-error
+                          *ngIf="
+                            isValidLength(
+                              getLevelControls()[i].get('description')
+                            )
+                          "
+                        >
+                          {{ validationMsg.DESCRIPTION_LENGTH }}
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <button
+                      *ngIf="getLevelControls().length > 1"
+                      (click)="deleteItem(i)"
+                      mat-icon-button
+                      matTooltip="Remove Level"
+                      type="button"
+                    >
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- <button
+                  class="add-more-button"
+                  *ngIf="getLevelControls().length === i + 1"
+                  mat-flat-button
+                  (click)="addItem('')"
+                  type="button"
+                >
+                  <i class="fa fa-plus"></i>
+                  Add More Level
+                </button> -->
+                <a class="red-color"
+                  *ngIf="getLevelControls().length === i + 1"
+                  (click)="addItem('')"
+                >
+                  Add More Level
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="MT-2 MB-2">
+            <button
+              class="small-btn"
+              color="primary"
+              mat-flat-button
+              type="submit"
+            >
+              Save
+            </button>
+            <button
+              class="small-btn ML-2"
+              (click)="onMaturityLevelSchemaList()"
+              color="secondary"
+              mat-flat-button
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="MT-3" *ngIf="isLoading">
+        <app-form-loader></app-form-loader>
+      </div>
+    </div>
+  </div>
+</div>

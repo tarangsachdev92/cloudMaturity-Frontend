@@ -1,0 +1,742 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+$mat-test: (
+  50: #e8eaf6,
+  100: #c5cae9,
+  200: #9fa8da,
+  300: #7986cb,
+  400: #5c6bc0,
+  500: #d64f4f,
+  600: #3949ab,
+  700: #303f9f,
+  800: #283593,
+  900: #1a237e,
+  A100: #8c9eff,
+  A200: #536dfe,
+  A400: #3d5afe,
+  A700: #304ffe,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+$mat-red-test: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #ff6e6e,
+  600: #e53935,
+  700: #d32f2f,
+  800: #c62828,
+  900: #b71c1c,
+  A100: #ff8a80,
+  A200: #ff5252,
+  A400: #ff1744,
+  A700: #d50000,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$candy-app-primary: mat-palette($mat-test);
+$candy-app-accent: mat-palette($candy-app-primary, 500);
+// The warn palette is optional (defaults to red).
+$candy-app-warn: mat-palette($mat-red-test);
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat-light-theme(
+  $candy-app-primary,
+  $candy-app-accent,
+  $candy-app-warn
+);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);
+$custom-typography: mat-typography-config(
+  $font-family: unquote("Muli, sans-serif"),
+);
+@include angular-material-typography($custom-typography);
+// LOGIN, SIGNUP, FORGOT PASSWORD, OTP, CHANGE PASSWORD
+mat-form-field {
+  width: 100%;
+  font-size: 1.6rem;
+}
+
+.forgot-password-flow-container,
+.sign-up-flow-container,
+.login-flow-container {
+  .mat-horizontal-stepper-header-container {
+    display: none !important;
+  }
+}
+
+/*LOGIN FLOW & FORGOT PASSWORD FLOW SCSS*/
+
+.app-section {
+  .mat-checkbox-background {
+    svg {
+      @include square(2rem);
+      margin: 0 auto;
+      top: 0.3rem;
+    }
+  }
+}
+
+/*IN WHOLE APPLICATION*/
+
+* {
+  .mat-horizontal-content-container {
+    padding: 0 !important;
+  }
+
+  .mat-button.cdk-keyboard-focused .mat-button-focus-overlay,
+  .mat-button.cdk-program-focused .mat-button-focus-overlay,
+  .mat-flat-button.cdk-keyboard-focused .mat-button-focus-overlay,
+  .mat-flat-button.cdk-program-focused .mat-button-focus-overlay,
+  .mat-stroked-button.cdk-keyboard-focused .mat-button-focus-overlay,
+  .mat-stroked-button.cdk-program-focused .mat-button-focus-overlay {
+    opacity: 0 !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 3px 0 0 3px !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0 3px 3px 0 !important;
+  }
+
+  .mat-form-field-appearance-outline
+    .mat-form-field-outline-thick
+    .mat-form-field-outline-end,
+  .mat-form-field-appearance-outline
+    .mat-form-field-outline-thick
+    .mat-form-field-outline-gap,
+  .mat-form-field-appearance-outline
+    .mat-form-field-outline-thick
+    .mat-form-field-outline-start {
+    border-width: 1px !important;
+  }
+
+  /*.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+  background: $primary-hover-color;
+}*/
+  .mat-option.mat-selected {
+    background: #ededed !important;
+    color: $primary-color !important;
+  }
+
+  .mat-select-value {
+    color: $primary-color !important;
+  }
+
+  .mat-option-text {
+    color: $primary-color !important;
+    font-size: 1.8rem !important;
+    font-weight: 600 !important;
+  }
+
+  .mat-slide-toggle-thumb-container {
+    cursor: pointer !important;
+  }
+
+  .mat-option.mat-selected {
+    .mat-option-text {
+      color: $primary-color !important;
+    }
+  }
+
+  mat-paginator {
+    .mat-paginator-page-size-label,
+    .mat-paginator-range-label,
+    .mat-select-value-text {
+      color: $primary-color;
+      font-size: 1.6rem;
+    }
+
+    .mat-paginator-page-size-select {
+      margin-left: 2rem;
+    }
+  }
+}
+
+// .procedure-tab{
+//   .mat-tab-labels{
+//     flex-direction: column;
+//   }
+
+//   .mat-tab-header{
+//     width: 20rem;
+//     box-shadow: 0 0 5px #ddd;
+//     margin: 2rem;
+//     border-bottom: 0;
+//     height: 25rem;
+//   }
+
+//   .mat-ink-bar {
+//     display: none;
+//   }
+
+//   .mat-tab-group{
+//     flex-direction: row;
+//   }
+
+//   .mat-tab-label-active{
+//     border-right: 2px solid $red-color;
+//   }
+
+//   .mat-tab-body-wrapper{
+//     width: calc(100% - 25rem);
+//   }
+// }
+
+.add-model-container,
+.criteria-panel {
+  .mat-step-label {
+    text-align: left !important;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    cursor: pointer;
+    padding-top: 0 !important;
+  }
+
+  .step-large-title {
+    @include square(3.5rem);
+    text-align: center;
+    line-height: 3.5rem;
+    background: #f1f1f1;
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 1.6rem;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .step-small-title {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.6rem;
+  }
+
+  .mat-stepper-label-position-bottom .mat-stepper-horizontal-line {
+    top: 15px;
+  }
+
+  .mat-step-header[aria-posinset="1"] {
+    padding-left: 0 !important;
+  }
+
+  .mat-step-header:hover,
+  .mat-step-header.cdk-program-focused {
+    background: transparent;
+  }
+
+  .mat-step-label-active.mat-step-label-selected span {
+    background-color: $red-color;
+    color: $white-color !important;
+  }
+
+  .mat-step-label-active.mat-step-label-selected label {
+    color: $red-color !important;
+    font-weight: 600 !important;
+  }
+
+  .mat-step-label-active span,
+  .mat-step-label-active label {
+    color: $primary-color !important;
+    cursor: pointer;
+  }
+
+  .mat-step-label-active label {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  // mat-step-header[ng-reflect-selected="true"]{
+  //   + .mat-stepper-horizontal-line{
+  //     background: $red-color;
+  //   }
+  // }
+
+  .mat-stepper-horizontal-line {
+    height: 6px !important;
+    border-radius: 8px !important;
+  }
+
+  .mat-step-icon-state-number,
+  .mat-step-icon-state-edit,
+  .mat-step-header-ripple.mat-ripple {
+    display: none;
+  }
+
+  .mat-stepper-horizontal-line {
+    border-top-width: 6px;
+  }
+
+  .mat-stepper-label-position-bottom
+    .mat-horizontal-stepper-header:not(:first-child)::before,
+  .mat-stepper-label-position-bottom
+    .mat-horizontal-stepper-header:not(:last-child)::after,
+  [dir="rtl"]
+    .mat-stepper-label-position-bottom
+    .mat-horizontal-stepper-header:not(:first-child)::after,
+  [dir="rtl"]
+    .mat-stepper-label-position-bottom
+    .mat-horizontal-stepper-header:not(:last-child)::before {
+    display: none;
+  }
+
+  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header {
+    padding: 0 24px;
+  }
+
+  .mat-horizontal-stepper-header-container {
+    margin-bottom: 2rem;
+    width: 75%;
+
+    @include respond("tab-port") {
+      width: 100%;
+    }
+  }
+
+  /*MATERIAL TAB*/
+  .mat-tab-labels {
+    .mat-tab-label {
+      opacity: 1;
+    }
+
+    .mat-tab-label-content {
+      font-size: 1.6rem;
+    }
+
+    .mat-tab-label-content {
+      font-weight: 600;
+      font-size: 1.6rem;
+    }
+
+    .mat-tab-label-active {
+      .mat-tab-label-content {
+        color: $red-color;
+      }
+    }
+  }
+}
+
+.element-list__fixed-btn {
+  button {
+    min-width: auto !important;
+    height: 4rem !important;
+    line-height: 4rem !important;
+    width: 4rem;
+  }
+}
+
+.criteria-tab {
+  .mat-tab-label {
+    min-width: 120px !important;
+    padding: 0 12px !important;
+  }
+}
+
+app-change-email {
+  .mat-horizontal-stepper-header-container {
+    display: none;
+  }
+}
+
+.mat-snack-bar-container {
+  min-height: 42px !important;
+}
+
+.add-model-container {
+  .mat-horizontal-stepper-header[aria-selected="true"]
+    + .mat-stepper-horizontal-line {
+    border-top-color: $red-color;
+  }
+}
+
+.multiple-control {
+  mat-error {
+    position: relative;
+    top: -2px;
+  }
+
+  .center-field {
+    .mat-form-field-infix {
+      text-align: center;
+    }
+
+    &__number {
+      @include square(4rem);
+      background-color: $primary-color;
+      color: $white-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      border-radius: 50% !important;
+      margin-top: 1rem;
+    }
+  }
+}
+
+app-assessment-type-details {
+  .mat-checkbox-label {
+    color: $primary-color;
+    font-size: 1.6rem;
+  }
+}
+
+.user-org-filter {
+  .custom-tree-select {
+    width: 100%;
+  }
+
+  .ant-select-selection--single {
+    height: 39px !important;
+    margin-top: 0 !important;
+  }
+
+  .ant-select-selection__rendered {
+    line-height: 37px !important;
+  }
+
+  .ant-select-selection-placeholder {
+    color: rgba($primary-color, 0.7);
+    display: block;
+    font-size: 1.4rem;
+    height: 39px;
+    line-height: 10px;
+    font-weight: normal;
+  }
+
+  .ant-select-search__field {
+    padding: 0;
+    font-size: 1.6rem !important;
+    line-height: 10px !important;
+    height: 37px !important;
+  }
+}
+
+.assessment-survey-container,
+.improvement-plan-container,
+.model-details-container {
+  .mat-tab-label-content {
+    font-weight: 600;
+    font-size: 1.6rem;
+  }
+
+  .mat-tab-label-active {
+    opacity: 1 !important;
+  }
+}
+
+.survey-basic-details__body__data__right {
+  .mat-progress-bar.mat-primary {
+    display: inline-block;
+    height: 1.2rem;
+    width: 80%;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .mat-progress-bar-buffer {
+    background: $grey-color-4;
+  }
+}
+
+.criteria-details-tab {
+  .mat-tab-label {
+    min-width: auto;
+    padding: 0 15px;
+    opacity: 1;
+
+    &.mat-tab-label-active {
+      .mat-tab-label-content {
+        color: $red-color !important;
+      }
+    }
+
+    .mat-tab-label-content {
+      color: $primary-color;
+      font-weight: 600 !important;
+    }
+  }
+}
+
+.procedure-tab {
+  .mat-tab-header {
+    .mat-tab-label {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+mat-tree-node {
+  padding: 1rem 0 1.5rem 0;
+  border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
+
+  .element-name {
+    .mat-icon-button {
+      @include square(4rem);
+      line-height: 4rem;
+    }
+  }
+
+  &:hover {
+    background-color: rgba(238, 238, 238, 0.45);
+  }
+}
+
+.assessment-tree-node {
+  mat-tree-node {
+    position: relative;
+    padding: 1rem 0;
+
+    .element-status {
+      position: absolute;
+      right: 2rem;
+      top: 1.7rem;
+    }
+  }
+}
+
+app-assessment-survey {
+  .mat-tab-body-content {
+    overflow: hidden;
+  }
+}
+
+.assign-assessment-panel{
+  .mat-expansion-panel-header {
+    border-bottom: 0 !important;
+  }
+
+  .mat-expansion-panel-content{
+    .mat-expansion-panel-body{
+      padding: 0 !important;
+      border-top: 0;
+    }
+  }
+
+  .mat-expansion-panel-header{
+    background-color: rgba(0, 0, 0, 0.04) !important;
+  }
+}
+
+.criteria-details-assessment, .assign-assessment-panel {
+  margin-top: 3rem;
+
+  .no-records-found{
+    transform: scale(0.7);
+  }
+
+  .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+    box-shadow: none;
+  }
+
+  .mat-expansion-panel-header {
+    padding-left: 1rem;
+    border-bottom: 1px solid #efefef;
+    padding-right: 1rem;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: $primary-color;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  thead {
+    border-top: 0 !important;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+
+  mat-expansion-panel-header.mat-expanded {
+    background-color: #f5f5f5 !important;
+  }
+
+  .mat-expansion-panel {
+    border-radius: 0 !important;
+  }
+
+  .mat-expansion-panel-spacing {
+    margin: 0 !important;
+  }
+}
+
+.criteria-panel-custom-tab {
+  .mat-tab-header {
+    margin: 0 2.5rem;
+  }
+}
+
+
+.assessment-details-box__border{
+  .ui-treetable .ui-treetable-toggler{
+    margin-top: -1em !important;
+  }
+}
+
+.questionnaire{
+  mat-radio-button{
+    margin-right: 2rem;
+  }
+
+  .mat-radio-label-content, .mat-checkbox-label {
+    color: #959494;
+    font-size: 1.8rem;
+  }
+
+  .question-box{
+    &--checkbox{
+      &__group{
+        .mat-checkbox-label{
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+
+  .question-box{
+    &--radio{
+      mat-radio-group{
+        margin-left: 4rem;
+
+        .mat-radio-outer-circle {
+          border-color: #c3c3c3;
+        }
+      }
+    }
+  }
+
+  .select-all-questions{
+    .mat-checkbox-label{
+      font-weight: 600;
+    }
+  }
+
+  .box-gap{
+    .mat-form-field-outline{
+      background-color: $white-color;
+    }
+  }
+}
+
+.level-boxes{
+  .mat-form-field-outline-start, .mat-form-field-outline-end{
+    border-radius: 0 !important;
+    border-top: 0 !important;
+  }
+
+  .mat-form-field-outline-start{
+    border-left: 0 !important;
+  }
+
+  .mat-form-field-outline-end{
+    border-right: 0 !important;
+  }
+}
+
+.mat-slide-toggle-thumb{
+  background-color: #e2e2e2;
+}
+
+.element-list-requirements{
+  max-height: 30rem;
+  overflow-y: auto;
+
+  li{
+    padding: 1rem;
+    font-size: 1.6rem;
+  }
+}
+
+.header{
+  &__menu{
+    i{
+      font-size: 1.8rem;
+      margin-right: 1rem;
+      vertical-align: middle;
+    }
+  }
+}
+
+.form-control--criteria{
+  .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: rgba(173, 173, 173, 0.42);
+  }
+
+  .mat-form-field, .mat-select-value, .mat-form-field-infix{
+    width: auto;
+  }
+
+  .mat-select-value{
+    max-width: 100%;
+  }
+  
+  .mat-select-arrow-wrapper{
+    top: 0.2rem;
+  }
+}
+
+.action-plan-full-width-dialog{
+  width: 80vw !important;
+  height: 80vh !important;
+  max-width: 80vw !important;
+  min-width: 80vw !important;
+
+  .large-modal-container{
+    width: 100% !important;
+  }
+}
+
+.large-modal-container{
+  width: 80%;
+  margin: 0 auto;
+}
+
+.assessment-scope-editor .mat-button-base.mat-secondary{
+  background-color: #ebebeb;
+}
+
+app-user-auth-forgot-container app-utility-otp .small-btn.mat-flat-button.mat-button-base.mat-primary,
+app-user-auth-sign-up-container app-utility-otp .small-btn.mat-flat-button.mat-button-base.mat-primary{
+  min-width: 15rem !important;
+  height: 5.5rem !important;
+  width: 100% !important;
+}

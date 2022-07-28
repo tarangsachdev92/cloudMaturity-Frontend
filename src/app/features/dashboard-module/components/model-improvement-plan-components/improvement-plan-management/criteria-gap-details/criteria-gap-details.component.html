@@ -1,0 +1,112 @@
+<div>
+  <div class="header-panel-inner">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>
+          <a (click)="onBack()" matTooltip="Back">
+            <i class="fa fa-angle-left"></i>
+          </a>
+          <span>{{selectedGap?.gap_id}}</span>
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-9">
+      <div>
+        <div class="assessment-filter-details box">
+          <div class="assessment-filter-details__header box__header">
+            <div class="row">
+              <div class="col-md-9 col-sm-8 PL-0">
+                <h3>Basic Details</h3>
+              </div>
+              <div class="col-md-3 col-sm-4 PR-0 text-right"></div>
+            </div>
+          </div>
+          <div class="assessment-filter-details__body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="assessment-filter-details__body__data">
+                  <div class="assessment-filter-details__body__data__left">
+                    <span>Practice ID:</span>
+                  </div>
+                  <div class="assessment-filter-details__body__data__right">
+                    <span>{{selectedGap?.criteria?.criteria_unique_id}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="assessment-filter-details__body__data">
+                  <div class="assessment-filter-details__body__data__left">
+                    <span>Practice Description:</span>
+                  </div>
+                  <div class="assessment-filter-details__body__data__right">
+                    <span>{{selectedGap?.criteria?.description}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="assessment-filter-details__body__data">
+                  <div class="assessment-filter-details__body__data__left">
+                    <span>Status:</span>
+                  </div>
+                  <div class="assessment-filter-details__body__data__right">
+                    <mat-slide-toggle [checked]="selectedGap?.criteria?.status===1" (change)="onChangeStatus($event)">
+                      <span class="ML-1" [ngClass]="{
+                        'red-color': selectedGap?.criteria?.status ===3,
+                        'orange-color': selectedGap?.criteria?.status ===2,
+                        'green-color': selectedGap?.criteria?.status ===1
+                      }">
+                        {{getCriteriaStatus(selectedGap?.criteria?.status)}}
+                      </span>
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row MT-3">
+    <div class="col-md-9">
+      <div class="table-box MB-2">
+        <div class="table MT-2">
+          <table>
+            <thead>
+              <tr>
+                <th width="10%">Sr.No.</th>
+                <th width="40%">Action</th>
+                <th width="15%">Assigned To</th>
+                <th width="15%">Due Date</th>
+                <th width="15%">Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let action of selectedGap?.actions; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{action.description}}</td>
+                <td>{{action.assigned_to?.fullName | checkEmpty}}</td>
+                <td>{{action.due_date | date: "dd MMM yyyy"}}</td>
+                <td>
+                  <span [ngClass]="{
+                    'red-color': +action.status===0,
+                    'green-color':+action.status===1
+                  }">{{getActionStatus(action)}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

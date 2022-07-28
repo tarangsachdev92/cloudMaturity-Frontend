@@ -1,0 +1,30 @@
+<div class="assessment-team">
+    <div class="assessment-team__header">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Assessment Team</h3>
+            </div>
+        </div>
+    </div>
+    <div class="assessment-team__body">
+        <ul>
+            <li *ngFor="let assessmentTeam of assessmentTeamList; let i = index">
+                <div class="row">
+                    <div class="col-md-10 PL-0">
+                        {{assessmentTeam.fullName}}
+                    </div>
+                    <div class="col-md-2 PR-0 text-right">
+                        <a class="assessment-team__body__delete" (click)="onDeleteTeamMember($event,assessmentTeam)"
+                            matTooltip="Remove">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <a (click)="onAddTeamMember()" class="assessment-team__body__add-more">
+            <i class="fa fa-plus"></i>
+            Add more
+        </a>
+    </div>
+</div>

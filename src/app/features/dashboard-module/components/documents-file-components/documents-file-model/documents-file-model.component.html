@@ -1,0 +1,231 @@
+<div *ngIf="isShowAttachmentDetails" class="header-panel">
+  <div class="page-header__action text-right">
+    <a matTooltip="Refresh" (click)="onRefreshClick()"><i class="fas fa-sync"></i></a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 PR-0">
+    <div class="row MT-1">
+      <div class="col-md-4 PL-0">
+        <div class="form-control">
+          <span class="form-control__title">Organisation</span>
+          <nz-tree-select [nzNodes]="nodes" class="custom-tree-select" [(ngModel)]="org_id"
+            (ngModelChange)="onOrganisationChange($event)" [nzNotFoundContent]="'No records!!'" nzShowSearch
+            nzPlaceHolder="Select organisation">
+          </nz-tree-select>
+        </div>
+      </div>
+
+      <div *ngIf="isShowAttachmentDetails" class="col-md-2">
+        <div class="box-view-right">
+          <div class="box-gap box-gap--space box-inital-score">
+            <i class="fas fa-tasks"></i>
+            <b>{{documentData?.required}}</b>
+            <h3>Required</h3>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isShowAttachmentDetails" class="col-md-2">
+        <div class="box-view-right">
+          <div class="box-gap box-gap--space box-inital-score">
+            <i class="far fa-check-circle"></i>
+            <b>{{documentData?.approved}}</b>
+            <h3>Approved</h3>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isShowAttachmentDetails" class="col-md-2">
+        <div class="box-view-right">
+          <div class="box-gap box-gap--space box-inital-score">
+            <i class="fas fa-save"></i>
+            <b>{{documentData?.draft}}</b>
+            <h3>Draft</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isShowAttachmentDetails">
+      <div class="row">
+        <div class="col-md-12 PR-0">
+          <div class="text-right">
+            <a *ngIf="isFilterApplied" (click)="onClearFilter()" class="MR-2 filter-link">
+              Clear Filter
+            </a>
+            <a (click)="onFilterToggle()" class="filter-link red-color">
+              {{ isShowFilter ? "Hide Filter" : "Show Filter" }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-box MT-1 MB-2">
+        <div [ngClass]="{'overflow-hidden' : selectedOrganisation && isLoadingOrganisationDocument}" class="table MT-2">
+          <form [formGroup]="filterDocumentForm">
+            <table class="filter-table">
+              <thead>
+                <tr>
+                  <th width="8%">
+                    <div>Document</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input formControlName="name" type="text" autocomplete="off" matInput placeholder="Search" />
+                      </mat-form-field>
+                    </div>
+                  </th>
+
+                  <th width="16%">
+                    <div>Title</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input formControlName="title" type="text" autocomplete="off" matInput
+                          placeholder="Search title" />
+                      </mat-form-field>
+                    </div>
+                  </th>
+
+                  <th width="10%">
+                    <div>Type</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-select formControlName="type" placeholder="Select type">
+                          <mat-option value="">All</mat-option>
+                          <mat-option *ngFor="let type of documentTypeList; let j = index" [value]="type._id">
+                            {{type.type}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+
+                  <th width="5%">
+                    <div>Level</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input formControlName="level" type="text" autocomplete="off" matInput placeholder="Search" />
+                      </mat-form-field>
+                    </div>
+                  </th>
+
+                  <th width="6%">
+                    <div>Required</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-select formControlName="required" placeholder="Select">
+                          <mat-option value="">All</mat-option>
+                          <mat-option [value]="true">Yes</mat-option>
+                          <mat-option [value]="false">No</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+
+                  <th width="17%">
+                    <div>Domains</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input formControlName="element" type="text" autocomplete="off" matInput placeholder="Search" />
+                      </mat-form-field>
+                    </div>
+                  </th>
+
+                  <th width="21%">
+                    <div>File Name / Link</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input formControlName="link_or_name" type="text" autocomplete="off" matInput
+                          placeholder="Search" />
+                      </mat-form-field>
+                    </div>
+                  </th>
+
+                  <th width="10%">
+                    <div>Status</div>
+                    <div *ngIf="isShowFilter">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-select formControlName="status" placeholder="Select">
+                          <mat-option value="">All</mat-option>
+                          <mat-option *ngFor="let status of modelDocumentStatusList" [value]="status.value">
+                            {{ status.display }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+
+                  <th width="7%" class="PL-action">Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let orgDoc of organisationDocuments; let j = index">
+                  <td>{{orgDoc.document_id?.name}}</td>
+                  <td>{{orgDoc.document_id?.title}}</td>
+                  <td>{{orgDoc.document_id?.type?.type}}</td>
+                  <td>{{orgDoc.document_id?.level}}</td>
+                  <td>{{ orgDoc.document_id?.required ? "Yes" : "No" }}</td>
+                  <td>
+                    <ul class="element-list-documents">
+                      <li *ngFor="let el of getDocumentElements(orgDoc.document_id); let k = index">
+                        {{ el.element_name }}
+                      </li>
+                      <li class="element-list-documents__more"
+                        *ngIf="getMoreDocumentElements(orgDoc.document_id).length">
+                        <a [matMenuTriggerFor]="menu">+[{{ getMoreDocumentElements(orgDoc.document_id).length }}
+                          More]</a>
+                        <mat-menu #menu="matMenu">
+                          <ul class="element-list-requirements">
+                            <li *ngFor="
+                        let moreElement of getMoreDocumentElements(orgDoc.document_id);
+                        let l = index
+                      ">
+                              {{ moreElement.element_name }}
+                            </li>
+                          </ul>
+                        </mat-menu>
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <div>
+                      <span *ngIf="isLink(orgDoc.type)">{{orgDoc.link | checkEmpty}}</span>
+                      <span *ngIf="isAttachment(orgDoc.type)">{{orgDoc.document_name | checkEmpty}}</span>
+                    </div>
+                  </td>
+                  <td>{{getDocumentStatus(orgDoc.status) | checkEmpty}}</td>
+                  <td>
+                    <a (click)="onDocumentPreview(orgDoc)" matTooltip="View Attachment">
+                      <i class="far fa-eye"></i>
+                    </a>
+                    <a class="ML-2" (click)="onEditDocument(orgDoc)" matTooltip="Edit">
+                      <i class="fas fa-pen"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+
+        </div>
+
+        <app-no-data *ngIf="selectedOrganisation && !isLoadingOrganisationDocument && organisationDocuments.length===0">
+        </app-no-data>
+
+        <div *ngIf="selectedOrganisation && isLoadingOrganisationDocument">
+          <app-table-loader></app-table-loader>
+        </div>
+
+        <div class="row" *ngIf="pager.totalRecords > 10">
+          <div class="col-md-12 PL-0 PR-0 text-right">
+            <mat-paginator [length]="pager.totalRecords" [pageIndex]="pager.page - 1" (page)="pageChange($event)"
+              [pageSize]="pager.recordsPerPage" [pageSizeOptions]="pageSizeOptions">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-md-10 PL-0">
+    <div class="header-panel">
+      <h3>Company</h3>
+    </div>
+    <div class="table">
+      <div class="table__search">
+        <input type="text" placeholder="Search Company..." [formControl]="searchFormControl" />
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th width="10%">
+              <a [ngClass]="{'active' : sortKey === 'regNo'}">
+                <a (click)="onClickSort('regNo',(((sortKey === 'regNo') && (sortOrder === '-1')) ? '1' : '-1'))">
+                  ID
+                  <i class="fas" [ngClass]="{'fa-long-arrow-alt-up' : ((sortKey === 'regNo') && (sortOrder === '1')),
+                    'fa-long-arrow-alt-down' : ((sortKey === 'regNo') && (sortOrder === '-1'))}">
+                  </i>
+                </a>
+              </a>
+            </th>
+            <th width="25%">
+              <a [ngClass]="{'active' : sortKey === 'company'}">
+                <a (click)="onClickSort('company',(((sortKey === 'company') && (sortOrder === '-1')) ? '1' : '-1'))">
+                  Company Name
+                  <i class="fas" [ngClass]="{'fa-long-arrow-alt-up' : ((sortKey === 'company') && (sortOrder === '1')),
+                    'fa-long-arrow-alt-down' : ((sortKey === 'company') && (sortOrder === '-1'))}">
+                  </i>
+                </a>
+              </a>
+            </th>
+            <th width="25%">
+              <a [ngClass]="{'active' : sortKey === 'email'}">
+                <a (click)="onClickSort('email',(((sortKey === 'email') && (sortOrder === '-1')) ? '1' : '-1'))">
+                  Email
+                  <i class="fas" [ngClass]="{'fa-long-arrow-alt-up' : ((sortKey === 'email') && (sortOrder === '1')),
+                    'fa-long-arrow-alt-down' : ((sortKey === 'email') && (sortOrder === '-1'))}">
+                  </i>
+                </a>
+              </a>
+            </th>
+            <th width="25%">
+              <a [ngClass]="{'active' : sortKey === 'name'}">
+                <a (click)="onClickSort('name',(((sortKey === 'name') && (sortOrder === '-1')) ? '1' : '-1'))">
+                  Full Name
+                  <i class="fas" [ngClass]="{'fa-long-arrow-alt-up' : ((sortKey === 'name') && (sortOrder === '1')),
+                    'fa-long-arrow-alt-down' : ((sortKey === 'name') && (sortOrder === '-1'))}">
+                  </i>
+                </a>
+              </a>
+            </th>
+            <th width="15%">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let company of companyList; let i = index;">
+            <td>
+              <div>{{company.regNo}}</div>
+            </td>
+            <td>
+              <div>{{company.company}}</div>
+            </td>
+            <td>
+              <div>{{company.email}}</div>
+            </td>
+            <td>
+              <div>{{company.name}}</div>
+            </td>
+            <td>
+              <div>
+                <a *ngIf="company.status !==companyStatusEnum.APPROVED"
+                  (click)="companyApproval(companyStatusEnum.APPROVED,company.email)" class="green-color"> Approve </a>
+                <a *ngIf="company.status !==companyStatusEnum.REJECTED"
+                  (click)="companyApproval(companyStatusEnum.REJECTED,company.email)" class="red-color">Reject</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <app-no-data *ngIf="companyList.length===0 && !isLoadingResults"></app-no-data>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-12 MT-2 text-right">
+        <mat-paginator [length]="pager.filteredRecords" (page)="pageChange($event)" [pageSize]="pager.recordsPerPage"
+          [pageSizeOptions]="pageSizeOptions">
+        </mat-paginator>
+      </div>
+    </div> -->
+    <div class="row" *ngIf="pager.totalRecords > 10">
+      <div class="col-md-12 MT-2 text-right">
+        <mat-paginator
+          [length]="pager.totalRecords"
+          [pageIndex]="pager.page - 1"
+          (page)="pageChange($event)"
+          [pageSize]="pager.recordsPerPage"
+          [pageSizeOptions]="pageSizeOptions"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

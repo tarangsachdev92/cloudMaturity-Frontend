@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-md-8 PL-0">
+    <div class="white-form">
+      <form [formGroup]="addAssessmentForm" (ngSubmit)="onSubmitCreateAssessmentForm(addAssessmentForm)">
+        <div class="row">
+          <div class="col-md-6 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Organisation*</span>
+              <nz-tree-select [nzNodes]="nodes" class="custom-tree-select" [nzNotFoundContent]="'No records!!'"
+                nzShowSearch nzPlaceHolder="Select organisation" formControlName="org_id">
+              </nz-tree-select>
+            </div>
+          </div>
+          <div class="col-md-6 PR-0">
+            <div class="form-control">
+              <span class="form-control__title">Model*</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select disabled formControlName="model_id" placeholder="Loading...">
+                  <mat-option *ngFor="let model of models" [value]="model._id">{{ model.model_name }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="isRequiredField(formControls['model_id'])">{{ validationMsg.MODEL_NAME }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Assessment Type*</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select formControlName="assessment_type_id" placeholder="Select assessment type">
+                  <mat-option *ngFor="let assessmentType of assessmentTypes" [value]="assessmentType._id">
+                    {{ assessmentType.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="isRequiredField(formControls['assessment_type_id'])">
+                  {{ validationMsg.ASSESSMENT_TYPE_NAME }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6 PR-0">
+            <div class="form-control">
+              <span class="form-control__title">Level</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select formControlName="evaluation_level" placeholder="Select Level">
+                  <mat-option [value]="level" *ngFor="let level of levels; let i = index">
+                    {{ "Level " + level }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 PL-0">
+            <div class="form-control">
+              <span class="form-control__title">Partner</span>
+              <mat-form-field appearance="outline" [floatLabel]="'never'">
+                <mat-select formControlName="partner_id" placeholder="Select partner">
+                  <mat-option *ngFor="let partner of partners" [value]="partner._id">{{ partner.partner_name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="isRequiredField(formControls['partner_id'])">{{ validationMsg.PARTNER_NAME }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button class="small-btn" type="submit" mat-flat-button color="primary">
+            Save & Next
+          </button>
+          <button (click)="onShowList()" class="small-btn ML-2" type="button" mat-flat-button color="secondary">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

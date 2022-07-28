@@ -1,0 +1,94 @@
+.mat-flat-button.mat-primary,
+.mat-flat-button.mat-secondary {
+  height: 5.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.mat-flat-button.mat-secondary {
+  background: $grey-color-4;
+}
+
+.icon-with-button {
+  mat-icon {
+    @include square(1.4rem);
+    vertical-align: top !important;
+    margin-right: 1rem;
+  }
+}
+
+.mat-flat-button.mat-primary,
+.mat-flat-button.mat-secondary {
+  min-width: 15rem;
+}
+
+.add-more-button {
+  i,
+  span {
+    color: $red-color;
+  }
+
+  i {
+    margin-right: 0.5rem;
+    position: relative;
+    top: -1px;
+  }
+}
+
+.small-btn {
+  height: 4rem !important;
+  line-height: 4rem !important;
+  width: auto !important;
+  min-width: auto !important;
+}
+
+.attach-document-btn {
+  background-color: #f3f3f3 !important;
+
+  .mat-ripple {
+    display: none;
+  }
+
+  i {
+    color: #bfbcbc;
+    margin-right: 1rem;
+  }
+
+  span {
+    font-size: 1.6rem;
+  }
+}
+
+
+.inactive-link{
+  pointer-events: none;
+  color: #e2e2e2;
+}
+
+.action-view{
+  background-color: $grey-color !important;
+  border-radius: 0 !important;
+  height: 4rem !important;
+  width: 4rem !important;
+  line-height: 4rem !important;
+  border-radius: 0.5rem !important;
+
+  &:hover{
+    background-color: darken($grey-color, 5%) !important;
+  }
+
+  .material-icons{
+    font-size: 2.2rem !important;
+    position: relative;
+    top: -1px;
+  }
+
+  &.active{
+    background-color: $primary-color !important;
+    color: $white-color !important;
+  }
+  
+  .mat-button-focus-overlay, .mat-button-ripple{
+    display: none;
+  }
+}

@@ -1,0 +1,24 @@
+<div class="assessment-scope-editor MT-2">
+  <div class="row">
+    <div class="col-md-12 PL-0 PR-0">
+      <div>
+        <div class="row">
+          <div class="col-md-12">
+            <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+            <ngx-editor [editor]="editor" [(ngModel)]="longTextModel"></ngx-editor>
+            <!-- <app-ngx-editor  [config]="editorConfig" [spellcheck]="true" [(ngModel)]="htmlContent">
+            </app-ngx-editor> -->
+            <div class="MB-2">
+              <button class="small-btn" color="primary" mat-flat-button type="submit" (click)="onSaveClick()">
+                Save
+              </button>
+              <button class="small-btn ML-2" color="secondary" mat-flat-button type="button" (click)="onResetClick()">
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

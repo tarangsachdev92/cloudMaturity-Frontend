@@ -1,0 +1,20 @@
+<div class="help-board">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Getting started with ScoreUp</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div *ngFor="let video of helpVideo;" class="col-md-3">
+            <div class="help-board__box">
+                <a (click)="onPlayVideo(video.link)">
+                    <img src="assets/images/{{video.img}}.png" alt="">
+                    <h5>{{video.name}}</h5>
+                    <i class="fas fa-play-circle"></i>
+                    <span>{{video.time}}m</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

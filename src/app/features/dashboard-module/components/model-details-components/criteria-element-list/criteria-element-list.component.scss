@@ -1,0 +1,105 @@
+@import "../../../../../../assets/scss/abstracts/abstracts";
+
+.element-details {
+  border-radius: $border-radius-box;
+  border: 1px solid $border-box-color;
+  background-color: $white-color;
+
+  &__header {
+    border-top-left-radius: $border-radius-box;
+    border-top-right-radius: $border-radius-box;
+    padding: 15px;
+    position: relative;
+
+    &__search {
+      background: $grey-color-4;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      padding: 8px 15px;
+
+      input {
+        border: 1px solid $grey-color;
+        font-family: $font-family;
+        width: 100%;
+        border-radius: 3px;
+        box-shadow: none;
+        padding: 6px;
+
+        &:focus {
+          outline: none;
+          border-color: $red-color;
+        }
+      }
+
+      a {
+        margin-top: 7px;
+        display: inline-block;
+      }
+    }
+
+    h3 {
+      color: $primary-color;
+      font-size: 1.8rem;
+    }
+
+    a {
+      color: $primary-color;
+      font-size: 1.6rem;
+      margin-left: 1.5rem;
+    }
+  }
+
+  &__body {
+    border-bottom-left-radius: $border-radius-box;
+    border-bottom-right-radius: $border-radius-box;
+    height: calc(100vh - 21rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: .5rem;
+
+    li {
+      list-style: none !important;
+    }
+
+    .element-box-tree {}
+
+    .is-active {
+      background-color: #f7f7f7;
+    }
+
+    .is-disable {
+      cursor: not-allowed;
+    }
+
+    .element-name {
+      color: $black-color;
+      font-weight: 600;
+      font-size: 1.6rem;
+
+      &__top {
+        vertical-align: top;
+        line-height: 4rem;
+      }
+    }
+
+    .element-description {
+      color: $black-color;
+      padding-left: 4rem;
+      font-size: 1.6rem;
+    }
+
+    .element-criteria {
+      color: $red-color;
+      padding-left: 4rem;
+      margin-top: 0.5rem;
+
+      b {
+        font-weight: 600;
+        font-size: 1.4rem;
+      }
+    }
+
+  }
+}

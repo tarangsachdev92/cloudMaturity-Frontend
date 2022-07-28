@@ -1,0 +1,74 @@
+@import "../../../../../assets/scss/abstracts/abstracts";
+
+.profile {
+  @include clearfix();
+  margin-top: 2rem;
+
+  &__left {
+    float: left;
+    position: relative;
+    width: 30rem;
+
+    &:before {
+      height: calc(100vh - #{$header-height} - 10rem);
+      position: absolute;
+      left: 30rem;
+      content: '';
+      width: 1px;
+      background: $grey-color;
+    }
+
+    h3 {
+      color: $primary-color;
+      font-size: 2.4rem;
+      margin-bottom: 4rem;
+    }
+
+    ul {
+      li {
+        list-style: none;
+
+        a {
+          color: $primary-color;
+          font-size: 2rem;
+          display: inline-block;
+          margin-bottom: 0.2rem;
+          padding: 1rem 0;
+          text-decoration: none;
+          display: block;
+          position: relative;
+          left: 1px;
+          top: 0;
+
+          &:hover {
+            color: $red-color;
+          }
+
+          &.active {
+            color: $red-color;
+            font-weight: 600;
+            border-right: 2px solid $red-color;
+            border-radius: 2px;
+          }
+
+          i {
+            @include square(2.4rem);
+            margin-right: 2rem;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+
+  &__right {
+    float: left;
+    width: calc(100% - 30rem);
+    padding-left: 4rem;
+    padding-bottom: 5rem;
+
+    @include respond("tab-port") {
+      padding-left: 2rem;
+    }
+  }
+}

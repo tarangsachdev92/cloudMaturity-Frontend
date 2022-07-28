@@ -1,0 +1,75 @@
+@import "../../../../../assets/scss/abstracts/abstracts";
+.profile-details {
+    @include clearfix();
+    margin-bottom: 6rem;
+    &__left {
+        float: left;
+        width: 15rem;
+        position: relative;
+        &__short-name {
+            @include square(15rem);
+            background: $grey-color-4;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20rem;
+            font-size: 3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        div {
+            @include square(15rem);
+            background: $grey-color-4;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20rem;
+            mat-icon {
+                @include square(7rem);
+                color: $grey-color-3;
+            }
+        }
+        img {
+            @include square(15rem);
+            border-radius: 50%;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+        }
+    }
+    &__right {
+        float: left;
+        width: calc(100% - 15rem);
+        padding-left: 5rem;
+        h4 {
+            color: $primary-color;
+            font-weight: 600;
+            font-size: 3.4rem;
+            margin-bottom: 1rem;
+            padding-top: 3.5rem;
+        }
+        span {
+            color: $grey-color-3;
+            font-size: 1.8rem;
+        }
+    }
+}
+
+.profile-view {
+    @include clearfix();
+    margin-bottom: 3rem;
+    &__left {
+        color: $grey-color-3;
+        float: left;
+        width: 25rem;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+    &__right {
+        color: $primary-color;
+        float: left;
+        width: calc(100% - 25rem);
+        font-size: 1.8rem;
+        a {
+            color: $red-color;
+        }
+    }
+}
